@@ -10,7 +10,7 @@ typedef void *Rect;
  * @param r the radius of the Rect
  * @return the new Rect
 */
-Rect new_rect(double x, double y, double r, double w, double h);
+Rect new_rect(double x, double y, double w, double h);
 
 /*
  * Sets the minimum bounding box of the form in the given variables

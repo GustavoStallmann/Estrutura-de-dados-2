@@ -55,7 +55,7 @@ SmuTreap newSmuTreap(int hitCount, double promotionRate, double epsilon) {
     return new_node; 
 }
 
-static Node newSmuTreapNode(const Info form, const DescritorTipoInfo formType, double x, double y, double priority) {
+static Node newSmuTreapNode(Info form, DescritorTipoInfo formType, double x, double y, double priority) {
     Node_st* new_node = malloc(sizeof(Node_st)); 
     if (new_node == NULL) {
         alloc_error( ); 
@@ -65,6 +65,7 @@ static Node newSmuTreapNode(const Info form, const DescritorTipoInfo formType, d
     new_node->left = NULL; 
     new_node->right = NULL; 
     new_node->formType = formType; 
+    new_node->form = form; 
     new_node->x = x; 
     new_node->y = y; 
     new_node->priority = priority; 
@@ -98,9 +99,9 @@ static Node rotate_right(Node *nd) {
 }
 
 
-static Node insertSmuTHelper(const Node *r, Info form, DescritorTipoInfo formType, double x, double y, double priority) {
+static Node insertSmuTHelper(Node *r, Info form, DescritorTipoInfo formType, double x, double y, double priority) {
     Node_st *root = (Node_st*) r; 
-    if (root == NULL) return newSmuTreapNode(form, formType, x, y, priority); 
+    if (root == NULL) return newSmuTreapNode((Node) form, formType, x, y, priority); 
 
     if (root->x < x) {
         root->left = insertSmuTHelper((Node) root->left, form, formType, x, y, priority); 
@@ -131,10 +132,23 @@ Node insertSmuT(SmuTreap t, double x, double y, Info i, DescritorTipoInfo d, FCa
 
     return nd; 
 }
-/*
- * Insere a informacao i, associada 'a ancora (x,y) na arvore t.
- * d e' um valor (definido pela aplicacao) que identifica, caso existam varias
- * categorias, um categoria específica da informacao i.
- * fCalcBb calcula o bounding box da informacao i.
- * Retorna um indicador para o no' inserido.
- */
+
+// Como saber o tipo da forma retornada? 
+Info getInfoSmuT(SmuTreap t, Node n) {
+    Node_st *node = (Node_st *) n;
+    return node->form; 
+}
+
+// Como saber o tipo da forma retornada? 
+Info getBoundingBoxSmuT(SmuTreap t, Node n, double *x, double *y, double *w, double *h) {
+    assert(t);
+    assert(n);
+
+    Node_st *node = (Node_st *) n; 
+    *x = node->bb.x; 
+    *y = node->bb.y;
+    *w = node->bb.w;
+    *h = node->bb.h;
+
+    return node->form;
+}

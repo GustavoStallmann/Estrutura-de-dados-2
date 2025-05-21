@@ -7,7 +7,7 @@ typedef struct {
     double x, y, w, h; 
 } Rect_st;
 
-Rect new_rect(double x, double y, double r, double w, double h) {
+Rect new_rect(double x, double y, double w, double h) {
     Rect_st* rect = (Rect_st *) malloc(sizeof(Rect_st)); 
     if (rect == NULL) {
         fprintf(stderr, "form_rect: memória insuficiente para alocar nova forma");
