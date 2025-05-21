@@ -13,6 +13,11 @@ static void alloc_error( ) {
     exit(1);
 }
 
+/*
+ * "Eu" passo a ser filho direito do meu filho da esquerda, 
+ * e tomo os filhos da direita dele como meus filhos da esquerda. 
+ * (viro direito do da esquerda e pego os filhos)
+*/
 static TreapNode* rotate_right(TreapNode *node) {
     if (node == NULL || node->left == NULL) return node; 
     TreapNode *left_node = node->left; 
@@ -23,17 +28,22 @@ static TreapNode* rotate_right(TreapNode *node) {
     return left_node; 
 }
 
+/* 
+ * "Eu" passo a ser filho esquerdo do meu filho da direita, 
+ * e tomo os filhos da esquerda dele como meus filhos da direita. 
+ * (viro esquerdo do da direita e pego os filhos)
+*/
 static TreapNode* rotate_left(TreapNode *node) {
     if (node == NULL || node->right == NULL) return node;  
     TreapNode *right_node = node->right; 
     TreapNode *right_node_left = right_node->left; 
 
-    right_node->right = node; 
+    right_node->left = node; 
     node->right = right_node_left; 
     return right_node;
 }
 
-TreapNode* new_node(TreapNodeValue value) {
+void* new_treap_node(TreapNodeValue value) {
     TreapNode* node = (TreapNode*) malloc(sizeof(TreapNode));
     if (node == NULL) alloc_error( ); 
 
@@ -44,9 +54,10 @@ TreapNode* new_node(TreapNodeValue value) {
     return node;
 }
 
-// TODO: fix and understand the insertion logic
-TreapNode* treap_insert(TreapNode *root, TreapNodeValue value) {
-    if (root == NULL) return new_node(value);
+void* treap_insert(void *treapNode, TreapNodeValue value) {
+    TreapNode *root = (TreapNode *) treapNode; 
+    
+    if (root == NULL) return new_treap_node(value);
 
     if (root->key < value) {
         root->left = treap_insert(root->left, value);
@@ -58,7 +69,7 @@ TreapNode* treap_insert(TreapNode *root, TreapNodeValue value) {
         root->right = treap_insert(root->right, value);
 
         if (root->right->priority < root->priority) {
-            root = rotate_right(root);
+            root = rotate_left(root);
         }
     }
 
@@ -68,12 +79,9 @@ TreapNode* treap_insert(TreapNode *root, TreapNodeValue value) {
 void treap_print(TreapNode *root) {
     if (root == NULL) return;
 
-    // Print left subtree
     treap_print(root->left);
 
-    // Print current node
     printf("%d ", root->key);
 
-    // Print right subtree
     treap_print(root->right);
 }
