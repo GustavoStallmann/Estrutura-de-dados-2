@@ -121,25 +121,38 @@ static Node insertSmuTHelper(Node *r, Info form, DescritorTipoInfo formType, dou
     return (Node) root; 
 }
 
-Node insertSmuT(SmuTreap t, double x, double y, Info i, DescritorTipoInfo d, FCalculaBoundingBox fCalcBb) {
+static void print_tree(Node nd) {
+    if (nd == NULL) return; 
+
+    Node_st* node = (Node_st *) nd; 
+
+    printf("(form -> %d; priority -> %lf)\n", node->formType, node->priority); 
+    
+    print_tree(node->left); 
+    print_tree(node->right); 
+}
+
+Node insertSmuT(SmuTreap t, double x, double y, Info form, DescritorTipoInfo formType, FCalculaBoundingBox fCalcBb) {
     assert(t); 
 
     SmuTreap_st *tree = (SmuTreap_st *) t; 
-    Node nd = insertSmuTHelper((Node) tree->root, i, d, x, y, get_random_priority()); 
+    Node nd = insertSmuTHelper((Node) tree->root, form, formType, x, y, get_random_priority()); 
+    if (tree->root == NULL) {
+        tree->root = nd; // New node as root
+    }
 
     Node_st* inserted_node = (Node_st *) nd; 
-    fCalcBb(d, inserted_node->form, &inserted_node->bb.x, &inserted_node->bb.y, &inserted_node->bb.w, &inserted_node->bb.h); 
+    fCalcBb(formType, inserted_node->form, &inserted_node->bb.x, &inserted_node->bb.y, &inserted_node->bb.w, &inserted_node->bb.h); 
 
+    print_tree(tree->root);
     return nd; 
 }
 
-// Como saber o tipo da forma retornada? 
 Info getInfoSmuT(SmuTreap t, Node n) {
     Node_st *node = (Node_st *) n;
     return node->form; 
 }
 
-// Como saber o tipo da forma retornada? 
 Info getBoundingBoxSmuT(SmuTreap t, Node n, double *x, double *y, double *w, double *h) {
     assert(t);
     assert(n);
