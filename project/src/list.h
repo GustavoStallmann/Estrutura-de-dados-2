@@ -9,6 +9,8 @@ typedef void *ListValue;
 
 typedef bool (*compare) (ListValue value, void *target); 
 typedef void (*free_list_value)(ListValue value); 
+typedef void *callback_st;
+typedef void (*callback_fn)(void *value, callback_st callSt);
 
 /* 
  * Create a new linked list instance
@@ -39,6 +41,13 @@ ListValue list_remove(List list);
  * @return ListValue if found NULL if not
  */
 ListValue list_search(List list, ListValue value, compare f);
+
+/* 
+ * Execute a function for each item in the list
+ * @param list the list to iterate
+ * @param foreach the function to be executed
+ */
+void list_foreach(List list, callback_fn callFn, callback_st callSt); 
 
 /* 
  * Free the memory of the given list

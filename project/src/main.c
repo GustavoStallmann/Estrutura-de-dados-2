@@ -6,16 +6,17 @@
 #include "form.h"
 #include "args.h"
 
-void check_arguments(int argc, char *argv[]) {
+ArgManager check_args(int argc, char *argv[]) {
     ArgManager argm = new_arg_manager();
     add_new_arg(argm, 'e', true, "Argumento de teste"); 
-
-
+    
+    verify_args(argm, argc, argv); 
     free_arg_manager(argm);
+    return argm; 
 }
 
 int main(int argc, char *argv[]) {
-    check_arguments(argc, argv);
+    ArgManager argm = check_args(argc, argv);
 
     SmuTreap* smu_treap = newSmuTreap(2, 1.1, 0.5);
 

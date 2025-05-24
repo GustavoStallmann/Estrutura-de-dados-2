@@ -90,6 +90,20 @@ ListValue list_search(List lst, void *value, compare compare_fn) {
     return NULL; 
 }
 
+void list_foreach(List lst, callback_fn callFn, callback_st callSt) {
+    assert(lst); 
+    assert(callFn); 
+
+    List_st *list = (List_st *) lst; 
+    if (list == NULL) return;
+
+    ListNode_st *current = (ListNode_st *) list->head;
+    while (current != NULL) {
+        callFn(current->value, callSt);
+
+        current = (ListNode_st *) current->next; 
+    }
+}
 
 void list_free(List lst, free_list_value free_value) {
     assert(lst); 
