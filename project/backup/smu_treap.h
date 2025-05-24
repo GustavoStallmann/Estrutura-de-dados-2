@@ -2,7 +2,8 @@
 #define _SMUTREAP_H__
 
 #include <stdbool.h>
-#include "lista.h"
+// #include "lista.h"
+typedef void *Lista; // remover 
 
 /*
  * Uma SmuTreap e' uma treap espacial com promocao dinamica de nos mais
@@ -107,8 +108,6 @@ typedef bool (*FsearchNo)(SmuTreap t, Node n, Info i, double x, double y, void *
  * sucessivas invocacoes a esta funcao, incluindo (provavelmente) uma chave de busca.
  */
 
-
-
 SmuTreap newSmuTreap(int hitCount, double promotionRate, double epsilon);
 /*
  * Retorna uma SmuTreap vazia.
@@ -135,7 +134,7 @@ Node getNodeSmuT(SmuTreap t, double x, double y);
  * Retorna NULL caso nao tenha encontrado o no'.
  */
 
-DescritorTipoInfo getTypeInfoSrbT(SmuTreap t, Node n);
+DescritorTipoInfo getTypeInfoSmuT(SmuTreap t, Node n);
 /* 
  * Retorna o tipo da informacao associada ao no' n 
 */
