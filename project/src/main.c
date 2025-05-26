@@ -4,19 +4,33 @@
 #include "form_circle.h"
 #include "form_rect.h"
 #include "form.h"
-#include "args.h"
+#include "processor_dir.h"
+#include "processor_args.h"
+#include <stdlib.h>
 
 ArgManager check_args(int argc, char *argv[]) {
+    // for (int i = 0; i < argc; i++) {
+    //     printf("arg[%d]: %s\n", i, argv[i]); 
+    // }
+
     ArgManager argm = new_arg_manager();
-    add_new_arg(argm, 'e', true, "Argumento de teste"); 
+    add_new_arg(argm, "-e", false, "Diretório-base de entrada (BED)", DIR, NULL); 
+    add_new_arg(argm, "-q", false, "Arquivo com consultas", DIR, NULL); 
+    add_new_arg(argm, "-p", false, "Prioridade máxima (número inteiro)", INT, "10000"); 
+    add_new_arg(argm, "-hc", false, "Parâmetro hit count usado na árvore (número inteiro)", INT, "3"); 
+    add_new_arg(argm, "-pr", false, "Fator de promoção a ser usado quando hit count é atingido (número decimal)", DOUBLE, "1.10"); 
+    add_new_arg(argm, "-o", true, "Diretório-base de saída", DIR, NULL); 
+    add_new_arg(argm, "-f", true, "Arquivo com a descrição da treap", DIR, NULL); 
     
-    verify_args(argm, argc, argv); 
+    bool status = verify_args(argm, argc, argv); 
+    if (!status) exit(EXIT_FAILURE);
+
     free_arg_manager(argm);
     return argm; 
 }
 
 int main(int argc, char *argv[]) {
-    ArgManager argm = check_args(argc, argv);
+    check_args(argc, argv);
 
     SmuTreap* smu_treap = newSmuTreap(2, 1.1, 0.5);
 

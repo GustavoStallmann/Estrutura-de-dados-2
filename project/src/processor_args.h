@@ -2,12 +2,19 @@
 #define ARGS_H
 #include <stdbool.h>
 
+typedef enum {
+    DIR, 
+    STR, 
+    DOUBLE,
+    INT
+} ArgType; 
+
 typedef void *ArgManager;
 typedef void *Arg; 
 
 
 ArgManager new_arg_manager();
-ArgManager add_new_arg(ArgManager argm, char particle, bool mandatory, char *arg_description);
+ArgManager add_new_arg(ArgManager argm, char *particle, bool mandatory, char *arg_description, ArgType argType, void *defaultValue);
 bool verify_args(ArgManager argm, int argc, char *argv[]);
 void free_arg_manager(ArgManager argm);
 

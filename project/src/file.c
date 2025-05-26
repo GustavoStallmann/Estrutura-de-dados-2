@@ -10,7 +10,7 @@ FILE* file_open_writable(char *file_path) {
     assert(file); 
 
     if (file == NULL) {
-        fprintf(stderr, "file: couldn't open the file"); 
+        fprintf(stderr, "file: couldn't open the file\n"); 
         return NULL; 
     }
 
@@ -25,7 +25,7 @@ FILE* file_open_readable(char *path, char *file_name) {
     FILE *file = fopen(file_dir, "r"); 
 
     if (file == NULL) {
-        fprintf(stderr, "file: couldn't open the file"); 
+        fprintf(stderr, "file: couldn't open the file\n"); 
         return NULL; 
     }
 

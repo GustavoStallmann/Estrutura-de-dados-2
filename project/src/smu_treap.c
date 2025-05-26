@@ -99,7 +99,6 @@ static Node rotate_right(Node *nd) {
     return left_node; 
 }
 
-
 static Node insertSmuTHelper(Node *r, Info form, DescritorTipoInfo formType, double x, double y, double priority) {
     Node_st *root = (Node_st*) r; 
     if (root == NULL) return newSmuTreapNode((Node) form, formType, x, y, priority); 

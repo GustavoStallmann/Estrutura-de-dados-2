@@ -50,7 +50,7 @@ ListNode list_insert(List lst, ListValue value) {
     list->head = node; 
     list->size++; 
 
-    return (ListNode) new_node;
+    return (ListNode) node;
 }
 
 ListValue list_remove(List lst) {
@@ -81,7 +81,7 @@ ListValue list_search(List lst, void *value, compare compare_fn) {
     
     ListNode_st *current = (ListNode_st *) list->head;
     while (current != NULL) {
-        if (compare_fn(current, value)) {
+        if (compare_fn(current->value, value)) {
             return current->value; 
         }
         current = (ListNode_st *) current->next; 
@@ -90,7 +90,7 @@ ListValue list_search(List lst, void *value, compare compare_fn) {
     return NULL; 
 }
 
-void list_foreach(List lst, callback_fn callFn, callback_st callSt) {
+void list_foreach(List lst, callback_fn callFn, callback_data callSt) {
     assert(lst); 
     assert(callFn); 
 
