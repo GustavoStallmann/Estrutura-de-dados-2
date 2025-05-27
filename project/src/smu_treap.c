@@ -86,6 +86,9 @@ static Node newSmuTreapNode(Info form, DescritorTipoInfo formType, double x, dou
 
     return new_node; 
 }
+static void joinBoundingBoxes(double *x1, double *y1, double *w1, double *h1, double *x2, double *y2, double *w2, double *h2) {
+
+}
 
 static Node rotate_left(Node nd) {
     Node_st* node = (Node_st *) nd; 
@@ -111,18 +114,20 @@ static Node rotate_right(Node nd) {
     return (Node) left_node; 
 }
 
-static Node insertSmuTHelper(Node *r, Info form, DescritorTipoInfo formType, double x, double y, double priority) {
+static Node insertSmuTHelper(Node *r, Node i) {
     Node_st *root = (Node_st*) r; 
-    if (root == NULL) return newSmuTreapNode((Node) form, formType, x, y, priority); 
+    Node_st *insertion_node = (Node_st *) i; 
 
-    if (x <= root->x) { // left insertion
-        root->left = insertSmuTHelper((Node) root->left, form, formType, x, y, priority); 
+    if (root == NULL) return insertion_node; 
+
+    if (insertion_node->x <= root->x) { // left insertion
+        root->left = insertSmuTHelper((Node) root->left, insertion_node); 
 
         if (root->left != NULL && ((Node_st*)root->left)->priority < root->priority) {
             return rotate_right((Node) root);
         }
     } else { // right insertion
-        root->right = insertSmuTHelper((Node) root->right, form, formType, x, y, priority); 
+        root->right = insertSmuTHelper((Node) root->right, insertion_node); 
         
         if (root->right != NULL && ((Node_st*)root->right)->priority < root->priority) {
             return rotate_left((Node) root); 
@@ -132,19 +137,43 @@ static Node insertSmuTHelper(Node *r, Info form, DescritorTipoInfo formType, dou
     return (Node) root; 
 }
 
+//TODO: CALC BB AS A LEAF THEN FIX IF ROTATION OCCURS
 Node insertSmuT(SmuTreap t, double x, double y, Info form, DescritorTipoInfo formType, FCalculaBoundingBox fCalcBb) {
     assert(t); 
-
+    
     SmuTreap_st *tree = (SmuTreap_st *) t; 
-    Node nd = insertSmuTHelper((Node) tree->root, form, formType, x, y, get_random_priority(0, tree->maxPriority)); 
+    Node_st *new_node = (Node_st *) newSmuTreapNode((Node) form, formType, x, y, get_random_priority(0, tree->maxPriority)); 
+    fCalcBb(formType, new_node->form, &new_node->bb.x, &new_node->bb.y, &new_node->bb.w, &new_node->bb.h); 
 
-    // Node_st* inserted_node = (Node_st *) nd; 
-    // fCalcBb(formType, inserted_node->form, &inserted_node->bb.x, &inserted_node->bb.y, &inserted_node->bb.w, &inserted_node->bb.h); 
-
+    Node nd = insertSmuTHelper((Node) tree->root, new_node); 
+    
     print_tree(tree->root);
     return nd; 
 }
 
+Info getBoundingBoxSmuT(SmuTreap t, Node n, double *x, double *y, double *w, double *h) {
+    assert(n);
+
+    Node_st *node = (Node_st *) n; 
+    *x = node->bb.x; 
+    *y = node->bb.y;
+    *w = node->bb.w;
+    *h = node->bb.h;
+
+    return node->form;
+}
+
+
+// static void fixBoundingBoxSmuT(Node_st *node, Node_st *parent, FCalculaBoundingBox fCalcBb) {
+//     if (node == NULL) return; 
+
+//     fixBoundingBoxSmuT(node->left, node, fCalcBb); 
+//     fixBoundingBoxSmuT(node->right, node, fCalcBb);
+
+//     fCalcBb(node->formType, node->form, &node->bb.x, &node->bb.y, &node->bb.w, &node->bb.h);
+
+//     // getBoundingBoxSmuT(NULL, (Node) node, &node->bb.x, &node->bb.y, &node->bb.w, &node->bb.h); 
+// }
 static void visitaProfundidadeSmuT_aux(SmuTreap t, Node nd, FvisitaNo f, void *aux) {
     if (nd == NULL) return; 
 
@@ -203,17 +232,4 @@ void promoteNodeSmuT(SmuTreap t, Node n, double promotionRate) {
 Info getInfoSmuT(SmuTreap t, Node n) {
     Node_st *node = (Node_st *) n;
     return node->form; 
-}
-
-Info getBoundingBoxSmuT(SmuTreap t, Node n, double *x, double *y, double *w, double *h) {
-    assert(t);
-    assert(n);
-
-    Node_st *node = (Node_st *) n; 
-    *x = node->bb.x; 
-    *y = node->bb.y;
-    *w = node->bb.w;
-    *h = node->bb.h;
-
-    return node->form;
 }
