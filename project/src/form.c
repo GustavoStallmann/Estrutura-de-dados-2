@@ -9,7 +9,6 @@ void computeFormBoundingBox(DescritorTipoInfo tp, Info form, double *x, double *
         case CIRCLE:
             getCircleBoundingBox((Circle) form, x, y, w, h);
             break; 
-
         case RECT: 
             getRectBoundingBox((Rect) form, x, y, w, h); 
             break; 

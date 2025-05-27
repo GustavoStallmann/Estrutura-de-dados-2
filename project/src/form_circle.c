@@ -22,7 +22,6 @@ Circle new_circle(double x, double y, double r) {
     return circle; 
 }
 
-
 void getCircleBoundingBox(Circle c, double *x, double *y, double *w, double *h) {
     assert(c);
     

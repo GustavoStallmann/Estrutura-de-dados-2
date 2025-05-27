@@ -112,6 +112,33 @@ Arg_st* get_arg_by_particle(ArgManager argm, char *particle) {
     return arg; 
 }
 
+ArgType get_arg_value_by_particle(ArgManager argm, char *particle, void *value) {
+    Arg_st *arg = get_arg_by_particle(argm, particle); 
+    assert(argm); 
+
+    if (arg == NULL) return -1; 
+    
+    switch (arg->argType) {
+        case DIR: 
+            *((Dir *)value) = arg->value.dir; 
+            break; 
+        case STR:
+            *((char **)value) = arg->value.str; 
+            break; 
+        case DOUBLE:
+            *((double *)value) = arg->value.num_d; 
+            break; 
+        case INT: 
+            *((int *)value) = arg->value.num_i;
+            break;
+        default:
+            fprintf(stderr, "ERROR: couldn't find argument for processor_args");
+            return -1; 
+    }
+
+    return arg->argType; 
+}
+
 ArgManager add_new_arg(ArgManager argm, char *particle, bool mandatory, char *arg_description, ArgType argType, void *defaultValue) {
     ArgManager_st *arg_manager = (ArgManager_st *) argm; 
     if (arg_manager == NULL) return NULL; 

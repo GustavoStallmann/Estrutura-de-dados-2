@@ -107,7 +107,7 @@ typedef bool (*FsearchNo)(SmuTreap t, Node n, Info i, double x, double y, void *
  * sucessivas invocacoes a esta funcao, incluindo (provavelmente) uma chave de busca.
  */
 
-SmuTreap newSmuTreap(int hitCount, double promotionRate, double epsilon);
+SmuTreap newSmuTreap(int hitCount, double promotionRate, double epsilon, int prio);
 /*
  * Retorna uma SmuTreap vazia.
  * hitCount >= 1; promotionRate > 0.0, tipicamente e' um numero positivo maior 
@@ -157,7 +157,6 @@ Info getBoundingBoxSmuT(SmuTreap t, Node n, double *x, double *y, double *w, dou
 /* 
  * Retorna o bounding box associado ao no' n 
  */
-
 
 bool getNodesDentroRegiaoSmuT(SmuTreap t, double x1, double y1, double x2, double y2, List L);
 /* Insere na List L os nos (Node) da arvore t cujas ancoras estao dentro da regiao 

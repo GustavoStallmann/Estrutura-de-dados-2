@@ -5,6 +5,15 @@
 #include "form_rect.h"
 #include <stdio.h>
 
+#ifndef NDEBUG
+    static inline void debug_form(FILE *svg_file, double x, double y)   {
+        fprintf(svg_file, 
+            "<text x='%lf' y='%lf' class='small'>(%d, %d)</text>\n",
+            x, y, (int) x, (int) y
+        ); 
+    }
+#endif
+
 static void svg_export_circle(FILE *svg_file, Circle circle) {
     double x, y, r; 
     getCirclePositions(circle, &x, &y, &r); 
@@ -13,6 +22,10 @@ static void svg_export_circle(FILE *svg_file, Circle circle) {
         "<circle r=\"%lf\" cx=\"%lf\" cy=\"%lf\" fill=\"red\" />\n",
         r, x, y
     );     
+
+    #ifndef NDEBUG
+        debug_form(svg_file, x, y); 
+    #endif
 }
 
 static void svg_export_rectangle(FILE *svg_file, Rect rect) {
@@ -23,6 +36,10 @@ static void svg_export_rectangle(FILE *svg_file, Rect rect) {
         "<rect width='%lf' height='%lf' x='%lf' y='%lf' rx='7' ry='7' fill='blue' />",
         w, h, x, y
     ); 
+
+    #ifndef NDEBUG
+        debug_form(svg_file, x, y); 
+    #endif
 }
 
 void svg_export_form(FILE *svg_file, Info form, DescritorTipoInfo form_type) {
