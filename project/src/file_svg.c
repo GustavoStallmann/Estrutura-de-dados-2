@@ -8,7 +8,7 @@
 #ifndef NDEBUG
     static inline void debug_form(FILE *svg_file, double x, double y)   {
         fprintf(svg_file, 
-            "<text x='%lf' y='%lf' class='small'>(%d, %d)</text>\n",
+            "<text x='%lf' y='%lf' fill='white'>(%d, %d)</text>\n",
             x, y, (int) x, (int) y
         ); 
     }

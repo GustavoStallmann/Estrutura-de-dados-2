@@ -33,14 +33,14 @@ int main(int argc, char *argv[]) {
     int max_priority; 
     get_arg_value_by_particle(argm, "-p", &max_priority);
     
-    SmuTreap* smu_treap = newSmuTreap(2, 1.1, 0.5, max_priority);
+    SmuTreap smu_treap = newSmuTreap(2, 1.1, 0.5, max_priority);
 
     FILE *svg_file = file_open_writable("output/test.svg"); 
     svg_init(svg_file, 800, 600);
 
-    for (int i = 0; i < 100; i++) {
+    for (int i = 0; i < 10; i++) {
         double r = 10; 
-        double formc_x = (i+10) * r, formc_y = i+r; 
+        double formc_x = 100, formc_y = i * 50 + r; 
         Circle formC = new_circle(formc_x, formc_y, r); 
         insertSmuT(smu_treap, formc_x, formc_y, formC, CIRCLE, &computeFormBoundingBox);
         svg_export_form(svg_file, formC, CIRCLE); 
