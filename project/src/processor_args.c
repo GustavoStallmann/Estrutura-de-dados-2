@@ -26,7 +26,7 @@ typedef struct {
 } ArgManager_st; 
 
 static void alloc_error() {
-    fprintf(stderr, "Error: insufficient memory for processor_args allocation\n");
+    fprintf(stderr, "(ERROR) processor_args: insufficient memory for processor_args allocation\n");
     exit(EXIT_FAILURE);     
 }
 

@@ -15,7 +15,7 @@ typedef struct st_list {
 } List_st;
 
 static void alloc_error() {
-    fprintf(stderr, "Error: insufficient memory for list allocation");
+    fprintf(stderr, "(ERROR) list: insufficient memory for list allocation");
     exit(EXIT_FAILURE);     
 }
  

@@ -1,7 +1,7 @@
+#include <stdatomic.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdbool.h>
 #include <assert.h>
 #include "processor_dir.h"
 
@@ -133,22 +133,8 @@ static bool split_path(char *full_dir, char *path, char *fileName, char *fileExt
     return true;
 }
 
-static bool file_exists(char *full_dir) {
-    if (full_dir == NULL) return false; 
-
-    FILE *file = fopen(full_dir, "r");
-    if (file == NULL) return false; 
-    
-    fclose(file);
-    return true; 
-}
-
 Dir new_dir(char *full_dir) {
     assert(full_dir); 
-    if (!file_exists(full_dir)) {
-        fprintf(stderr, "ERROR: [%s] the file doesn't exist\n", full_dir);
-        return NULL; 
-    }; 
 
     char path[PATH_MAX], fileName[NAME_MAX], fileExt[NAME_MAX]; 
 
@@ -163,6 +149,30 @@ Dir new_dir(char *full_dir) {
     dir->fileName = alloc_str(fileName); 
 
     return (Dir) dir; 
+}
+
+void get_full_dir(Dir d, char *path) {
+    assert(d); 
+    assert(path);
+    
+    Dir_st *dir = (Dir_st *) d; 
+    int str_size = strlen(dir->path) + strlen(dir->fileName) + strlen(dir->fileExt) + 3;
+    char *full_dir = (char *) malloc(sizeof(char) * str_size);
+
+    if (dir->path[strlen(dir->path) - 1] == '/' || dir->path[strlen(dir->path) - 1] == '\\') {
+        snprintf(full_dir, str_size, "%s%s.%s", dir->path, dir->fileName, dir->fileExt);
+    } else {
+        snprintf(full_dir, str_size, "%s/%s.%s", dir->path, dir->fileName, dir->fileExt);
+    }
+
+    strcpy(path, full_dir);
+    free(full_dir);
+}
+
+char* get_file_extension(Dir d) {
+    Dir_st *dir = (Dir_st *) d; 
+
+    return dir->fileExt; 
 }
 
 void dir_free(Dir d) {

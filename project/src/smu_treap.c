@@ -11,15 +11,18 @@ typedef struct {
     double promotionRate, epsilon; 
 } SmuTreap_st;
 
+typedef struct {
+    double x, y, w, h; 
+} BoundingBox; 
+
 typedef struct nd {
     double x, y; 
     double priority; 
     DescritorTipoInfo formType; 
     Info form; 
+    BoundingBox form_bb; 
+    BoundingBox sub_bb; 
     struct nd *left, *right; 
-    struct {
-        double x, y, w, h; 
-    } bb; 
 } Node_st; 
 
 //REMOVE LATER
@@ -38,7 +41,7 @@ static void print_tree_aux(Node nd, int depth, char* prefix, int is_last) {
     // Print bounding box info with indentation
     printf("%s%s    BB: x=%.2f, y=%.2f, w=%.2f, h=%.2f\n", 
            prefix, is_last ? "    " : "│   ",
-           node->bb.x, node->bb.y, node->bb.w, node->bb.h);
+           node->sub_bb.x, node->sub_bb.y, node->sub_bb.w, node->sub_bb.h);
     
     // Print children info
     printf("%s%s    Children: L=%s, R=%s\n", 
@@ -73,7 +76,7 @@ static void print_tree(Node nd) {
 }
 
 static void alloc_error() { 
-    fprintf(stderr, "Error: insufficient memory for smu_treap allocation");
+    fprintf(stderr, "(ERROR) smu_treap: insufficient memory for smu_treap allocation");
     exit(EXIT_FAILURE); 
 }
 
@@ -83,12 +86,12 @@ static inline int get_random_priority(int min, int max) {
 
 SmuTreap newSmuTreap(int hitCount, double promotionRate, double epsilon, int prio) {
     if (hitCount < 1) {
-        fprintf(stderr, "smu_treap: hitCount cannot be lower than 1"); 
+        fprintf(stderr, "(ERROR) smu_treap: hitCount cannot be lower than 1"); 
         return NULL; 
     }
 
     if (promotionRate < 0) {
-        fprintf(stderr, "smu_treap: promotionRate cannot be lower than 0");
+        fprintf(stderr, "(ERROR) smu_treap: promotionRate cannot be lower than 0");
         return NULL; 
     }
 
@@ -125,16 +128,16 @@ static Node newSmuTreapNode(Info form, DescritorTipoInfo formType, double x, dou
     return new_node; 
 }
 
-static void joinBoundingBoxes(Node_st *f_node, Node_st *s_node, double *x, double *y, double *w, double *h) {
-    if (s_node == NULL) return;
+static void joinBoundingBoxes(BoundingBox *first_bb, BoundingBox *second_bb, double *x, double *y, double *w, double *h) {
+    if (first_bb == NULL || second_bb == NULL) return;
     
-    double min_x = f_node->bb.x < s_node->bb.x ? f_node->bb.x : s_node->bb.x;
-    double min_y = f_node->bb.y < s_node->bb.y ? f_node->bb.y : s_node->bb.y;
+    double min_x = first_bb->x < second_bb->x ? first_bb->x : second_bb->x;
+    double min_y = first_bb->y < second_bb->y ? first_bb->y : second_bb->y;
     
-    double max_x = (f_node->bb.x + f_node->bb.w) > (s_node->bb.x + s_node->bb.w) ? 
-                   (f_node->bb.x + f_node->bb.w) : (s_node->bb.x + s_node->bb.w);
-    double max_y = (f_node->bb.y + f_node->bb.h) > (s_node->bb.y + s_node->bb.h) ? 
-                   (f_node->bb.y + f_node->bb.h) : (s_node->bb.y + s_node->bb.h);
+    double max_x = (first_bb->x + first_bb->w) > (second_bb->x + second_bb->w) ? 
+                   (first_bb->x + first_bb->w) : (second_bb->x + second_bb->w);
+    double max_y = (first_bb->y + first_bb->h) > (second_bb->y + second_bb->h) ? 
+                   (first_bb->y + first_bb->h) : (second_bb->y + second_bb->h);
     
     *x = min_x;
     *y = min_y;
@@ -142,36 +145,36 @@ static void joinBoundingBoxes(Node_st *f_node, Node_st *s_node, double *x, doubl
     *h = max_y - min_y;
 }
 
-static Node rotate_left(Node nd, FCalculaBoundingBox fCalcBb) {
+static Node rotate_left(Node nd) {
     Node_st *node = (Node_st *) nd; 
     if (node == NULL || node->right == NULL) return node;  
 
     Node_st *right_node = node->right; 
     Node_st *right_node_left = right_node->left; 
 
-    // Primeiro faz a rotação física
     right_node->left = node; 
     node->right = right_node_left; 
 
-    // Depois recalcula as bounding boxes
-    // Recalcula BB do node (agora filho esquerdo)
-    fCalcBb(node->formType, node->form, &node->bb.x, &node->bb.y, &node->bb.w, &node->bb.h);
-    if (node->left) 
-        joinBoundingBoxes(node, node->left, &node->bb.x, &node->bb.y, &node->bb.w, &node->bb.h);
-    if (node->right) 
-        joinBoundingBoxes(node, node->right, &node->bb.x, &node->bb.y, &node->bb.w, &node->bb.h);
+    // Recalcula a bounding box do nó não promovido (agora filho esquerdo)
+    // Inicia com a bounding box da forma do próprio nó
+    node->sub_bb = node->form_bb;
+    if (node->left != NULL)
+        joinBoundingBoxes(&node->sub_bb, &node->left->sub_bb, &node->sub_bb.x, &node->sub_bb.y, &node->sub_bb.w, &node->sub_bb.h);
+    if (node->right != NULL)
+        joinBoundingBoxes(&node->sub_bb, &node->right->sub_bb, &node->sub_bb.x, &node->sub_bb.y, &node->sub_bb.w, &node->sub_bb.h);
 
-    // Recalcula BB do right_node (agora raiz)
-    fCalcBb(right_node->formType, right_node->form, &right_node->bb.x, &right_node->bb.y, &right_node->bb.w, &right_node->bb.h);
-    if (right_node->left) 
-        joinBoundingBoxes(right_node, right_node->left, &right_node->bb.x, &right_node->bb.y, &right_node->bb.w, &right_node->bb.h);
-    if (right_node->right) 
-        joinBoundingBoxes(right_node, right_node->right, &right_node->bb.x, &right_node->bb.y, &right_node->bb.w, &right_node->bb.h);
+    // Recalcula a bounding box do nó promovido (agora raiz)
+    // Inicia com a bounding box da forma do próprio nó
+    right_node->sub_bb = right_node->form_bb;
+    if (right_node->left != NULL)
+        joinBoundingBoxes(&right_node->sub_bb, &right_node->left->sub_bb, &right_node->sub_bb.x, &right_node->sub_bb.y, &right_node->sub_bb.w, &right_node->sub_bb.h);
+    if (right_node->right != NULL)
+        joinBoundingBoxes(&right_node->sub_bb, &right_node->right->sub_bb, &right_node->sub_bb.x, &right_node->sub_bb.y, &right_node->sub_bb.w, &right_node->sub_bb.h);
 
     return (Node) right_node;
 }
 
-static Node rotate_right(Node nd, FCalculaBoundingBox fCalcBb) {
+static Node rotate_right(Node nd) {
     Node_st* node = (Node_st *) nd; 
     if (node == NULL || node->left == NULL) return node; 
 
@@ -182,56 +185,67 @@ static Node rotate_right(Node nd, FCalculaBoundingBox fCalcBb) {
     left_node->right = node;
     node->left = left_node_right;
 
-    // Depois recalcula as bounding boxes
     // Recalcula BB do node (agora filho direito)
-    fCalcBb(node->formType, node->form, &node->bb.x, &node->bb.y, &node->bb.w, &node->bb.h);
-    if (node->left) 
-        joinBoundingBoxes(node, node->left, &node->bb.x, &node->bb.y, &node->bb.w, &node->bb.h);
-    if (node->right) 
-        joinBoundingBoxes(node, node->right, &node->bb.x, &node->bb.y, &node->bb.w, &node->bb.h);
+    // Inicia com a bounding box da forma do próprio nó
+    node->sub_bb = node->form_bb;
+    if (node->left != NULL) 
+        joinBoundingBoxes(&node->sub_bb, &node->left->sub_bb, &node->sub_bb.x, &node->sub_bb.y, &node->sub_bb.w, &node->sub_bb.h);
+    if (node->right != NULL) 
+        joinBoundingBoxes(&node->sub_bb, &node->right->sub_bb, &node->sub_bb.x, &node->sub_bb.y, &node->sub_bb.w, &node->sub_bb.h);
 
     // Recalcula BB do left_node (agora raiz)
-    fCalcBb(left_node->formType, left_node->form, &left_node->bb.x, &left_node->bb.y, &left_node->bb.w, &left_node->bb.h);
-    if (left_node->left) 
-        joinBoundingBoxes(left_node, left_node->left, &left_node->bb.x, &left_node->bb.y, &left_node->bb.w, &left_node->bb.h);
-    if (left_node->right) 
-        joinBoundingBoxes(left_node, left_node->right, &left_node->bb.x, &left_node->bb.y, &left_node->bb.w, &left_node->bb.h);
+    // Inicia com a bounding box da forma do próprio nó
+    left_node->sub_bb = left_node->form_bb;
+    if (left_node->left != NULL) 
+        joinBoundingBoxes(&left_node->sub_bb, &left_node->left->sub_bb, &left_node->sub_bb.x, &left_node->sub_bb.y, &left_node->sub_bb.w, &left_node->sub_bb.h);
+    if (left_node->right != NULL) 
+        joinBoundingBoxes(&left_node->sub_bb, &left_node->right->sub_bb, &left_node->sub_bb.x, &left_node->sub_bb.y, &left_node->sub_bb.w, &left_node->sub_bb.h);
 
     return (Node) left_node; 
 }
 
-static Node insertSmuT_aux(Node r, Node i, FCalculaBoundingBox fCalcBb) {
+static Node insertSmuT_aux(Node r, Node i) {
     Node_st *root = (Node_st*) r; 
     Node_st *insertion_node = (Node_st *) i; 
 
     if (root == NULL) return insertion_node; 
 
     if (insertion_node->x <= root->x) { // left insertion
-        root->left = insertSmuT_aux((Node) root->left, insertion_node, fCalcBb); 
+        root->left = insertSmuT_aux((Node) root->left, insertion_node); 
 
-        if (root->left != NULL && ((Node_st*)root->left)->priority < root->priority) {
-            return rotate_right((Node) root, fCalcBb);
+        if (root->left != NULL && ((Node_st*)root->left)->priority > root->priority) {
+            return rotate_right((Node) root);
         }
     } else { // right insertion
-        root->right = insertSmuT_aux((Node) root->right, insertion_node, fCalcBb); 
+        root->right = insertSmuT_aux((Node) root->right, insertion_node); 
         
-        if (root->right != NULL && ((Node_st*)root->right)->priority < root->priority) {
-            return rotate_left((Node) root, fCalcBb); 
+        if (root->right != NULL && ((Node_st*)root->right)->priority > root->priority) {
+            return rotate_left((Node) root); 
         }
     }
 
-    return (Node) root; 
+    // Recalcula a bounding box do nó atual incluindo seus filhos
+    // Inicia com a bounding box da forma do próprio nó
+    root->sub_bb = root->form_bb;
+    
+    if (root->left != NULL) {
+        joinBoundingBoxes(&root->sub_bb, &root->left->sub_bb, &root->sub_bb.x, &root->sub_bb.y, &root->sub_bb.w, &root->sub_bb.h);
+    }
+    if (root->right != NULL) {
+        joinBoundingBoxes(&root->sub_bb, &root->right->sub_bb, &root->sub_bb.x, &root->sub_bb.y, &root->sub_bb.w, &root->sub_bb.h);
+    }
+    return (Node) root;
 }
-
 
 Node insertSmuT(SmuTreap t, double x, double y, Info form, DescritorTipoInfo formType, FCalculaBoundingBox fCalcBb) {
     assert(t); 
     
     SmuTreap_st *tree = (SmuTreap_st *) t; 
     Node_st *new_node = (Node_st *) newSmuTreapNode((Node) form, formType, x, y, get_random_priority(0, tree->maxPriority)); 
-    fCalcBb(formType, new_node->form, &new_node->bb.x, &new_node->bb.y, &new_node->bb.w, &new_node->bb.h); 
+    fCalcBb(formType, new_node->form, &new_node->form_bb.x, &new_node->form_bb.y, &new_node->form_bb.w, &new_node->form_bb.h); 
+    new_node->sub_bb = new_node->form_bb; 
 
-    tree->root = insertSmuT_aux((Node) tree->root, new_node, fCalcBb); 
+    tree->root = insertSmuT_aux((Node) tree->root, new_node); 
     
     print_tree(tree->root);
     return tree->root; 
@@ -241,10 +255,10 @@ Info getBoundingBoxSmuT(SmuTreap t, Node n, double *x, double *y, double *w, dou
     assert(n);
 
     Node_st *node = (Node_st *) n; 
-    *x = node->bb.x; 
-    *y = node->bb.y;
-    *w = node->bb.w;
-    *h = node->bb.h;
+    *x = node->sub_bb.x; 
+    *y = node->sub_bb.y;
+    *w = node->sub_bb.w;
+    *h = node->sub_bb.h;
 
     return node->form;
 }

@@ -1,29 +1,42 @@
 #ifndef FORM_CIRCLE
 #define FORM_CIRCLE
-
+#include "form_style.h"
 typedef void *Circle;
 
 /*
  * Create a new circle form
+ * @param id the id of the circle
  * @param x the horizontal coordinate 
  * @param y the vertical coordinate 
  * @param r the radius of the circle
  * @return the new circle
-*/
-Circle new_circle(double x, double y, double r);
+ */
+Circle new_circle(int id, double x, double y, double r, FormStyle style);
 
 /*
  * Sets the minimum bounding box of the form in the given variables
  * @param c the form to get the bounding box
  * @param x, y, w, h the results of the bounding box coordinates
-*/
-void getCircleBoundingBox(Circle c, double *x, double *y, double *w, double *h);
+ */
+void get_circle_bounding_box(Circle c, double *x, double *y, double *w, double *h);
 
 /* 
  * Sets the form position to the given variables
  * @param c the form to get the position
  * @param x, y, r the available positions 
-*/
-void getCirclePositions(Circle c, double *x, double *y, double *r);
+ */
+void get_circle_positions(Circle c, double *x, double *y, double *r);
+
+/* 
+ * Gets the style of the circle
+ * @param c the form to get the style
+ * @return the style of the circle
+ */
+FormStyle get_circle_style(Circle c);
+
+/* 
+ * Free memory of the given form
+ */
+void free_circle(Circle c);
 
 #endif

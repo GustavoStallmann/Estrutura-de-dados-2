@@ -1,12 +1,36 @@
 #include <assert.h>
 #include <stdio.h>
-#include "file.h"
+#include <stdlib.h>
 #include <string.h>
+#include <limits.h>
+#include "file.h"
+#include "processor_dir.h"
 
-FILE* file_open_writable(char *file_path) {
-    assert(file_path); 
+#ifndef PATH_MAX
+#define PATH_MAX 4096
+#endif
 
-    FILE *file = fopen(file_path, "w"); 
+
+bool file_exists(Dir d) {
+    if (d == NULL) return false; 
+
+    char full_dir[PATH_MAX]; 
+    get_full_dir(d, full_dir); 
+
+    FILE *file = fopen(full_dir, "r");
+    if (file == NULL) return false; 
+    
+    fclose(file);
+    return true; 
+}
+
+FILE* file_open_writable(Dir d) {
+    assert(d); 
+
+    char full_dir[PATH_MAX]; 
+    get_full_dir(d, full_dir); 
+
+    FILE *file = fopen(full_dir, "w"); 
     assert(file); 
 
     if (file == NULL) {
@@ -17,12 +41,13 @@ FILE* file_open_writable(char *file_path) {
     return file; 
 }
 
-FILE* file_open_readable(char *path, char *file_name) {
-    assert(path); 
-    assert(file_name); 
+FILE* file_open_readable(Dir d) {
+    assert(d); 
 
-    char* file_dir = strcat(path, file_name);
-    FILE *file = fopen(file_dir, "r"); 
+    char full_dir[PATH_MAX]; 
+    get_full_dir(d, full_dir); 
+ 
+    FILE *file = fopen(full_dir, "r"); 
 
     if (file == NULL) {
         fprintf(stderr, "file: couldn't open the file\n"); 
