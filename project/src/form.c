@@ -7,6 +7,7 @@
 #include "form_rect.h"
 #include "form_style.h"
 #include "form_text.h"
+#include "smu_treap.h"
 
 void get_form_bounding_box(DescritorTipoInfo tp, Info form, double *x, double *y, double *w, double *h) {
     switch (tp) {
@@ -46,6 +47,27 @@ FormStyle get_form_style(DescritorTipoInfo tp, Info form) {
     }
 }
 
+void get_form_coordinates(DescritorTipoInfo tp, Info form, double *x, double *y) {
+    switch (tp) {
+        case CIRCLE:
+            get_circle_positions((Circle) form, x, y, NULL);
+            break; 
+        case RECT: 
+            get_rect_positions((Rect) form, x, y, NULL, NULL); 
+            break; 
+        case TEXT:
+            get_text_positions((Text) form, x, y); 
+            break;
+        case LINE: 
+            get_line_positions((Line) form, x, y, NULL, NULL);
+            break;
+        
+        default:
+            fprintf(stderr, "(ERROR) form: invalid form provided to get coordinates");
+            break;
+    }
+}
+
 void free_form(DescritorTipoInfo tp, Info form) {
     switch (tp) {
         case CIRCLE:
@@ -64,17 +86,5 @@ void free_form(DescritorTipoInfo tp, Info form) {
         default:
             fprintf(stderr, "(ERROR) form: invalid form provided to free memory");
             break;
-    }
-}
-
-void process_form(char *formType) {
-    if (strcmp(formType, "ts") == 0) {
-    
-    } else if (strcmp(formType, "r") == 0) {
-    } else if (strcmp(formType, "c") == 0) {
-    } else if (strcmp(formType, "l") == 0) {
-    } else if (strcmp(formType, "t") == 0) {
-    } else {
-        fprintf(stderr, "(ERROR) form: the .geo form type informed is invalid: %s", formType); 
     }
 }

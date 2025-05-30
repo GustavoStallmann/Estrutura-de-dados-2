@@ -86,8 +86,10 @@ void get_text_positions(Text t, double *x, double *y) {
     Text_st *text = (Text_st *) t; 
     if (text == NULL) return;
 
-    *x = text->x; 
-    *y = text->y;
+    if (x != NULL)
+        *x = text->x; 
+    if (y != NULL)
+        *y = text->y;
 }
 
 void free_text(Text t) {

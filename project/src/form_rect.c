@@ -54,10 +54,14 @@ void get_rect_positions(Rect r, double *x, double *y, double *w, double *h) {
     Rect_st* rect = (Rect_st *) r; 
     if (rect == NULL) return; 
 
-    *x = rect->x; 
-    *y = rect->y; 
-    *w = rect->w; 
-    *h = rect->h; 
+    if (x != NULL)
+        *x = rect->x; 
+    if (y != NULL)
+        *y = rect->y; 
+    if (w != NULL)
+        *w = rect->w;   
+    if (h != NULL)
+        *h = rect->h; 
 }
 
 void free_rect(Rect r) {

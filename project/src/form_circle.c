@@ -14,8 +14,12 @@ typedef struct {
 Circle new_circle(int id, double x, double y, double r, FormStyle style) {
     Circle_st *circle = (Circle_st *) malloc(sizeof(Circle_st)); 
     if (circle == NULL) {
-        fprintf(stderr, "(ERROR) form_circle: memória insuficiente para alocar circulo");
+        fprintf(stderr, "(ERROR) form_circle:insufficient memory to alloc circle");
         return NULL;
+    }
+
+    if (x < 0 || y < 0 || r <= 0) {
+        fprintf(stderr, "(ERROR) form_circle: possibly wrong coordinates (x: %lf, y: %lf, r: %lf)", x, y, r);
     }
 
     circle->id = id; 
@@ -33,21 +37,28 @@ void get_circle_bounding_box(Circle c, double *x, double *y, double *w, double *
     Circle_st *circle = (Circle_st *) c; 
     if (circle == NULL) return; 
 
-    *x = circle->x - circle->r; 
-    *y = circle->y - circle->r; 
-    *w = circle->r * 2; 
-    *h = circle->r * 2; 
+    if (x != NULL)
+        *x = circle->x - circle->r; 
+    if (y != NULL)
+        *y = circle->y - circle->r; 
+    if (w != NULL)
+        *w = circle->r * 2; 
+    if (h != NULL)
+        *h = circle->r * 2; 
 }
 
 void get_circle_positions(Circle c, double *x, double *y, double *r) {
-    assert(c); 
+    assert(c);
     
     Circle_st *circle = (Circle_st *) c;
     if (circle == NULL) return; 
 
-    *x = circle->x; 
-    *y = circle->y; 
-    *r = circle->r; 
+    if (x != NULL)
+        *x = circle->x;
+    if (y != NULL)
+        *y = circle->y; 
+    if (r != NULL)
+        *r = circle->r; 
 }
 
 FormStyle get_circle_style(Circle c) {

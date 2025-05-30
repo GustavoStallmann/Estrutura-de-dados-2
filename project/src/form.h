@@ -27,6 +27,8 @@ void get_form_bounding_box(DescritorTipoInfo tp, Info form, double *x, double *y
  */
 FormStyle get_form_style(DescritorTipoInfo tp, Info form); 
 
+void get_form_coordinates(DescritorTipoInfo tp, Info form, double *x, double *y);
+
 /*
  * Frees the memory of the form
  * @param tp the type of the form

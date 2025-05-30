@@ -27,7 +27,7 @@ void get_line_bounding_box(Line l, double *x, double *y, double *w, double *h);
  * @param l the form to get the position
  * @param x, y, x2, y2 the available positions 
 */
-void get_line_position(Line l, double *x, double *y, double *x2, double *y2);
+void get_line_positions(Line l, double *x, double *y, double *x2, double *y2);
 
 /* 
  * Gets the style of the line

@@ -41,16 +41,20 @@ void get_line_bounding_box(Line l, double *x, double *y, double *w, double *h) {
     *h = fabs(line->y - line->y2);
 }
 
-void get_line_position(Line l, double *x, double *y, double *x2, double *y2){
+void get_line_positions(Line l, double *x, double *y, double *x2, double *y2){
     assert(l); 
 
     Line_st *line = (Line_st *) l; 
     if (line == NULL) return; 
 
-    *x = line->x; 
-    *y = line->y; 
-    *x2 = line->x2; 
-    *y2 = line->y2; 
+    if (x != NULL)
+        *x = line->x; 
+    if (y != NULL)
+        *y = line->y; 
+    if (x2 != NULL)
+        *x2 = line->x2; 
+    if (y2 != NULL)
+        *y2 = line->y2; 
 }
 
 FormStyle get_line_style(Line l) {

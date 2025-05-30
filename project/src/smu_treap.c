@@ -291,6 +291,22 @@ void visitaProfundidadeSmuT(SmuTreap t, FvisitaNo f, void *aux) {
     visitaProfundidadeSmuT_aux(t, tree->root, f, aux);
 }
 
+DescritorTipoInfo getTypeInfoSmuT(SmuTreap t, Node n) {
+    (void)t; // ignore arg
+    assert(n);
+
+    Node_st *node = (Node_st *) n; 
+    return node->formType; 
+}
+
+Info getInfoSmuT(SmuTreap t, Node n) {
+    (void)t; // ignore arg
+    assert(n);
+
+    Node_st *node = (Node_st *) n; 
+    return node->form; 
+}
+
 // static Node fixHeapProperty_aux(Node nd) {
 //     if (nd == NULL) return NULL;
     
@@ -328,8 +344,3 @@ void visitaProfundidadeSmuT(SmuTreap t, FvisitaNo f, void *aux) {
 /*
  * Aumenta a prioridade do no' n pelo fator promotionRate.
  */
-
-Info getInfoSmuT(SmuTreap t, Node n) {
-    Node_st *node = (Node_st *) n;
-    return node->form; 
-}
