@@ -10,6 +10,7 @@ typedef struct {
     char *fillColor; 
     char *fontFamily; 
     char *fontWeight;
+    char *fontSize; 
     char *textAnchor;
 } FormStyle_st; 
 
@@ -28,7 +29,7 @@ static char* alloc_str(char *str) {
     return new_str; 
 }
 
-FormStyle new_form_style(char *borderColor, char *fillColor, char *fontFamily, char *fontWeight, char *textAnchor) {
+FormStyle new_form_style(char *borderColor, char *fillColor, char *fontFamily, char *fontWeight, char *textAnchor, char *fontSize) {
     FormStyle_st *style = (FormStyle_st *) malloc(sizeof(FormStyle_st)); 
     if (style == NULL) {
         fprintf(stderr, "(ERROR) form_style: insufficient memory to alloc formStyle_st");
@@ -38,8 +39,15 @@ FormStyle new_form_style(char *borderColor, char *fillColor, char *fontFamily, c
     style->borderColor = alloc_str(borderColor); 
     style->fillColor = alloc_str(fillColor); 
     style->fontFamily = alloc_str(fontFamily); 
-    style->textAnchor = alloc_str(textAnchor);
     style->fontWeight = alloc_str(fontWeight);
+    if (textAnchor != NULL && strcmp(textAnchor, "m") == 0) {
+        style->textAnchor = alloc_str("middle");
+    } else if (textAnchor != NULL && strcmp(textAnchor, "f") == 0) {
+        style->textAnchor = alloc_str("end");
+    } else {
+        style->textAnchor = alloc_str("start");
+    }
+    style->fontSize = alloc_str(fontSize);
 
     return style; 
 }
@@ -79,6 +87,13 @@ char* get_form_style_text_anchor(FormStyle style) {
     return style_st->textAnchor; 
 }
 
+char* get_form_style_font_size(FormStyle style) {
+    FormStyle_st *style_st = (FormStyle_st *) style;
+    if (style_st == NULL) return "12px";
+
+    return style_st->fontSize; 
+}
+
 void free_form_style(FormStyle style) {
     FormStyle_st *style_st = (FormStyle_st *) style;
     if (style_st == NULL) return;
@@ -88,5 +103,6 @@ void free_form_style(FormStyle style) {
     free(style_st->fontFamily);
     free(style_st->fontWeight);
     free(style_st->textAnchor);
+    free(style_st->fontSize);
     free(style_st);
 }

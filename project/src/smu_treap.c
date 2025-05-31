@@ -248,11 +248,12 @@ Node insertSmuT(SmuTreap t, double x, double y, Info form, DescritorTipoInfo for
 
     tree->root = insertSmuT_aux((Node) tree->root, new_node); 
     
-    print_tree(tree->root);
+    // print_tree(tree->root);
     return tree->root; 
 } 
 
 Info getBoundingBoxSmuT(SmuTreap t, Node n, double *x, double *y, double *w, double *h) {
+    (void)t;
     assert(n);
 
     Node_st *node = (Node_st *) n; 

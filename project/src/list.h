@@ -27,6 +27,14 @@ List new_list();
 ListNode list_insert(List list, ListValue value);
 
 /* 
+ * Insert a new value at the end of a given list
+ * @param list the list to insert the value
+ * @param value the value to be inserted
+ * @return ListNode the newly created node
+ */
+ListNode list_insert_end(List list, ListValue value);
+
+/* 
  * Remove the last value of a list
  * The user is responsible to free the ListValue
  * @param list the list to remove the value

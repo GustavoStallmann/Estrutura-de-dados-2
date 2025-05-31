@@ -1,12 +1,12 @@
+#include <string.h>
+#include <stdio.h>
 #include <assert.h>
 #include "form.h" 
 #include "file_svg.h"
 #include "form_circle.h"
 #include "form_line.h"
 #include "form_rect.h"
-#include "form_style.h"
 #include "form_text.h"
-#include <stdio.h>
 
 static void svg_export_circle(FILE *svg_file, Circle circle, FormStyle style) {
     double x, y, r; 
@@ -23,7 +23,7 @@ static void svg_export_rectangle(FILE *svg_file, Rect rect, FormStyle style) {
     get_rect_positions(rect, &x, &y, &w, &h); 
 
     fprintf(svg_file, 
-        "<rect width='%lf' height='%lf' x='%lf' y='%lf' rx='7' ry='7' style='fill: %s; stroke-width: 2; stroke:%s' />\n",
+        "<rect width='%lf' height='%lf' x='%lf' y='%lf' style='fill: %s; stroke-width: 2; stroke:%s' />\n",
         w, h, x, y, get_form_style_fill_color(style), get_form_style_border_color(style)
     ); 
 }
@@ -31,11 +31,20 @@ static void svg_export_rectangle(FILE *svg_file, Rect rect, FormStyle style) {
 static void svg_export_text(FILE *svg_file, Text text, FormStyle style) {
     double x, y; 
     get_text_positions(text, &x, &y); 
+    char *font_weight = get_form_style_font_weight(style);
+
+    if (font_weight != NULL && strcmp(font_weight, "b") == 0) {
+        font_weight = "bold"; 
+    } else if (font_weight != NULL && strcmp(font_weight, "i") == 0) {
+        font_weight = "italic"; 
+    } else {
+        font_weight = "normal"; 
+    }
 
     fprintf(svg_file, 
-        "<text x='%lf' y='%lf' fill='black' style='font-family: %s; font-weight: %s'; fill: '%s'; stroke-width:2; stroke:%s>%s</text>\n",
-        x, y, get_form_style_font_family(style), get_form_style_font_weight(style), 
-        get_form_style_fill_color(style), get_form_style_border_color(style), get_text_string(text)
+        "<text x='%lf' y='%lf' fill='%s' stroke='%s' stroke-width='1' text-anchor='%s' font-weight='%s' font-size='%s'>%s</text>\n",
+        x, y, get_form_style_fill_color(style), get_form_style_border_color(style), get_form_style_text_anchor(style), 
+        font_weight, get_form_style_font_size(style), get_text_string(text)
     ); 
 }
 
@@ -108,15 +117,16 @@ void svg_export_sub_bounding_box(FILE *svg_file, SmuTreap treap, Node node) {
     double x, y, w, h;
     getBoundingBoxSmuT(treap, node, &x, &y, &w, &h);
     
-    // Export sub-bounding box as a dashed rectangle with no fill and blue stroke
     fprintf(svg_file, 
         "<rect width='%lf' height='%lf' x='%lf' y='%lf' style='fill: none; stroke: blue; stroke-width: 2; stroke-dasharray: 10,5; opacity: 0.5' />\n",
         w, h, x, y
     );
 }
 
-// Helper function for tree traversal to export sub-bounding boxes
 static void export_sub_bb_visitor(SmuTreap t, Node n, Info i, double x, double y, void *aux) {
+    (void)x;
+    (void)y;
+    (void)i;
     FILE *svg_file = (FILE *)aux;
     svg_export_sub_bounding_box(svg_file, t, n);
 }

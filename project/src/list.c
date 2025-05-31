@@ -53,6 +53,29 @@ ListNode list_insert(List lst, ListValue value) {
     return (ListNode) node;
 }
 
+ListNode list_insert_end(List lst, ListValue value) {
+    assert(lst); 
+
+    List_st *list = (List_st *) lst; 
+    if (list == NULL) return NULL; 
+
+    ListNode new_node_ptr = new_node(value, NULL);
+    
+    if (list->head == NULL) {
+        list->head = new_node_ptr;
+    } else {
+        ListNode_st *current = (ListNode_st *) list->head;
+        while (current->next != NULL) {
+            current = (ListNode_st *) current->next;
+        }
+        current->next = new_node_ptr;
+    }
+    
+    list->size++;
+    
+    return new_node_ptr;
+}
+
 ListValue list_remove(List lst) {
     assert(lst); 
 

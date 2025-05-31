@@ -65,10 +65,16 @@ static int get_total_mandatory_args(ArgManager_st *arg_manager) {
 static bool assign_arg_value(Arg_st *arg, char *value) {
     switch (arg->argType) {
         case DIR: 
+            if (arg->value.dir != NULL) {
+                dir_free(arg->value.dir);
+            }
             arg->value.dir = new_dir(value); 
             if (arg->value.dir == NULL) return false; 
             break; 
         case STR: 
+            if (arg->value.str != NULL) {
+                free(arg->value.str);
+            }
             arg->value.str = alloc_str(value);
             if (arg->value.str == NULL) return false; 
             break; 

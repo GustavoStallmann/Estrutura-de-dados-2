@@ -70,7 +70,7 @@ void free_form_info_wrapper_only(FormInfo formInfo) {
     free(formInfo);
 }
 
-static Info process_circle(char *line_buffer) {
+static FormInfo process_circle(char *line_buffer) {
     char cmd[10];
     int id = 0; 
     double x = 0.0, y = 0.0, r = 0.0;
@@ -80,7 +80,7 @@ static Info process_circle(char *line_buffer) {
         fprintf(stderr, "(ERROR) form: couldn't parse circle parameters from line: %s", line_buffer);
         return NULL;
     }
-    FormStyle style = new_form_style(borderColor, fillColor, NULL, NULL, NULL); 
+    FormStyle style = new_form_style(borderColor, fillColor, NULL, NULL, NULL, NULL); 
     Circle circle = new_circle(id, x, y, r, style);
     if (circle == NULL) {
         fprintf(stderr, "(ERROR) form: couldn't create circle with id %d", id);
@@ -90,7 +90,7 @@ static Info process_circle(char *line_buffer) {
     return new_form_info(CIRCLE, circle); 
 }
 
-static Info process_rect(char * line_buffer) {
+static FormInfo process_rect(char * line_buffer) {
     char cmd[10];
     int id = 0; 
     double x = 0.0, y = 0.0, w = 0.0, h = 0.0;
@@ -100,7 +100,7 @@ static Info process_rect(char * line_buffer) {
         fprintf(stderr, "(ERROR) form: couldn't parse rect parameters from line: %s", line_buffer);
         return NULL;
     }
-    FormStyle style = new_form_style(borderColor, fillColor, NULL, NULL, NULL); 
+    FormStyle style = new_form_style(borderColor, fillColor, NULL, NULL, NULL, NULL); 
     Rect rect = new_rect(id, x, y, w, h, style);
     if (rect == NULL) {
         fprintf(stderr, "(ERROR) form: couldn't create rect with id %d", id);
@@ -110,18 +110,22 @@ static Info process_rect(char * line_buffer) {
     return new_form_info(RECT, rect); 
 }
 
-static Info process_text(char *line_buffer) {
+static FormInfo process_text(char *line_buffer, FormStyle *actual_font_style) {
     char cmd[10];
     int id = 0; 
     double x = 0.0, y = 0.0; 
     char text[ARG_SIZE] = {0}, fillColor[ARG_SIZE] = {0}, anchor[ARG_SIZE] = {0}, borderColor[ARG_SIZE] = {0}; 
-    int parsed = sscanf(line_buffer, "%s %d %lf %lf %s %s %s %s", cmd, &id, &x, &y, borderColor, fillColor, anchor, text);
+    int parsed = sscanf(line_buffer, "%s %d %lf %lf %s %s %s \"%[^\"]\"", cmd, &id, &x, &y, borderColor, fillColor, anchor, text);
     if (parsed != 8) {
         fprintf(stderr, "(ERROR) form: couldn't parse text parameters from line: %s", line_buffer);
         return NULL;
     }
 
-    FormStyle style = new_form_style(borderColor, fillColor, NULL, NULL, anchor); 
+    FormStyle style = new_form_style(borderColor, fillColor, 
+        get_form_style_font_family(*actual_font_style), get_form_style_font_weight(*actual_font_style), 
+        get_form_style_text_anchor(*actual_font_style), get_form_style_font_size(*actual_font_style)
+    ); 
+
     Text textForm = new_text(id, x, y, text, style);
     if (textForm == NULL) {
         fprintf(stderr, "(ERROR) form: couldn't create text with id %d", id);
@@ -131,7 +135,7 @@ static Info process_text(char *line_buffer) {
     return new_form_info(TEXT, textForm); 
 }
 
-static Info process_line(char *line_buffer) {
+static FormInfo process_line(char *line_buffer) {
     char cmd[10];
     int id = 0; 
     double x = 0.0, y = 0.0, x2 = 0.0, y2 = 0.0;
@@ -141,7 +145,7 @@ static Info process_line(char *line_buffer) {
         fprintf(stderr, "(ERROR) form: couldn't parse line parameters from line: %s", line_buffer);
         return NULL;
     }
-    FormStyle style = new_form_style(borderColor, NULL, NULL, NULL, NULL); 
+    FormStyle style = new_form_style(borderColor, NULL, NULL, NULL, NULL, NULL); 
     Line line = new_line(id, x, y, x2, y2, style);
     if (line == NULL) {
         fprintf(stderr, "(ERROR) form: couldn't create line with id %d", id);
@@ -151,14 +155,36 @@ static Info process_line(char *line_buffer) {
     return new_form_info(LINE, line); 
 }
 
-FormInfo process_form(char *formType, char *line_buffer) {
+static FormStyle process_ts(char *line_buffer) {
+    char cmd[10];
+    char font_family[ARG_SIZE] = {0}, font_weight[ARG_SIZE] = {0}, font_size[ARG_SIZE] = {0};
+    int parsed = sscanf(line_buffer, "%s %s %s %s", cmd, font_family, font_weight, font_size);
+    if (parsed != 4) {
+        fprintf(stderr, "(ERROR) form: couldn't parse ts parameters from line: %s", line_buffer);
+        return NULL;
+    }
+
+    FormStyle ts = new_form_style("#ffffff", "#ffffff", font_family, font_weight, "start", font_size);
+    if (ts == NULL) {
+        fprintf(stderr, "(ERROR) form: couldn't create ts style");
+        return NULL; 
+    }
+    return ts; 
+}
+
+FormInfo process_form(char *formType, char *line_buffer, FormStyle *actual_font_style) {
     if (formType == NULL || line_buffer == NULL) {
         fprintf(stderr, "(ERROR) form: the form type or line buffer is NULL");
         return NULL; 
     }
 
-    if (strcmp(formType, "ts") == 0) 
-        return NULL;
+    if (strcmp(formType, "ts") == 0) {
+        if (*actual_font_style != NULL) {
+            free_form_style(*actual_font_style); // Free the previous style before assigning a new one
+        }
+        *actual_font_style = process_ts(line_buffer);
+        return NULL; 
+    }
     else if (strcmp(formType, "r") == 0) 
         return process_rect(line_buffer);
     else if (strcmp(formType, "c") == 0) 
@@ -166,7 +192,7 @@ FormInfo process_form(char *formType, char *line_buffer) {
     else if (strcmp(formType, "l") == 0) 
         return process_line(line_buffer);
     else if (strcmp(formType, "t") == 0) 
-        return process_text(line_buffer);
+        return process_text(line_buffer, actual_font_style);
     else {
         fprintf(stderr, "(ERROR) form: the .geo form type informed is invalid: %s", formType); 
     }

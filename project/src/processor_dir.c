@@ -1,4 +1,3 @@
-#include <stdatomic.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -43,7 +42,7 @@ static bool extract_path(char *full_dir, char *path) {
     
     int last_slash = -1;
     for (int i = full_dir_len - 1; i >= 0; i--) {
-        if (full_dir[i] == '/' || full_dir[i] == '\\') {
+        if (full_dir[i] == '/') {
             last_slash = i;
             break;
         }
@@ -69,7 +68,7 @@ static bool extract_filename(char *full_dir, char *fileName) {
     int last_dot = -1;
     
     for (int i = full_dir_len - 1; i >= 0; i--) {
-        if (last_slash == -1 && (full_dir[i] == '/' || full_dir[i] == '\\')) {
+        if (last_slash == -1 && full_dir[i] == '/') {
             last_slash = i;
         }
         if (last_dot == -1 && full_dir[i] == '.') {
@@ -105,12 +104,12 @@ static bool extract_extension(char *full_dir, char *fileExt) {
     int last_dot = -1;
     
     for (int i = full_dir_len - 1; i >= 0; i--) {
-        if (last_slash == -1 && (full_dir[i] == '/' || full_dir[i] == '\\')) {
-            last_slash = i; //saves last slash index
+        if (last_slash == -1 && full_dir[i] == '/') {
+            last_slash = i;
         }
         if (last_dot == -1 && full_dir[i] == '.') {
             if (last_slash == -1 || i > last_slash) {
-                last_dot = i; //saves last dot index
+                last_dot = i;
                 break; 
             }
         }
@@ -151,6 +150,21 @@ Dir new_dir(char *full_dir) {
     return (Dir) dir; 
 }
 
+Dir dir_combine_path_and_file(char *path, char *file) {
+    assert(path);
+    assert(file);
+    char full_dir[PATH_MAX];
+
+    char path_last_char = path[strlen(path) - 1];
+    if (path_last_char == '/') {
+        snprintf(full_dir, sizeof(full_dir), "%s%s", path, file);
+    } else {
+        snprintf(full_dir, sizeof(full_dir), "%s/%s", path, file);
+    }
+
+    return new_dir(full_dir);    
+}
+
 void get_full_dir(Dir d, char *path) {
     assert(d); 
     assert(path);
@@ -159,7 +173,8 @@ void get_full_dir(Dir d, char *path) {
     int str_size = strlen(dir->path) + strlen(dir->fileName) + strlen(dir->fileExt) + 3;
     char *full_dir = (char *) malloc(sizeof(char) * str_size);
 
-    if (dir->path[strlen(dir->path) - 1] == '/' || dir->path[strlen(dir->path) - 1] == '\\') {
+    char path_last_char = dir->path[strlen(dir->path) - 1];
+    if (path_last_char == '/') {
         snprintf(full_dir, str_size, "%s%s.%s", dir->path, dir->fileName, dir->fileExt);
     } else {
         snprintf(full_dir, str_size, "%s/%s.%s", dir->path, dir->fileName, dir->fileExt);
@@ -167,6 +182,24 @@ void get_full_dir(Dir d, char *path) {
 
     strcpy(path, full_dir);
     free(full_dir);
+}
+
+char* get_dir_file_name(Dir d) {
+    Dir_st *dir = (Dir_st *) d; 
+
+    return dir->fileName; 
+}
+
+char* get_dir_file_extension(Dir d) {
+    Dir_st *dir = (Dir_st *) d; 
+
+    return dir->fileExt; 
+}
+
+char* get_dir_path(Dir d) {
+    Dir_st *dir = (Dir_st *) d; 
+
+    return dir->path; 
 }
 
 char* get_file_extension(Dir d) {

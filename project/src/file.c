@@ -29,7 +29,7 @@ FILE* file_open_writable(Dir d) {
 
     char full_dir[PATH_MAX]; 
     get_full_dir(d, full_dir); 
-
+    
     FILE *file = fopen(full_dir, "w"); 
     assert(file); 
 
