@@ -13,33 +13,24 @@
 ArgManager check_args(int argc, char *argv[]); 
 static void callback_insert_on_smu_treap(void *value, callback_data call_data); 
 static void export_form_svg(SmuTreap t, Node n, Info info, double x, double y, void *aux);
+static void combine_file_names(char *str1, char *str2, char *file_extension, char *result, int size);
 
 /*
 TODOS: 
     - Valor do epsilon? 
     - Processar .qry 
-    - Export .dot
+    - Export de svg com atributos básicos (sem css)
 */
 
 int main(int argc, char *argv[]) {
     ArgManager argm = check_args(argc, argv);
 
-    char *base_input_dir;
+    // Gets dir related args
+    char *base_input_dir, *base_output_dir, *geo_file, *qry_file;
     get_arg_value_by_particle(argm, "-e", &base_input_dir);
-
-    char *base_output_dir;
     get_arg_value_by_particle(argm, "-o", &base_output_dir);
-
-    char *geo_file; 
     get_arg_value_by_particle(argm, "-f", &geo_file);
-
-    Dir geo_dir = dir_combine_path_and_file(base_input_dir, geo_file);
-    List forms_list = geo_process(geo_dir);
-    
-    if (forms_list == NULL) {
-        fprintf(stderr, "ERROR: main couldn't process the geo file\n");
-        exit(EXIT_FAILURE);
-    }
+    get_arg_value_by_particle(argm, "-q", &qry_file);
     
     // Get args for the SMU treap
     int max_priority; 
@@ -48,26 +39,44 @@ int main(int argc, char *argv[]) {
     get_arg_value_by_particle(argm, "-p", &max_priority);
     get_arg_value_by_particle(argm, "-hc", &hit_count);
     get_arg_value_by_particle(argm, "-pr", &promotion_rate);
+
+    // Process the geo file
+    Dir geo_dir = dir_combine_path_and_file(base_input_dir, geo_file);
+    List forms_list = geo_process(geo_dir);
+    if (forms_list == NULL) {
+        fprintf(stderr, "ERROR: main couldn't process the geo file\n");
+        exit(EXIT_FAILURE);
+    }
     
     // Initialize the SMU treap
     SmuTreap smu_treap = newSmuTreap(hit_count, promotion_rate, 0.5, max_priority);
     list_foreach(forms_list, &callback_insert_on_smu_treap, smu_treap);
     list_free(forms_list, &free_form_info_wrapper_only);
-
+    
     // Export the default SVG forms
     Dir svg_dir = dir_combine_path_and_file(base_output_dir, "arq.svg");
     FILE *svg_file = file_open_writable(svg_dir); 
+    dir_free(svg_dir);
     svg_init(svg_file, 1280, 720);
     visitaProfundidadeSmuT(smu_treap, &export_form_svg, svg_file);
     svg_close(svg_file);
     file_close(svg_file);
-    dir_free(svg_dir);
     
+    char dot_file_name[50], dot_full_path[50];
+    combine_file_names(get_dir_file_name(geo_dir), "qry", "dot", dot_file_name, sizeof(dot_file_name));
+    Dir dot_dir = dir_combine_path_and_file(base_output_dir, dot_file_name);
+    get_full_dir(dot_dir, dot_full_path);
+    printDotSmuTreap(smu_treap, dot_full_path);
+    dir_free(dot_dir);
+    
+    dir_free(geo_dir);
     killSmuTreap(smu_treap); 
     free_arg_manager(argm);
-    dir_free(geo_dir);
-    
     return 0;
+}
+
+static void combine_file_names(char *str1, char *str2, char *file_extension, char *result, int size) {
+    snprintf(result, size, "%s-%s.%s", str1, str2, file_extension);
 }
 
 ArgManager check_args(int argc, char *argv[]) {
@@ -84,7 +93,7 @@ ArgManager check_args(int argc, char *argv[]) {
     if (!status) {
         free_arg_manager(argm);
         exit(EXIT_FAILURE);
-    };
+    }
 
     return argm; 
 }

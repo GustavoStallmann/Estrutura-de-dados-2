@@ -1,3 +1,4 @@
+#include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -18,7 +19,7 @@ typedef struct {
 
 typedef struct nd {
     double x, y; 
-    double priority; 
+    int priority; 
     DescritorTipoInfo formType; 
     Info form; 
     BoundingBox form_bb; 
@@ -36,7 +37,7 @@ static void print_tree_aux(Node nd, int depth, char* prefix, int is_last) {
     
     // Print current node with tree structure
     printf("%s%s", prefix, is_last ? "└── " : "├── ");
-    printf("Node[%p]: form=%d, prio=%.2f, pos=(%.2f,%.2f)\n", 
+    printf("Node[%p]: form=%d, prio=%d, pos=(%.2f,%.2f)\n", 
            (void*)node, node->formType, node->priority, node->x, node->y);
     
     // Print bounding box info with indentation
@@ -332,9 +333,74 @@ void killSmuTreap(SmuTreap t) {
     assert(t); 
     SmuTreap_st *tree = (SmuTreap_st *) t;
     
-    visitaProfundidadeSmuT(t, &killSmuTreap_aux, NULL); //kill the forms
-    killSmuTreap_nodes_aux(tree->root); //kill nodes
-    free(t); //kill treap
+    visitaProfundidadeSmuT(t, &killSmuTreap_aux, NULL);
+    killSmuTreap_nodes_aux(tree->root); 
+    free(t);
+}
+
+static void get_node_type(DescritorTipoInfo formType, char *str, char *color) {
+    switch (formType) {
+        case CIRCLE:
+            strcpy(str, "circle");
+            strcpy(color, "blue");
+            break;
+        case RECT:
+            strcpy(str, "rectangle");
+            strcpy(color, "green");
+            break;
+        case TEXT:
+            strcpy(str, "text");
+            strcpy(color, "orange");
+            break;
+        case LINE:
+            strcpy(str, "line");
+            strcpy(color, "purple");
+            break;
+        default:
+            strcpy(str, "unknown");
+            strcpy(color, "black");
+    }
+}
+
+static void printDotSmuTreap_aux(Node_st *node, FILE *file) {
+    if (node == NULL) return;
+
+    char color[20], str[20];
+    get_node_type(node->formType, str, color);
+
+    fprintf(file, "\t\"%p\" [label=\"%s\np: %d\nX: %d\\nY: %d\", color=black, fontcolor=white, style=filled, fillcolor=%s];\n", node, str, node->priority, (int) node->x, (int) node->y, color);
+
+    if (node->left != NULL) {
+        fprintf(file, "\t\"%p\" -- \"%p\";\n", node, node->left);
+        printDotSmuTreap_aux(node->left, file);
+    }
+
+    if (node->right != NULL) {
+        fprintf(file, "\t\"%p\" -- \"%p\";\n", node, node->right);
+        printDotSmuTreap_aux(node->right, file);
+    }
+}
+
+bool printDotSmuTreap(SmuTreap t, char *fn) {
+    assert(t); 
+    assert(fn); 
+
+    SmuTreap_st *tree = (SmuTreap_st *) t;
+
+    FILE *file = fopen(fn, "w");
+    if (file == NULL) {
+        fprintf(stderr, "(ERROR) smu_treap: could not open file %s for writing\n", fn);
+        return false; 
+    }
+
+    fprintf(file, "graph G {\n");
+    fprintf(file, "\trankdir=TB;\n"); 
+    fprintf(file, "\tnode [shape=circle];\n");
+
+    printDotSmuTreap_aux((Node_st *) tree->root, file);
+    fprintf(file, "}\n");
+    fclose(file);
+    return true; 
 }
 
 // static Node fixHeapProperty_aux(Node nd) {

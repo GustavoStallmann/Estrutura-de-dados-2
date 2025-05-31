@@ -34,7 +34,7 @@ test1:
 	./program -o "./output" -e "./input" -f "00-vaso-simples.geo"
 
 test2:
-	./program -o "./output" -e "./input" -f "02-band-suecia.geo"
+	./program -o "./output" -e "./input" -f "01-band-suecia.geo"
 
 debug:
 	valgrind --leak-check=full --track-origins=yes ./program -o "./output" -e "./input" -f "01-band-suecia.geo"
