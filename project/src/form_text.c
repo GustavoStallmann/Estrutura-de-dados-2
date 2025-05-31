@@ -75,7 +75,7 @@ char* get_text_string(Text t) {
     assert(t); 
 
     Text_st *text = (Text_st *) t; 
-    if (text == NULL) return NULL; 
+    if (text == NULL || text->str == NULL) return ""; 
 
     return text->str; 
 }

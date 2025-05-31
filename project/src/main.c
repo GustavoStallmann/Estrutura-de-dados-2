@@ -24,51 +24,42 @@ TODOS:
 int main(int argc, char *argv[]) {
     ArgManager argm = check_args(argc, argv);
 
-    int max_priority; 
-    get_arg_value_by_particle(argm, "-p", &max_priority);
+    const char *base_input_dir;
+    get_arg_value_by_particle(argm, "-e", &base_input_dir);
 
-    Dir geo_dir = new_dir("input/00-vaso-simples.geo");
+    const char *geo_file; 
+    get_arg_value_by_particle(argm, "-q", &geo_file);
+
+    Dir geo_dir = new_dir(strcat(base_input_dir, geo_file));
     List forms_list = geo_process(geo_dir);
     if (forms_list == NULL) {
         fprintf(stderr, "ERROR: main couldn't process the geo file\n");
         exit(EXIT_FAILURE);
     }
-
+    
     Dir svg_dir = new_dir("output/test.svg");
     FILE *svg_file = file_open_writable(svg_dir); 
     svg_init(svg_file, 800, 600);
 
-    SmuTreap smu_treap = newSmuTreap(2, 1.1, 0.5, max_priority);
+    int max_priority; 
+    int hit_count; 
+    int promotion_rate; 
+    get_arg_value_by_particle(argm, "-p", &max_priority);
+    get_arg_value_by_particle(argm, "-hc", &hit_count);
+    get_arg_value_by_particle(argm, "-pr", &promotion_rate);
+
+    SmuTreap smu_treap = newSmuTreap(hit_count, promotion_rate, 0.5, max_priority);
     list_foreach(forms_list, &callback_insert_on_smu_treap, smu_treap);
     visitaProfundidadeSmuT(smu_treap, &export_form_svg, svg_file);
-
-    // // IF ARGS NOT INFORMED SEG FAULTS
-    // // Dir input_dir; 
-    // // get_arg_value_by_particle(argm, "-e", &input_dir);
-    // // printf("dir: %s", get_full_dir(input_dir)); 
     
-    // for (int i = 0; i < 10; i++) {
-    //     double r = 10; 
-    //     double formc_x = i * 50 + r, formc_y = i * 50 + r; 
-    //     FormStyle style = new_form_style("#696969", "#FF0000", NULL, NULL); 
-    //     Circle formC = new_circle(i, formc_x, formc_y, r, style); 
-    //     insertSmuT(smu_treap, formc_x, formc_y, formC, CIRCLE, &get_form_bounding_box);
-    //     svg_export_form(svg_file, formC, CIRCLE); 
-    // }
-    
-    // // double formr_x = 0, formr_y = 0; 
-    // // FormStyle rect_style = new_form_style("#0000FF", "#00FF00", NULL, NULL);
-    // // Rect formR = new_rect(11, formr_x, formr_y, 120, 120, rect_style);
-    // // insertSmuT(smu_treap, formr_x, formr_y, formR, RECT, &get_form_bounding_box); 
-    // // svg_export_form(svg_file, formR, RECT);
-    
-    // // Export all sub-bounding boxes from the SMU Treap
-    // svg_export_all_sub_bounding_boxes(svg_file, smu_treap);
+    list_free(forms_list, &free_form_info_wrapper_only);
     
     svg_close(svg_file);
     file_close(svg_file);
-    
+    killSmuTreap(smu_treap); 
     free_arg_manager(argm);
+    dir_free(geo_dir);
+    dir_free(svg_dir);
     
     return 0;
 }

@@ -239,4 +239,5 @@ void free_arg_manager(ArgManager argm) {
     if (arg_manager == NULL) return; 
     
     list_free(arg_manager->list, &free_arg); 
+    free(arg_manager);
 }

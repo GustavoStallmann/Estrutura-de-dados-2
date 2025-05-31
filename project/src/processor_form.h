@@ -9,5 +9,6 @@ Info process_form(char *formType, char *line_buffer);
 Info get_form_info(FormInfo formInfo);
 DescritorTipoInfo get_form_type(FormInfo formInfo);
 void free_form_info(FormInfo formInfo);
+void free_form_info_wrapper_only(FormInfo formInfo);
 
 #endif

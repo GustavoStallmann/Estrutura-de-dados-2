@@ -4,6 +4,7 @@
 #include <time.h>
 
 #include "smu_treap.h"
+#include "form.h"
 
 typedef struct {
     struct Node *root;
@@ -305,6 +306,34 @@ Info getInfoSmuT(SmuTreap t, Node n) {
 
     Node_st *node = (Node_st *) n; 
     return node->form; 
+}
+
+static void killSmuTreap_aux(SmuTreap t, Node n, Info i, double x, double y, void *aux) {
+    (void)x; // unused parameter
+    (void)y; // unused parameter
+    (void)aux; // unused parameter
+    
+    DescritorTipoInfo formType = getTypeInfoSmuT(t, n);
+    free_form(formType, i);
+}
+
+static void killSmuTreap_nodes_aux(Node nd) {
+    if (nd == NULL) return;
+    
+    Node_st *node = (Node_st *) nd;
+    
+    killSmuTreap_nodes_aux(node->left);
+    killSmuTreap_nodes_aux(node->right);
+    free(node);
+}
+
+void killSmuTreap(SmuTreap t) {
+    assert(t); 
+    SmuTreap_st *tree = (SmuTreap_st *) t;
+    
+    visitaProfundidadeSmuT(t, &killSmuTreap_aux, NULL); //kill the forms
+    killSmuTreap_nodes_aux(tree->root); //kill nodes
+    free(t); //kill treap
 }
 
 // static Node fixHeapProperty_aux(Node nd) {

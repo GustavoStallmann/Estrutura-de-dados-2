@@ -56,14 +56,30 @@ void free_form_info(FormInfo formInfo) {
         return; 
     }
 
+    FormInfo_st *info = (FormInfo_st *) formInfo;
+    free_form(info->tp, info->form);
+    free(formInfo);
+}
+
+void free_form_info_wrapper_only(FormInfo formInfo) {
+    if (formInfo == NULL) {
+        fprintf(stderr, "(ERROR) form: the form info is NULL");
+        return; 
+    }
+
     free(formInfo);
 }
 
 static Info process_circle(char *line_buffer) {
-    int id; 
-    double x, y, r;
-    char fillColor[ARG_SIZE], borderColor[ARG_SIZE]; 
-    sscanf(line_buffer, "%d %lf %lf %lf %s %s", &id, &x, &y, &r, borderColor, fillColor);
+    char cmd[10];
+    int id = 0; 
+    double x = 0.0, y = 0.0, r = 0.0;
+    char fillColor[ARG_SIZE] = {0}, borderColor[ARG_SIZE] = {0}; 
+    int parsed = sscanf(line_buffer, "%s %d %lf %lf %lf %s %s", cmd, &id, &x, &y, &r, borderColor, fillColor);
+    if (parsed != 7) {
+        fprintf(stderr, "(ERROR) form: couldn't parse circle parameters from line: %s", line_buffer);
+        return NULL;
+    }
     FormStyle style = new_form_style(borderColor, fillColor, NULL, NULL, NULL); 
     Circle circle = new_circle(id, x, y, r, style);
     if (circle == NULL) {
@@ -75,10 +91,15 @@ static Info process_circle(char *line_buffer) {
 }
 
 static Info process_rect(char * line_buffer) {
-    int id; 
-    double x, y, w, h;
-    char fillColor[ARG_SIZE], borderColor[ARG_SIZE]; 
-    sscanf(line_buffer, "%d %lf %lf %lf %lf %s %s", &id, &x, &y, &w, &h, borderColor, fillColor);
+    char cmd[10];
+    int id = 0; 
+    double x = 0.0, y = 0.0, w = 0.0, h = 0.0;
+    char fillColor[ARG_SIZE] = {0}, borderColor[ARG_SIZE] = {0}; 
+    int parsed = sscanf(line_buffer, "%s %d %lf %lf %lf %lf %s %s", cmd, &id, &x, &y, &w, &h, borderColor, fillColor);
+    if (parsed != 8) {
+        fprintf(stderr, "(ERROR) form: couldn't parse rect parameters from line: %s", line_buffer);
+        return NULL;
+    }
     FormStyle style = new_form_style(borderColor, fillColor, NULL, NULL, NULL); 
     Rect rect = new_rect(id, x, y, w, h, style);
     if (rect == NULL) {
@@ -90,10 +111,15 @@ static Info process_rect(char * line_buffer) {
 }
 
 static Info process_text(char *line_buffer) {
-    int id; 
-    double x, y; 
-    char text[ARG_SIZE], fillColor[ARG_SIZE], anchor[ARG_SIZE], borderColor[ARG_SIZE]; 
-    sscanf(line_buffer, "%d %lf %lf %s %s %c %s", &id, &x, &y, borderColor, fillColor, anchor, text);
+    char cmd[10];
+    int id = 0; 
+    double x = 0.0, y = 0.0; 
+    char text[ARG_SIZE] = {0}, fillColor[ARG_SIZE] = {0}, anchor[ARG_SIZE] = {0}, borderColor[ARG_SIZE] = {0}; 
+    int parsed = sscanf(line_buffer, "%s %d %lf %lf %s %s %s %s", cmd, &id, &x, &y, borderColor, fillColor, anchor, text);
+    if (parsed != 8) {
+        fprintf(stderr, "(ERROR) form: couldn't parse text parameters from line: %s", line_buffer);
+        return NULL;
+    }
 
     FormStyle style = new_form_style(borderColor, fillColor, NULL, NULL, anchor); 
     Text textForm = new_text(id, x, y, text, style);
@@ -106,10 +132,15 @@ static Info process_text(char *line_buffer) {
 }
 
 static Info process_line(char *line_buffer) {
-    int id; 
-    double x, y, x2, y2;
-    char borderColor[ARG_SIZE]; 
-    sscanf(line_buffer, "%d %lf %lf %lf %lf %s", &id, &x, &y, &x2, &y2, borderColor);
+    char cmd[10];
+    int id = 0; 
+    double x = 0.0, y = 0.0, x2 = 0.0, y2 = 0.0;
+    char borderColor[ARG_SIZE] = {0}; 
+    int parsed = sscanf(line_buffer, "%s %d %lf %lf %lf %lf %s", cmd, &id, &x, &y, &x2, &y2, borderColor);
+    if (parsed != 7) {
+        fprintf(stderr, "(ERROR) form: couldn't parse line parameters from line: %s", line_buffer);
+        return NULL;
+    }
     FormStyle style = new_form_style(borderColor, NULL, NULL, NULL, NULL); 
     Line line = new_line(id, x, y, x2, y2, style);
     if (line == NULL) {

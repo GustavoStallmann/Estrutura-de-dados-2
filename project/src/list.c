@@ -107,7 +107,6 @@ void list_foreach(List lst, callback_fn callFn, callback_data callSt) {
 
 void list_free(List lst, free_list_value free_value) {
     assert(lst); 
-    assert(free_value);
 
     List_st *list = (List_st *) lst; 
     if (list == NULL) return;
@@ -116,7 +115,7 @@ void list_free(List lst, free_list_value free_value) {
     while (current != NULL) {
         ListNode_st *next = (ListNode_st *) current->next;
         
-        if (current->value != NULL) {
+        if (current->value != NULL && free_value != NULL) {
             free_value(current->value);
         }
         

@@ -1,13 +1,13 @@
 <svg width='800.000000' height='600.000000' xmlns='http://www.w3.org/2000/svg'>
-<rect width='0.000000' height='0.000000' x='0.000000' y='0.000000' rx='7' ry='7' style='fill: ; stroke-width: 2; stroke:' />
-<text x='0.000000' y='0.000000' fill='black' style='font-family: (null); font-weight: (null)'; fill: ''; stroke-width:2; stroke:>®>¦</text>
-<circle r='0.000000' cx='0.000000' cy='0.000000' fill='red' style='fill: `; stroke-width: 2; stroke:'/>
-<circle r='0.000000' cx='0.000000' cy='0.000000' fill='red' style='fill: `; stroke-width: 2; stroke:'/>
-<circle r='0.000000' cx='0.000000' cy='0.000000' fill='red' style='fill: `; stroke-width: 2; stroke:'/>
-<rect width='0.000000' height='0.000000' x='0.000000' y='0.000000' rx='7' ry='7' style='fill: `; stroke-width: 2; stroke:' />
-<rect width='0.000000' height='0.000000' x='0.000000' y='0.000000' rx='7' ry='7' style='fill: `; stroke-width: 2; stroke:' />
-<line x1='0.000000' y1='0.000000' x2='0.000000' y2='0.000000' style='stroke: ; stroke-width: 2;'/>
-<line x1='0.000000' y1='0.000000' x2='0.000000' y2='0.000000' style='stroke: ; stroke-width: 2;'/>
-<line x1='0.000000' y1='0.000000' x2='0.000000' y2='0.000000' style='stroke: ; stroke-width: 2;'/>
-<line x1='0.000000' y1='0.000000' x2='0.000000' y2='0.000000' style='stroke: ; stroke-width: 2;'/>
+<rect width='14.000000' height='29.000000' x='48.000000' y='35.000000' rx='7' ry='7' style='fill: #FF00FF; stroke-width: 2; stroke:#800080' />
+<rect width='16.000000' height='16.000000' x='0.000000' y='26.000000' rx='7' ry='7' style='fill: #d45500; stroke-width: 2; stroke:#803300' />
+<circle r='5.000000' cx='35.000000' cy='20.000000' fill='red' style='fill: #FF0000; stroke-width: 2; stroke:#FF00FF'/>
+<rect width='16.000000' height='16.000000' x='3.000000' y='29.000000' rx='7' ry='7' style='fill: #803300; stroke-width: 2; stroke:#d45500' />
+<line x1='39.000000' y1='25.000000' x2='48.000000' y2='38.000000' style='stroke: #008000; stroke-width: 2;'/>
+<text x='79.500000' y='40.000000' fill='black' style='font-family: "Arial" '>teste</text>
+<line x1='75.000000' y1='71.000000' x2='91.000000' y2='67.000000' style='stroke: #c837ab; stroke-width: 2;'/>
+<circle r='5.000000' cx='73.000000' cy='19.000000' fill='red' style='fill: #FF0000; stroke-width: 2; stroke:#FF00FF'/>
+<line x1='54.500000' y1='19.900000' x2='55.000000' y2='37.000000' style='stroke: #008000; stroke-width: 2;'/>
+<circle r='5.000000' cx='54.000000' cy='15.000000' fill='red' style='fill: #FF0000; stroke-width: 2; stroke:#FF00FF'/>
+<line x1='70.500000' y1='23.300000' x2='59.700000' y2='38.300000' style='stroke: #008000; stroke-width: 2;'/>
 </svg>
