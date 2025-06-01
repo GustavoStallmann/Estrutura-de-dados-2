@@ -179,10 +179,15 @@ FormInfo process_form(char *formType, char *line_buffer, FormStyle *actual_font_
     }
 
     if (strcmp(formType, "ts") == 0) {
-        if (*actual_font_style != NULL) {
-            free_form_style(*actual_font_style); // Free the previous style before assigning a new one
+        FormStyle new_style = process_ts(line_buffer);
+        if (new_style != NULL) {
+            if (*actual_font_style != NULL) {
+                free_form_style(*actual_font_style);
+            }
+            *actual_font_style = new_style;
+        } else {
+            fprintf(stderr, "(ERROR) form: failed to process text style from line: %s", line_buffer);
         }
-        *actual_font_style = process_ts(line_buffer);
         return NULL; 
     }
     else if (strcmp(formType, "r") == 0) 
@@ -198,4 +203,29 @@ FormInfo process_form(char *formType, char *line_buffer, FormStyle *actual_font_
     }
 
     return NULL; 
+}
+
+FormInfo clone_form(DescritorTipoInfo formType, Info form, int id) {
+    if (formType == -1 || form == NULL) {
+        fprintf(stderr, "(ERROR) form: clone_form requires a valid form type and info");
+        return NULL; 
+    }
+
+    switch (formType) {
+        case CIRCLE: {
+            double x, y; 
+            get_form_coordinates(formType, form, &x, &y);
+            new_circle(id, x, y, double r, FormStyle style);
+            break;
+        }
+        case RECT:
+            
+        case TEXT:
+            
+        case LINE:
+            
+        default:
+            fprintf(stderr, "(ERROR) form: invalid form type for cloning");
+            return NULL; 
+    }
 }

@@ -6,6 +6,8 @@
 
 #include "smu_treap.h"
 #include "form.h"
+#include "form_state.h"
+#include "list.h"
 
 typedef struct {
     struct Node *root;
@@ -19,7 +21,7 @@ typedef struct {
 
 typedef struct nd {
     double x, y; 
-    int priority; 
+    int priority, hitCount; 
     DescritorTipoInfo formType; 
     Info form; 
     BoundingBox form_bb; 
@@ -27,55 +29,55 @@ typedef struct nd {
     struct nd *left, *right; 
 } Node_st; 
 
-//REMOVE LATER
-static void print_tree_aux(Node nd, int depth, char* prefix, int is_last) {
-    if (nd == NULL) {
-        return;
-    }
+// //REMOVE LATER
+// static void print_tree_aux(Node nd, int depth, char* prefix, int is_last) {
+//     if (nd == NULL) {
+//         return;
+//     }
     
-    Node_st* node = (Node_st *) nd;
+//     Node_st* node = (Node_st *) nd;
     
-    // Print current node with tree structure
-    printf("%s%s", prefix, is_last ? "└── " : "├── ");
-    printf("Node[%p]: form=%d, prio=%d, pos=(%.2f,%.2f)\n", 
-           (void*)node, node->formType, node->priority, node->x, node->y);
+//     // Print current node with tree structure
+//     printf("%s%s", prefix, is_last ? "└── " : "├── ");
+//     printf("Node[%p]: form=%d, prio=%d, pos=(%.2f,%.2f)\n", 
+//            (void*)node, node->formType, node->priority, node->x, node->y);
     
-    // Print bounding box info with indentation
-    printf("%s%s    BB: x=%.2f, y=%.2f, w=%.2f, h=%.2f\n", 
-           prefix, is_last ? "    " : "│   ",
-           node->sub_bb.x, node->sub_bb.y, node->sub_bb.w, node->sub_bb.h);
+//     // Print bounding box info with indentation
+//     printf("%s%s    BB: x=%.2f, y=%.2f, w=%.2f, h=%.2f\n", 
+//            prefix, is_last ? "    " : "│   ",
+//            node->sub_bb.x, node->sub_bb.y, node->sub_bb.w, node->sub_bb.h);
     
-    // Print children info
-    printf("%s%s    Children: L=%s, R=%s\n", 
-           prefix, is_last ? "    " : "│   ",
-           node->left ? "Yes" : "NULL", 
-           node->right ? "Yes" : "NULL");
+//     // Print children info
+//     printf("%s%s    Children: L=%s, R=%s\n", 
+//            prefix, is_last ? "    " : "│   ",
+//            node->left ? "Yes" : "NULL", 
+//            node->right ? "Yes" : "NULL");
     
-    // Prepare prefix for children
-    char new_prefix[256];
-    snprintf(new_prefix, sizeof(new_prefix), "%s%s", prefix, is_last ? "    " : "│   ");
+//     // Prepare prefix for children
+//     char new_prefix[256];
+//     snprintf(new_prefix, sizeof(new_prefix), "%s%s", prefix, is_last ? "    " : "│   ");
     
-    // Print children
-    if (node->left || node->right) {
-        if (node->left) {
-            print_tree_aux(node->left, depth + 1, new_prefix, node->right == NULL);
-        }
-        if (node->right) {
-            print_tree_aux(node->right, depth + 1, new_prefix, 1);
-        }
-    }
-}
+//     // Print children
+//     if (node->left || node->right) {
+//         if (node->left) {
+//             print_tree_aux(node->left, depth + 1, new_prefix, node->right == NULL);
+//         }
+//         if (node->right) {
+//             print_tree_aux(node->right, depth + 1, new_prefix, 1);
+//         }
+//     }
+// }
 
-static void print_tree(Node nd) {
-    if (nd == NULL) {
-        printf("Tree is empty (NULL)\n");
-        return;
-    }
+// static void print_tree(Node nd) {
+//     if (nd == NULL) {
+//         printf("Tree is empty (NULL)\n");
+//         return;
+//     }
     
-    printf("\n=== SMU TREAP STRUCTURE ===\n");
-    print_tree_aux(nd, 0, "", 1);
-    printf("=========================\n\n");
-}
+//     printf("\n=== SMU TREAP STRUCTURE ===\n");
+//     print_tree_aux(nd, 0, "", 1);
+//     printf("=========================\n\n");
+// }
 
 static void alloc_error() { 
     fprintf(stderr, "(ERROR) smu_treap: insufficient memory for smu_treap allocation");
@@ -126,11 +128,41 @@ static Node newSmuTreapNode(Info form, DescritorTipoInfo formType, double x, dou
     new_node->x = x; 
     new_node->y = y; 
     new_node->priority = priority;
+    new_node->hitCount = 0;
 
     return new_node; 
 }
 
-static void joinBoundingBoxes(BoundingBox *first_bb, BoundingBox *second_bb, double *x, double *y, double *w, double *h) {
+static bool bounding_box_intersects(const BoundingBox* bb1, const BoundingBox* bb2) {
+    if (bb1->x >= bb2->x + bb2->w) {
+        return false;
+    }
+    
+    if (bb1->x + bb1->w <= bb2->x) {
+        return false;
+    }
+
+    if (bb1->y >= bb2->y + bb2->h) {
+        return false;
+    }
+
+    if (bb1->y + bb1->h <= bb2->y) {
+        return false;
+    }
+
+    return true;
+}
+
+static bool is_bounding_boxes_contained(BoundingBox *inner_bbm, BoundingBox *outer_bbm) {
+    if (inner_bbm == NULL || outer_bbm == NULL) return false;
+    
+    return (inner_bbm->x >= outer_bbm->x && 
+            inner_bbm->y >= outer_bbm->y &&
+            (inner_bbm->x + inner_bbm->w) <= (outer_bbm->x + outer_bbm->w) &&
+            (inner_bbm->y + inner_bbm->h) <= (outer_bbm->y + outer_bbm->h));
+}
+
+static void join_bounding_boxes(BoundingBox *first_bb, BoundingBox *second_bb, double *x, double *y, double *w, double *h) {
     if (first_bb == NULL || second_bb == NULL) return;
     
     double min_x = first_bb->x < second_bb->x ? first_bb->x : second_bb->x;
@@ -161,17 +193,17 @@ static Node rotate_left(Node nd) {
     // Inicia com a bounding box da forma do próprio nó
     node->sub_bb = node->form_bb;
     if (node->left != NULL)
-        joinBoundingBoxes(&node->sub_bb, &node->left->sub_bb, &node->sub_bb.x, &node->sub_bb.y, &node->sub_bb.w, &node->sub_bb.h);
+        join_bounding_boxes(&node->sub_bb, &node->left->sub_bb, &node->sub_bb.x, &node->sub_bb.y, &node->sub_bb.w, &node->sub_bb.h);
     if (node->right != NULL)
-        joinBoundingBoxes(&node->sub_bb, &node->right->sub_bb, &node->sub_bb.x, &node->sub_bb.y, &node->sub_bb.w, &node->sub_bb.h);
+        join_bounding_boxes(&node->sub_bb, &node->right->sub_bb, &node->sub_bb.x, &node->sub_bb.y, &node->sub_bb.w, &node->sub_bb.h);
 
     // Recalcula a bounding box do nó promovido (agora raiz)
     // Inicia com a bounding box da forma do próprio nó
     right_node->sub_bb = right_node->form_bb;
     if (right_node->left != NULL)
-        joinBoundingBoxes(&right_node->sub_bb, &right_node->left->sub_bb, &right_node->sub_bb.x, &right_node->sub_bb.y, &right_node->sub_bb.w, &right_node->sub_bb.h);
+        join_bounding_boxes(&right_node->sub_bb, &right_node->left->sub_bb, &right_node->sub_bb.x, &right_node->sub_bb.y, &right_node->sub_bb.w, &right_node->sub_bb.h);
     if (right_node->right != NULL)
-        joinBoundingBoxes(&right_node->sub_bb, &right_node->right->sub_bb, &right_node->sub_bb.x, &right_node->sub_bb.y, &right_node->sub_bb.w, &right_node->sub_bb.h);
+        join_bounding_boxes(&right_node->sub_bb, &right_node->right->sub_bb, &right_node->sub_bb.x, &right_node->sub_bb.y, &right_node->sub_bb.w, &right_node->sub_bb.h);
 
     return (Node) right_node;
 }
@@ -191,19 +223,61 @@ static Node rotate_right(Node nd) {
     // Inicia com a bounding box da forma do próprio nó
     node->sub_bb = node->form_bb;
     if (node->left != NULL) 
-        joinBoundingBoxes(&node->sub_bb, &node->left->sub_bb, &node->sub_bb.x, &node->sub_bb.y, &node->sub_bb.w, &node->sub_bb.h);
+        join_bounding_boxes(&node->sub_bb, &node->left->sub_bb, &node->sub_bb.x, &node->sub_bb.y, &node->sub_bb.w, &node->sub_bb.h);
     if (node->right != NULL) 
-        joinBoundingBoxes(&node->sub_bb, &node->right->sub_bb, &node->sub_bb.x, &node->sub_bb.y, &node->sub_bb.w, &node->sub_bb.h);
+        join_bounding_boxes(&node->sub_bb, &node->right->sub_bb, &node->sub_bb.x, &node->sub_bb.y, &node->sub_bb.w, &node->sub_bb.h);
 
     // Recalcula BB do left_node (agora raiz)
     // Inicia com a bounding box da forma do próprio nó
     left_node->sub_bb = left_node->form_bb;
     if (left_node->left != NULL) 
-        joinBoundingBoxes(&left_node->sub_bb, &left_node->left->sub_bb, &left_node->sub_bb.x, &left_node->sub_bb.y, &left_node->sub_bb.w, &left_node->sub_bb.h);
+        join_bounding_boxes(&left_node->sub_bb, &left_node->left->sub_bb, &left_node->sub_bb.x, &left_node->sub_bb.y, &left_node->sub_bb.w, &left_node->sub_bb.h);
     if (left_node->right != NULL) 
-        joinBoundingBoxes(&left_node->sub_bb, &left_node->right->sub_bb, &left_node->sub_bb.x, &left_node->sub_bb.y, &left_node->sub_bb.w, &left_node->sub_bb.h);
+        join_bounding_boxes(&left_node->sub_bb, &left_node->right->sub_bb, &left_node->sub_bb.x, &left_node->sub_bb.y, &left_node->sub_bb.w, &left_node->sub_bb.h);
 
     return (Node) left_node; 
+}
+
+static Node fixHeapProperty_aux(Node nd) {
+    if (nd == NULL) return NULL;
+    
+    Node_st *node = (Node_st *) nd;
+    
+    node->left = fixHeapProperty_aux(node->left);
+    node->right = fixHeapProperty_aux(node->right);
+    
+    bool left_violates = node->left && ((Node_st*)node->left)->priority > node->priority;
+    bool right_violates = node->right && ((Node_st*)node->right)->priority > node->priority;
+
+    if (left_violates && right_violates) {
+        if (((Node_st*)node->left)->priority >= ((Node_st*)node->right)->priority) {
+            return rotate_right(nd);
+        } else {
+            return rotate_left(nd);
+        }
+    } else if (left_violates) {
+        return rotate_right(nd);
+    } else if (right_violates) {
+        return rotate_left(nd);
+    }
+    
+    return nd;
+}
+
+void promoteNodeSmuT(SmuTreap t, Node n, double promotionRate) {
+    assert(t); 
+    assert(n);
+
+    SmuTreap_st *tree = (SmuTreap_st *) t; 
+    Node_st *node = (Node_st *) n; 
+
+    double new_priority = promotionRate * node->priority; 
+    if (new_priority > tree->maxPriority) {
+        new_priority = tree->maxPriority; 
+    }
+
+    node->priority = (int)new_priority; 
+    tree->root = fixHeapProperty_aux(tree->root);
 }
 
 static Node insertSmuT_aux(Node r, Node i) {
@@ -231,10 +305,10 @@ static Node insertSmuT_aux(Node r, Node i) {
     root->sub_bb = root->form_bb;
     
     if (root->left != NULL) {
-        joinBoundingBoxes(&root->sub_bb, &root->left->sub_bb, &root->sub_bb.x, &root->sub_bb.y, &root->sub_bb.w, &root->sub_bb.h);
+        join_bounding_boxes(&root->sub_bb, &root->left->sub_bb, &root->sub_bb.x, &root->sub_bb.y, &root->sub_bb.w, &root->sub_bb.h);
     }
     if (root->right != NULL) {
-        joinBoundingBoxes(&root->sub_bb, &root->right->sub_bb, &root->sub_bb.x, &root->sub_bb.y, &root->sub_bb.w, &root->sub_bb.h);
+        join_bounding_boxes(&root->sub_bb, &root->right->sub_bb, &root->sub_bb.x, &root->sub_bb.y, &root->sub_bb.w, &root->sub_bb.h);
     }
     return (Node) root;
 }
@@ -243,14 +317,13 @@ Node insertSmuT(SmuTreap t, double x, double y, Info form, DescritorTipoInfo for
     assert(t); 
     
     SmuTreap_st *tree = (SmuTreap_st *) t; 
-    Node_st *new_node = (Node_st *) newSmuTreapNode((Node) form, formType, x, y, get_random_priority(0, tree->maxPriority)); 
+    Node_st *new_node = (Node_st *) newSmuTreapNode(form, formType, x, y, get_random_priority(0, tree->maxPriority)); 
     fCalcBb(formType, new_node->form, &new_node->form_bb.x, &new_node->form_bb.y, &new_node->form_bb.w, &new_node->form_bb.h); 
     new_node->sub_bb = new_node->form_bb; 
 
     tree->root = insertSmuT_aux((Node) tree->root, new_node); 
     
-    // print_tree(tree->root);
-    return tree->root; 
+    return new_node; 
 } 
 
 Info getBoundingBoxSmuT(SmuTreap t, Node n, double *x, double *y, double *w, double *h) {
@@ -262,24 +335,13 @@ Info getBoundingBoxSmuT(SmuTreap t, Node n, double *x, double *y, double *w, dou
     *y = node->sub_bb.y;
     *w = node->sub_bb.w;
     *h = node->sub_bb.h;
-
+    
     return node->form;
 }
 
-
-// static void fixBoundingBoxSmuT(Node_st *node, Node_st *parent, FCalculaBoundingBox fCalcBb) {
-//     if (node == NULL) return; 
-
-//     fixBoundingBoxSmuT(node->left, node, fCalcBb); 
-//     fixBoundingBoxSmuT(node->right, node, fCalcBb);
-
-//     fCalcBb(node->formType, node->form, &node->bb.x, &node->bb.y, &node->bb.w, &node->bb.h);
-
-//     // getBoundingBoxSmuT(NULL, (Node) node, &node->bb.x, &node->bb.y, &node->bb.w, &node->bb.h); 
-// }
 static void visitaProfundidadeSmuT_aux(SmuTreap t, Node nd, FvisitaNo f, void *aux) {
     if (nd == NULL) return; 
-
+        
     Node_st *node = (Node_st *) nd; 
     
     f(t, nd, node->form, node->x, node->y, aux);
@@ -289,15 +351,66 @@ static void visitaProfundidadeSmuT_aux(SmuTreap t, Node nd, FvisitaNo f, void *a
 
 void visitaProfundidadeSmuT(SmuTreap t, FvisitaNo f, void *aux) {
     assert(t); 
-
+    
     SmuTreap_st *tree = (SmuTreap_st *) t; 
     visitaProfundidadeSmuT_aux(t, tree->root, f, aux);
+}
+
+static void promote_node_by_hit_count(SmuTreap t, Node_st *root) {
+    assert(root);
+    assert(t);
+
+    SmuTreap_st *tree = (SmuTreap_st *) t;
+
+    if (root->hitCount > tree->hitCount) {
+        promoteNodeSmuT(t, (Node) root, tree->promotionRate);
+    }
+
+    root->hitCount++;
+}
+
+static void getNodesDentroRegiaoSmuT_aux(SmuTreap t, Node_st *root, BoundingBox interest_bb, List L, FdentroDeRegiao is_form_inside_region, double x1, double y1, double x2, double y2) {
+    if (root == NULL) return;
+    if (bounding_box_intersects(&root->sub_bb, &interest_bb) == false) return; // node subtree does not intersect the interest region
+    
+    if (is_form_inside_region(NULL, root, root->form, x1, y1, x2, y2)) {
+        list_insert(L, root); // form is entirely inside the interest region
+        promote_node_by_hit_count(t, root);
+        
+        FormState state = get_form_state(root->formType, root->form);
+        set_form_state_selected(state, true); 
+    }
+
+    getNodesDentroRegiaoSmuT_aux(t, root->left, interest_bb, L, is_form_inside_region, x1, y1, x2, y2);
+    getNodesDentroRegiaoSmuT_aux(t, root->right, interest_bb, L, is_form_inside_region, x1, y1, x2, y2);
+}
+
+bool getInfosDentroRegiaoSmuT(SmuTreap t, double x1, double y1, double x2, double y2, FdentroDeRegiao f, List L) {
+    assert(t);
+    SmuTreap_st *tree = (SmuTreap_st *) t;
+
+    // Normalize coordinates to ensure min/max are correct
+    double min_x = (x1 < x2) ? x1 : x2;
+    double max_x = (x1 < x2) ? x2 : x1;
+    double min_y = (y1 < y2) ? y1 : y2;
+    double max_y = (y1 < y2) ? y2 : y1;
+
+    BoundingBox interest_bb = {
+        .x = min_x, 
+        .y = min_y, 
+        .w = max_x - min_x, 
+        .h = max_y - min_y
+    };
+    
+    getNodesDentroRegiaoSmuT_aux(t, (Node_st *) tree->root, interest_bb, L, f, x1, y1, x2, y2);
+
+    return true; 
 }
 
 DescritorTipoInfo getTypeInfoSmuT(SmuTreap t, Node n) {
     (void)t; // ignore arg
     assert(n);
-
+    
     Node_st *node = (Node_st *) n; 
     return node->formType; 
 }
@@ -305,7 +418,7 @@ DescritorTipoInfo getTypeInfoSmuT(SmuTreap t, Node n) {
 Info getInfoSmuT(SmuTreap t, Node n) {
     (void)t; // ignore arg
     assert(n);
-
+    
     Node_st *node = (Node_st *) n; 
     return node->form; 
 }
@@ -323,7 +436,7 @@ static void killSmuTreap_nodes_aux(Node nd) {
     if (nd == NULL) return;
     
     Node_st *node = (Node_st *) nd;
-    
+
     killSmuTreap_nodes_aux(node->left);
     killSmuTreap_nodes_aux(node->right);
     free(node);
@@ -402,41 +515,6 @@ bool printDotSmuTreap(SmuTreap t, char *fn) {
     fclose(file);
     return true; 
 }
-
-// static Node fixHeapProperty_aux(Node nd) {
-//     if (nd == NULL) return NULL;
-    
-//     Node_st *node = (Node_st *) nd;
-    
-//     node->left = fixHeapProperty_aux(node->left);
-//     node->right = fixHeapProperty_aux(node->right);
-    
-//     if (node->left && ((Node_st*)node->left)->priority > node->priority) {
-//         return rotate_right(nd);
-//     }
-    
-//     if (node->right && ((Node_st*)node->right)->priority > node->priority) {
-//         return rotate_left(nd);
-//     }
-    
-//     return nd;
-// }
-
-// void promoteNodeSmuT(SmuTreap t, Node n, double promotionRate) {
-//     assert(t); 
-//     assert(n);
-
-//     SmuTreap_st *tree = (SmuTreap_st *) t; 
-//     Node_st *node = (Node_st *) n; 
-
-//     double new_priority = promotionRate * node->priority; 
-//     if (tree->maxPriority < new_priority) {
-//         new_priority = tree->maxPriority; 
-//     }
-
-//     node->priority = new_priority; 
-//     tree->root = fixHeapProperty_aux(tree->root);     
-// }
 /*
  * Aumenta a prioridade do no' n pelo fator promotionRate.
  */

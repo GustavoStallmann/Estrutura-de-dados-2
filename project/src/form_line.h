@@ -1,6 +1,7 @@
 #ifndef FORM_LINE_H 
 #define FORM_LINE_H
 #include "form_style.h"
+#include "form_state.h"
 
 typedef void *Line;
 
@@ -30,11 +31,25 @@ void get_line_bounding_box(Line l, double *x, double *y, double *w, double *h);
 void get_line_positions(Line l, double *x, double *y, double *x2, double *y2);
 
 /* 
+ * Gets the state of the line
+ * @param l the form to get the state
+ * @return the state of the line
+*/
+FormState get_line_state(Line l);
+
+/* 
  * Gets the style of the line
  * @param l the form to get the style
  * @return the style of the line
 */
 FormStyle get_line_style(Line l); 
+
+/* 
+ * Gets the id of the line
+ * @param l the form to get the id
+ * @return the id of the line
+*/
+int get_line_id(Line l); 
 
 /* 
  * Free memory of the given form

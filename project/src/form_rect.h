@@ -1,6 +1,7 @@
 #ifndef FORM_RECT
 #define FORM_RECT
 #include "form_style.h"
+#include "form_state.h"
 
 typedef void *Rect;
 
@@ -33,6 +34,20 @@ void get_rect_positions(Rect r, double *x, double *y, double *w, double *h);
  * @return the style of the Rect
 */
 FormStyle get_rect_style(Rect r); 
+
+/* 
+ * Gets the state of the Rect
+ * @param r the form to get the state
+ * @return the state of the Rect
+*/
+FormState get_rect_state(Rect r);
+
+/* 
+ * Gets the id of the Rect
+ * @param r the form to get the id
+ * @return the id of the Rect
+*/
+int get_rect_id(Rect r); 
 
 /* 
  * Free memory of the given form

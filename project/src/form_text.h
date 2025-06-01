@@ -2,6 +2,7 @@
 #define FORM_TEXT_H 
 
 #include "form_style.h"
+#include "form_state.h"
 typedef void *Text;
 
 /*
@@ -27,6 +28,20 @@ void get_text_bounding_box(Text t, double *x, double *y, double *w, double *h);
  * @param x, y the available positions to return
 */
 void get_text_positions(Text t, double *x, double *y);
+
+/* 
+ * Gets the state of the text
+ * @param t the form to get the state
+ * @return the state of the text
+*/
+FormState get_text_state(Text t);
+
+/* 
+ * Gets the id of the text
+ * @param t the form to get the id
+ * @return the id of the text
+*/
+int get_text_id(Text t);
 
 /* 
  * Gets the style of the text

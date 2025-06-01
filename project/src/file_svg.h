@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include "smu_treap.h"
+#include "form_selection.h"
 
 /*
  * Initializes a file as an svg
@@ -33,9 +34,12 @@ void svg_export_form(FILE *svg_file, Info f, DescritorTipoInfo form_type);
  * @param svg_file the file reference
  */
  void svg_close(FILE *svg_file);
- 
- //REMOVER
-void svg_export_all_sub_bounding_boxes(FILE *svg_file, SmuTreap treap);
-void svg_export_bounding_box(FILE *svg_file, Info form, DescritorTipoInfo form_type);
+
+/*
+ * Export selection regions to the SVG file as dashed rectangles
+ * @param svg_file the file reference
+ * @param selection_manager the selection manager containing regions to export
+ */
+void svg_export_selection_regions(FILE *svg_file, SelectionManager selection_manager);
 
 #endif

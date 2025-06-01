@@ -2,12 +2,14 @@
 #include <stdlib.h>
 #include <assert.h>
 #include "form_rect.h"
+#include "form_state.h"
 #include "form_style.h"
 
 typedef struct {
     int id; 
     double x, y, w, h; 
     FormStyle style;
+    FormState state; 
 } Rect_st;
 
 Rect new_rect(int id, double x, double y, double w, double h, FormStyle style) {
@@ -23,8 +25,18 @@ Rect new_rect(int id, double x, double y, double w, double h, FormStyle style) {
     rect->w = w; 
     rect->h = h; 
     rect->style = style;
+    rect->state = new_form_state();
 
     return rect; 
+}
+
+int get_rect_id(Rect r) {
+    assert(r); 
+
+    Rect_st *rect = (Rect_st *) r; 
+    if (rect == NULL) return -1; 
+
+    return rect->id; 
 }
 
 void get_rect_bounding_box(Rect r, double *x, double *y, double *w, double *h) {
@@ -46,6 +58,15 @@ FormStyle get_rect_style(Rect r) {
     if (rect == NULL) return NULL; 
 
     return rect->style; 
+}
+
+FormState get_rect_state(Rect r) {
+    assert(r); 
+
+    Rect_st *rect = (Rect_st *) r; 
+    if (rect == NULL) return NULL; 
+
+    return rect->state; 
 }
 
 void get_rect_positions(Rect r, double *x, double *y, double *w, double *h) {
@@ -71,5 +92,6 @@ void free_rect(Rect r) {
     if (rect == NULL) return; 
 
     free_form_style(rect->style);
+    free_form_state(rect->state);
     free(rect);
 }

@@ -4,12 +4,14 @@
 #include <math.h>
 
 #include "form_line.h"
+#include "form_state.h"
 #include "form_style.h"
 
 typedef struct {
     int id; 
     double x, y, x2, y2; 
     FormStyle style;
+    FormState state;
 } Line_st; 
 
 Line new_line(int id, double x, double y, double x2, double y2, FormStyle style) {
@@ -25,6 +27,7 @@ Line new_line(int id, double x, double y, double x2, double y2, FormStyle style)
     line->x2 = x2; 
     line->y2 = y2; 
     line->style = style;
+    line->state = new_form_state();
 
     return line; 
 }
@@ -57,6 +60,15 @@ void get_line_positions(Line l, double *x, double *y, double *x2, double *y2){
         *y2 = line->y2; 
 }
 
+int get_line_id(Line l) {
+    assert(l); 
+
+    Line_st *line = (Line_st *) l; 
+    if (line == NULL) return -1; 
+
+    return line->id; 
+}
+
 FormStyle get_line_style(Line l) {
     assert(l); 
 
@@ -66,6 +78,15 @@ FormStyle get_line_style(Line l) {
     return line->style; 
 }
 
+FormState get_line_state(Line l) {
+    assert(l); 
+
+    Line_st *line = (Line_st *) l; 
+    if (line == NULL) return NULL; 
+
+    return line->state; 
+}
+
 void free_line(Line l) {
     assert(l); 
 
@@ -73,5 +94,6 @@ void free_line(Line l) {
     if (line == NULL) return; 
 
     free_form_style(line->style);
+    free_form_state(line->state);
     free(line);
 }

@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <assert.h>
 #include <string.h>
@@ -7,6 +8,17 @@
 #include "processor_form.h"
 
 #define MAX_LINE_LENGTH 512 
+
+static bool process_command(char *line_buffer, char *command_type) {
+    if (sscanf(line_buffer, "%9s", command_type) == 0) {
+        if (line_buffer[0] != '\n' && line_buffer[0] != '\0') {
+            fprintf(stderr, "ERROR: processor_qry unknown line type\n"); 
+        } 
+        return false;
+    }; 
+
+    return true; 
+}
 
 static List geo_execute(FILE *geo_file) {
     assert(geo_file);
@@ -23,12 +35,7 @@ static List geo_execute(FILE *geo_file) {
     FormStyle actual_font_style = new_form_style("#ffffff", "#ffffff", "Arial", "normal", "start", "12px");
 
     while (fgets(line_buffer, sizeof(line_buffer), geo_file) != NULL) {
-        if (sscanf(line_buffer, "%9s", command_type) == 0) {
-            if (line_buffer[0] != '\n' && line_buffer[0] != '\0') { // lines's empty
-                fprintf(stderr, "ERROR: processor_geo unknown line type\n"); 
-            }
-            continue; 
-        }
+        if (process_command(line_buffer, command_type) == false) continue;
 
         FormInfo form = process_form(command_type, line_buffer, &actual_font_style); 
         if (form == NULL && strcmp(command_type, "ts") != 0) {

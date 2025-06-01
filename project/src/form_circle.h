@@ -1,6 +1,7 @@
 #ifndef FORM_CIRCLE
 #define FORM_CIRCLE
 #include "form_style.h"
+#include "form_state.h"
 typedef void *Circle;
 
 /*
@@ -35,7 +36,22 @@ void get_circle_positions(Circle c, double *x, double *y, double *r);
 FormStyle get_circle_style(Circle c);
 
 /* 
+ * Gets the state of the circle
+ * @param c the form to get the state
+ * @return the state of the circle
+ */
+FormState get_circle_state(Circle c);
+
+/* 
+ * Gets the id of the circle
+ * @param c the form to get the id
+ * @return the id of the circle
+ */
+int get_circle_id(Circle c); 
+
+/* 
  * Free memory of the given form
+ * @param c the form to free
  */
 void free_circle(Circle c);
 

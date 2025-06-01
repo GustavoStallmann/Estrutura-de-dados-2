@@ -3,6 +3,7 @@
 #include <assert.h>
 #include <string.h>
 #include "form_text.h"
+#include "form_state.h"
 #include "form_style.h"
 
 typedef struct {
@@ -10,6 +11,7 @@ typedef struct {
     char *str; 
     double x, y;
     FormStyle style;
+    FormState state; 
 } Text_st; 
 
 static char* alloc_str(char *str) {
@@ -28,6 +30,15 @@ static char* alloc_str(char *str) {
     return new_str; 
 }
 
+int get_text_id(Text t) {
+    assert(t); 
+
+    Text_st *text = (Text_st *) t; 
+    if (text == NULL) return -1; 
+
+    return text->id; 
+}
+
 Text new_text(int id, double x, double y, char *str, FormStyle style) {
     Text_st *text = (Text_st *) malloc(sizeof(Text_st)); 
     if (text == NULL) {
@@ -35,13 +46,16 @@ Text new_text(int id, double x, double y, char *str, FormStyle style) {
         return NULL;
     }
 
-    text->str = alloc_str(str); 
     text->id = id; 
     text->x = x; 
     text->y = y; 
     text->style = style;
-
+    text->state = new_form_state();
+    
+    text->str = alloc_str(str); 
     if (text->str == NULL) {
+        free_form_style(text->style);
+        free_form_state(text->state);
         free(text);
         fprintf(stderr, "(ERROR) form_text: insufficient memory to alloc text string");
         return NULL;
@@ -60,6 +74,15 @@ void get_text_bounding_box(Text t, double *x, double *y, double *w, double *h) {
     *y = text->y;
     *w = 0;
     *h = 0; 
+}
+
+FormState get_text_state(Text t) {
+    assert(t); 
+
+    Text_st *text = (Text_st *) t; 
+    if (text == NULL) return NULL; 
+
+    return text->state; 
 }
 
 FormStyle get_text_style(Text t) {
@@ -100,5 +123,6 @@ void free_text(Text t) {
 
     free(text->str);
     free_form_style(text->style);
+    free_form_state(text->state);
     free(text);
 }

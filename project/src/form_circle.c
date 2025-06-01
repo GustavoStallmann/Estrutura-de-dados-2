@@ -3,12 +3,14 @@
 #include <assert.h>
  
 #include "form_circle.h"
+#include "form_state.h"
 #include "form_style.h"
 
 typedef struct {
     int id; 
     double x, y, r; 
     FormStyle style;
+    FormState state;
 } Circle_st; 
 
 Circle new_circle(int id, double x, double y, double r, FormStyle style) {
@@ -19,7 +21,10 @@ Circle new_circle(int id, double x, double y, double r, FormStyle style) {
     }
 
     if (x < 0 || y < 0 || r <= 0) {
-        fprintf(stderr, "(ERROR) form_circle: possibly wrong coordinates (x: %lf, y: %lf, r: %lf)", x, y, r);
+        fprintf(stderr, "(ERROR) form_circle: invalid coordinates (x: %lf, y: %lf, r: %lf)", x, y, r);
+        free_form_style(style);
+        free(circle);
+        return NULL;
     }
 
     circle->id = id; 
@@ -27,8 +32,18 @@ Circle new_circle(int id, double x, double y, double r, FormStyle style) {
     circle->y = y; 
     circle->r = r;
     circle->style = style; 
+    circle->state = new_form_state();
 
     return circle; 
+}
+
+int get_circle_id(Circle c) {
+    assert(c); 
+
+    Circle_st *circle = (Circle_st *) c; 
+    if (circle == NULL) return -1; 
+
+    return circle->id; 
 }
 
 void get_circle_bounding_box(Circle c, double *x, double *y, double *w, double *h) {
@@ -70,6 +85,15 @@ FormStyle get_circle_style(Circle c) {
     return circle->style; 
 }
 
+FormState get_circle_state(Circle c) {
+    assert(c); 
+
+    Circle_st *circle = (Circle_st *) c; 
+    if (circle == NULL) return NULL; 
+
+    return circle->state; 
+}
+
 void free_circle(Circle c) {
     assert(c); 
 
@@ -77,5 +101,6 @@ void free_circle(Circle c) {
     if (circle == NULL) return; 
 
     free_form_style(circle->style);
+    free_form_state(circle->state);
     free(circle);
 }
