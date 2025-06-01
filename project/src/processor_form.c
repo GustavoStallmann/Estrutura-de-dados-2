@@ -205,27 +205,66 @@ FormInfo process_form(char *formType, char *line_buffer, FormStyle *actual_font_
     return NULL; 
 }
 
-FormInfo clone_form(DescritorTipoInfo formType, Info form, int id) {
+FormInfo clone_form(DescritorTipoInfo formType, Info form, int id, double target_x, double target_y) {
     if (formType == -1 || form == NULL) {
         fprintf(stderr, "(ERROR) form: clone_form requires a valid form type and info");
         return NULL; 
     }
 
+    FormStyle style = get_form_style(formType, form);
+    if (style == NULL) {
+        fprintf(stderr, "(ERROR) form: couldn't get style for form with id %d", id);
+        return NULL; 
+    }
+
+    FormStyle new_style = new_form_style(
+        get_form_style_border_color(style), get_form_style_fill_color(style), 
+        get_form_style_font_family(style), get_form_style_font_weight(style), 
+        get_form_style_text_anchor(style), get_form_style_font_size(style)
+    );
+
+    Info new_form = NULL; 
+
     switch (formType) {
         case CIRCLE: {
-            double x, y; 
-            get_form_coordinates(formType, form, &x, &y);
-            new_circle(id, x, y, double r, FormStyle style);
+            double r; 
+            get_form_dimensions(formType, form, &r, NULL);
+            
+            new_form = (Info) new_circle(id, target_x, target_y, r, new_style);
             break;
         }
-        case RECT:
+        case RECT: {
+            double w, h; 
+            get_form_dimensions(formType, form, &w, &h);
             
-        case TEXT:
+            new_form = (Info) new_rect(id, target_x, target_y, w, h, new_style);
+            break;
+        }
+        case TEXT: {
+            char *text = get_text_string((Text) form);
+            if (text == NULL) {
+                fprintf(stderr, "(ERROR) form: couldn't get text content for form with id %d", id);
+                return NULL; 
+            }
             
-        case LINE:
+            new_form = new_text(id, target_x, target_y, text, new_style);
+            break;
+        }  
+        case LINE: {
+            double x1, y1, x2, y2; 
+            get_form_coordinates(formType, form, &x1, &y1);
+            get_form_dimensions(formType, form, &x2, &y2);
             
+            double offset_x = target_x - x1;
+            double offset_y = target_y - y1;
+            
+            new_form = (Info) new_line(id, target_x, target_y, x2 + offset_x, y2 + offset_y, new_style);
+            break;
+        }            
         default:
             fprintf(stderr, "(ERROR) form: invalid form type for cloning");
             return NULL; 
     }
+
+    return new_form_info(formType, new_form); 
 }

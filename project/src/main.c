@@ -99,7 +99,7 @@ static void export_svg_treap(SmuTreap smu_treap, char *base_output_dir, char *fi
     FILE *svg_file = file_open_writable(svg_dir);
     dir_free(svg_dir);
     
-    svg_init(svg_file, 800, 600);
+    svg_init(svg_file, 500, 500);
     visitaProfundidadeSmuT(smu_treap, &export_form_svg, svg_file);
     
     // Exportar as regiões de seleção se fornecidas

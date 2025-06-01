@@ -59,6 +59,8 @@ static void selr(SmuTreap t, char *line_buffer, List *selections_list) {
 struct cln_data {
     int max_id;
     SmuTreap tree;
+    double target_x;
+    double target_y;
 };
 
 static void get_max_info_id(void *value, callback_data call_data) {
@@ -89,10 +91,19 @@ static void cln_helper(void *value, callback_data call_data) {
         fprintf(stderr, "ERROR: processor_qry cln command requires valid form type and info\n");
         return; 
     }
-  
+    
     double x, y;
     get_form_coordinates(form_type, form_info, &x, &y);
-    // insertSmuT(data->tree, x, y, , form_type, &get_form_bounding_box);
+    FormInfo cloned_form_info = clone_form(form_type, form_info, ++data->max_id, data->target_x, data->target_y);
+    if (cloned_form_info == NULL) {
+        fprintf(stderr, "ERROR: processor_qry cln command failed to clone form\n");
+        return;
+    }
+    
+    Info cloned_form = get_form_info(cloned_form_info);
+    insertSmuT(data->tree, data->target_x, data->target_y, cloned_form, form_type, &get_form_bounding_box);
+    
+    free_form_info_wrapper_only(cloned_form_info);
 }
 
 static void cln(SmuTreap t, char *line_buffer, List *selections_list) {
@@ -121,7 +132,7 @@ static void cln(SmuTreap t, char *line_buffer, List *selections_list) {
         return; 
     }
     
-    struct cln_data data = {.max_id = 0, .tree = t};
+    struct cln_data data = {.max_id = 0, .tree = t, .target_x = x, .target_y = y};
     list_foreach(selection, &get_max_info_id, &data); // lookup for the maximum id in the selection
     list_foreach(selection, &cln_helper, &data); // clone the forms from the given selection
 }
