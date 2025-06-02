@@ -30,6 +30,16 @@ Rect new_rect(int id, double x, double y, double w, double h, FormStyle style) {
     return rect; 
 }
 
+void rect_transp(Rect r, double x, double y) {
+    assert(r); 
+
+    Rect_st *rect = (Rect_st *) r; 
+    if (rect == NULL) return; 
+
+    rect->x = x; 
+    rect->y = y; 
+}
+
 int get_rect_id(Rect r) {
     assert(r); 
 
@@ -83,6 +93,16 @@ void get_rect_positions(Rect r, double *x, double *y, double *w, double *h) {
         *w = rect->w;   
     if (h != NULL)
         *h = rect->h; 
+}
+
+double get_rect_distance_disp(Rect r) {
+    assert(r);
+
+    Rect_st *rect = (Rect_st *) r;
+    if (rect == NULL) return 0.0;
+
+    // Rectangle distance = area = width * height
+    return rect->w * rect->h;
 }
 
 void free_rect(Rect r) {

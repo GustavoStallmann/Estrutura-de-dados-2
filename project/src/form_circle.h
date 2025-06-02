@@ -29,6 +29,13 @@ void get_circle_bounding_box(Circle c, double *x, double *y, double *w, double *
 void get_circle_positions(Circle c, double *x, double *y, double *r);
 
 /* 
+ * Sets the circle position to the given coordinates
+ * @param c the form to set the position
+ * @param x, y the new coordinates of the circle
+ */
+void circle_transp(Circle c, double x, double y);
+
+/* 
  * Gets the style of the circle
  * @param c the form to get the style
  * @return the style of the circle
@@ -48,6 +55,13 @@ FormState get_circle_state(Circle c);
  * @return the id of the circle
  */
 int get_circle_id(Circle c); 
+
+/* 
+ * Gets the distance for displacement calculation
+ * @param c the form to calculate distance
+ * @return the distance value (area = π * r²)
+ */
+double get_circle_distance_disp(Circle c);
 
 /* 
  * Free memory of the given form

@@ -12,6 +12,7 @@ typedef struct {
     char *fontWeight;
     char *fontSize; 
     char *textAnchor;
+    char *strokeWidth;
 } FormStyle_st; 
 
 static char* alloc_str(char *str) {
@@ -29,7 +30,7 @@ static char* alloc_str(char *str) {
     return new_str; 
 }
 
-FormStyle new_form_style(char *borderColor, char *fillColor, char *fontFamily, char *fontWeight, char *textAnchor, char *fontSize) {
+FormStyle new_form_style(char *borderColor, char *fillColor, char *fontFamily, char *fontWeight, char *textAnchor, char *fontSize, char *strokeWidth) {
     FormStyle_st *style = (FormStyle_st *) malloc(sizeof(FormStyle_st)); 
     if (style == NULL) {
         fprintf(stderr, "(ERROR) form_style: insufficient memory to alloc formStyle_st");
@@ -48,6 +49,7 @@ FormStyle new_form_style(char *borderColor, char *fillColor, char *fontFamily, c
         style->textAnchor = alloc_str("start");
     }
     style->fontSize = alloc_str(fontSize);
+    style->strokeWidth = alloc_str(strokeWidth);
 
     return style; 
 }
@@ -94,6 +96,37 @@ char* get_form_style_font_size(FormStyle style) {
     return style_st->fontSize; 
 }
 
+char* get_form_style_stroke_width(FormStyle style) {
+    FormStyle_st *style_st = (FormStyle_st *) style;
+    if (style_st == NULL || style_st->strokeWidth == NULL) return "2";
+
+    return style_st->strokeWidth; 
+}
+
+void set_form_fill_color(FormStyle style, char *fillColor) {
+    FormStyle_st *style_st = (FormStyle_st *) style;
+    if (style_st == NULL) return;
+
+    free(style_st->fillColor);
+    style_st->fillColor = alloc_str(fillColor);
+}
+
+void set_form_border_color(FormStyle style, char *borderColor) {
+    FormStyle_st *style_st = (FormStyle_st *) style;
+    if (style_st == NULL) return;
+
+    free(style_st->borderColor);
+    style_st->borderColor = alloc_str(borderColor);
+}
+
+void set_form_style_stroke_width(FormStyle style, char *strokeWidth) {
+    FormStyle_st *style_st = (FormStyle_st *) style;
+    if (style_st == NULL) return;
+
+    free(style_st->strokeWidth);
+    style_st->strokeWidth = alloc_str(strokeWidth);
+}
+
 void free_form_style(FormStyle style) {
     FormStyle_st *style_st = (FormStyle_st *) style;
     if (style_st == NULL) return;
@@ -104,5 +137,6 @@ void free_form_style(FormStyle style) {
     free(style_st->fontWeight);
     free(style_st->textAnchor);
     free(style_st->fontSize);
+    free(style_st->strokeWidth);
     free(style_st);
 }

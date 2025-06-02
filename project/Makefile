@@ -22,7 +22,7 @@ all: $(TARGET)
 
 # Link object files to create executable
 $(TARGET): $(OBJ_FILES)
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) -o $@ $^ -lm
 
 # Compile source files into object files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
@@ -34,13 +34,31 @@ clean:
 	rm -rf $(OBJ_DIR) $(TARGET)
 	rm -rf ${RESULT_DIR}
 
-test1: 
-	./program -o "./${RESULT_DIR}" -e "./input" -f "00-vaso-simples.geo" -q "clone.qry"
+# Run all tests (with and without .qry files)
+test-suecia: $(TARGET)
+	./program -o "./${RESULT_DIR}" -e "./input/band-suecia" -f "01-band-suecia.geo"
+	./program -o "./${RESULT_DIR}" -e "./input/band-suecia" -f "01-band-suecia.geo" -q "transp.qry"
+	./program -o "./${RESULT_DIR}" -e "./input/band-suecia" -f "01-band-suecia.geo" -q "cmflg.qry"
+	./program -o "./${RESULT_DIR}" -e "./input/band-suecia" -f "01-band-suecia.geo" -q "sel-0-r1.qry"
+	./program -o "./${RESULT_DIR}" -e "./input/band-suecia" -f "01-band-suecia.geo" -q "sel-1-r1-r2.qry"
+	./program -o "./${RESULT_DIR}" -e "./input/band-suecia" -f "01-band-suecia.geo" -q "clone.qry"
+	./program -o "./${RESULT_DIR}" -e "./input/band-suecia" -f "01-band-suecia.geo" -q "blow.qry"
 
-test2:
-	./program -o "./${RESULT_DIR}" -e "./input" -f "01-band-suecia.geo"
+test-vaso: $(TARGET)
+	./program -o "./${RESULT_DIR}" -e "./input/vaso" -f "00-vaso-simples.geo"
+	./program -o "./${RESULT_DIR}" -e "./input/vaso" -f "00-vaso-simples.geo" -q "blow.qry"
+	./program -o "./${RESULT_DIR}" -e "./input/vaso" -f "00-vaso-simples.geo" -q "clone.qry"
+	./program -o "./${RESULT_DIR}" -e "./input/vaso" -f "00-vaso-simples.geo" -q "cmflg.qry"
+	./program -o "./${RESULT_DIR}" -e "./input/vaso" -f "00-vaso-simples.geo" -q "disp-0-retang.qry"
+	./program -o "./${RESULT_DIR}" -e "./input/vaso" -f "00-vaso-simples.geo" -q "disp-1-txt.qry"
+	./program -o "./${RESULT_DIR}" -e "./input/vaso" -f "00-vaso-simples.geo" -q "disp-3-retang-regiao.qry"
+	./program -o "./${RESULT_DIR}" -e "./input/vaso" -f "00-vaso-simples.geo" -q "disp-4-txt-regiao.qry"
+	./program -o "./${RESULT_DIR}" -e "./input/vaso" -f "00-vaso-simples.geo" -q "transp.qry"
 
 debug:
 	valgrind --leak-check=full --track-origins=yes ./program -o "./${RESULT_DIR}" -e "./input" -f "01-band-suecia.geo"
 
-.PHONY: all clean
+debug-qry:
+	valgrind --leak-check=full --track-origins=yes ./program -o "./${RESULT_DIR}" -e "./input" -f "01-band-suecia.geo" -q "transp.qry"
+
+.PHONY: all clean test-all-qry test-all debug-qry

@@ -30,6 +30,16 @@ static char* alloc_str(char *str) {
     return new_str; 
 }
 
+void text_transp(Text t, double x, double y) {
+    assert(t); 
+
+    Text_st *text = (Text_st *) t; 
+    if (text == NULL) return; 
+
+    text->x = x; 
+    text->y = y; 
+}
+
 int get_text_id(Text t) {
     assert(t); 
 
@@ -70,10 +80,10 @@ void get_text_bounding_box(Text t, double *x, double *y, double *w, double *h) {
     Text_st *text = (Text_st *) t; 
     if (text == NULL) return;
 
-    *x = text->x; 
-    *y = text->y;
-    *w = 0;
-    *h = 0; 
+    if (x != NULL) *x = text->x; 
+    if (y != NULL) *y = text->y;
+    if (w != NULL) *w = 0;
+    if (h != NULL) *h = 0; 
 }
 
 FormState get_text_state(Text t) {
@@ -113,6 +123,16 @@ void get_text_positions(Text t, double *x, double *y) {
         *x = text->x; 
     if (y != NULL)
         *y = text->y;
+}
+
+double get_text_distance_disp(Text t) {
+    assert(t);
+
+    Text_st *text = (Text_st *) t;
+    if (text == NULL || text->str == NULL) return 0.0;
+
+    // Text distance = 12 * number of characters
+    return 12.0 * strlen(text->str);
 }
 
 void free_text(Text t) {

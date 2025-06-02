@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+
+#ifndef PI
+#define PI 3.14159265358979323846
+#endif
  
 #include "form_circle.h"
 #include "form_state.h"
@@ -76,6 +80,16 @@ void get_circle_positions(Circle c, double *x, double *y, double *r) {
         *r = circle->r; 
 }
 
+void circle_transp(Circle c, double x, double y) {
+    assert(c); 
+
+    Circle_st *circle = (Circle_st *) c; 
+    if (circle == NULL) return; 
+
+    circle->x = x; 
+    circle->y = y; 
+}
+
 FormStyle get_circle_style(Circle c) {
     assert(c); 
 
@@ -92,6 +106,16 @@ FormState get_circle_state(Circle c) {
     if (circle == NULL) return NULL; 
 
     return circle->state; 
+}
+
+double get_circle_distance_disp(Circle c) {
+    assert(c);
+
+    Circle_st *circle = (Circle_st *) c;
+    if (circle == NULL) return 0.0;
+
+    // Circle distance = area = π * r²
+    return PI * circle->r * circle->r;
 }
 
 void free_circle(Circle c) {

@@ -16,6 +16,7 @@ static void callback_insert_on_smu_treap(void *value, callback_data call_data);
 static void export_form_svg(SmuTreap t, Node n, Info info, double x, double y, void *aux);
 static void combine_file_names(char *str1, char *str2, char *file_extension, char *result, int size);
 static void export_svg_treap(SmuTreap smu_treap, char *base_output_dir, char *filename, SelectionManager selection_manager);
+static void export_dot_treap(SmuTreap smu_treap, char *base_output_dir, char *geo_name, char *qry_name);
 
 /*
 TODOS: 
@@ -23,6 +24,7 @@ TODOS:
     - Processar .qry 
     - Export de svg com atributos básicos (sem css)
     - Promover nós nas funções de consulta
+    - Alinhar ponto de seleção com o centro do círculo
 */
 
 int main(int argc, char *argv[]) {
@@ -55,17 +57,13 @@ int main(int argc, char *argv[]) {
     list_foreach(forms_list, &callback_insert_on_smu_treap, smu_treap);
     list_free(forms_list, &free_form_info_wrapper_only);
     
+    // Export dot file after tree creation
+    export_dot_treap(smu_treap, base_output_dir, get_dir_file_name(geo_dir), NULL);
+    
     // Export the default SVG forms
     char svg_file_name[50];
     combine_file_names(get_dir_file_name(geo_dir), NULL, "svg", svg_file_name, sizeof(svg_file_name));
     export_svg_treap(smu_treap, base_output_dir, svg_file_name, NULL);
-    
-    char dot_file_name[50], dot_full_path[50];
-    combine_file_names(get_dir_file_name(geo_dir), "qry", "dot", dot_file_name, sizeof(dot_file_name));
-    Dir dot_dir = dir_combine_path_and_file(base_output_dir, dot_file_name);
-    get_full_dir(dot_dir, dot_full_path);
-    printDotSmuTreap(smu_treap, dot_full_path);
-    dir_free(dot_dir);
 
     // Process the qry file
     if (qry_file != NULL) {
@@ -75,14 +73,15 @@ int main(int argc, char *argv[]) {
         SelectionManager selection_manager = selection_manager_create();
         qry_process(qry_dir, smu_treap, selection_manager);
         
+        // Export dot file after qry processing
+        export_dot_treap(smu_treap, base_output_dir, get_dir_file_name(geo_dir), get_dir_file_name(qry_dir));
+        
         // Re-export SVG after qry processing with selection regions
         char svg_qry_file_name[50];
         combine_file_names(get_dir_file_name(geo_dir), get_dir_file_name(qry_dir), "svg", svg_qry_file_name, sizeof(svg_qry_file_name));
         export_svg_treap(smu_treap, base_output_dir, svg_qry_file_name, selection_manager);
         
-        // Clean up selection manager
         selection_manager_destroy(selection_manager);
-        
         dir_free(qry_dir);
     } else {
         fprintf(stderr, "WARNING: No query file provided, skipping query processing.\n");
@@ -99,7 +98,7 @@ static void export_svg_treap(SmuTreap smu_treap, char *base_output_dir, char *fi
     FILE *svg_file = file_open_writable(svg_dir);
     dir_free(svg_dir);
     
-    svg_init(svg_file, 500, 500);
+    svg_init(svg_file, 1000, 1000);
     visitaProfundidadeSmuT(smu_treap, &export_form_svg, svg_file);
     
     // Exportar as regiões de seleção se fornecidas
@@ -161,4 +160,14 @@ static void export_form_svg(SmuTreap t, Node n, Info info, double x, double y, v
     DescritorTipoInfo info_type = getTypeInfoSmuT(t, n);
 
     svg_export_form(svg_file, info, info_type);
+}
+
+static void export_dot_treap(SmuTreap smu_treap, char *base_output_dir, char *geo_name, char *qry_name) {
+    char dot_file_name[50], dot_full_path[50];
+    combine_file_names(geo_name, qry_name, "dot", dot_file_name, sizeof(dot_file_name));
+    
+    Dir dot_dir = dir_combine_path_and_file(base_output_dir, dot_file_name);
+    get_full_dir(dot_dir, dot_full_path);
+    printDotSmuTreap(smu_treap, dot_full_path);
+    dir_free(dot_dir);
 }

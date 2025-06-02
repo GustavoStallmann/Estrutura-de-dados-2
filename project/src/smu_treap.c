@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <time.h>
+#include <math.h>
 
 #include "smu_treap.h"
 #include "form.h"
@@ -153,13 +154,20 @@ static bool bounding_box_intersects(const BoundingBox* bb1, const BoundingBox* b
     return true;
 }
 
-static bool is_bounding_boxes_contained(BoundingBox *inner_bbm, BoundingBox *outer_bbm) {
-    if (inner_bbm == NULL || outer_bbm == NULL) return false;
+// static bool is_bounding_boxes_contained(BoundingBox *inner_bbm, BoundingBox *outer_bbm) {
+//     if (inner_bbm == NULL || outer_bbm == NULL) return false;
     
-    return (inner_bbm->x >= outer_bbm->x && 
-            inner_bbm->y >= outer_bbm->y &&
-            (inner_bbm->x + inner_bbm->w) <= (outer_bbm->x + outer_bbm->w) &&
-            (inner_bbm->y + inner_bbm->h) <= (outer_bbm->y + outer_bbm->h));
+//     return (inner_bbm->x >= outer_bbm->x && 
+//             inner_bbm->y >= outer_bbm->y &&
+//             (inner_bbm->x + inner_bbm->w) <= (outer_bbm->x + outer_bbm->w) &&
+//             (inner_bbm->y + inner_bbm->h) <= (outer_bbm->y + outer_bbm->h));
+// }
+
+static bool is_point_inside_bounding_box(BoundingBox *bb, double x, double y) {
+    if (bb == NULL) return false;
+    
+    return (x >= bb->x && x <= (bb->x + bb->w) &&
+            y >= bb->y && y <= (bb->y + bb->h));
 }
 
 static void join_bounding_boxes(BoundingBox *first_bb, BoundingBox *second_bb, double *x, double *y, double *w, double *h) {
@@ -369,7 +377,7 @@ static void promote_node_by_hit_count(SmuTreap t, Node_st *root) {
     root->hitCount++;
 }
 
-static void getNodesDentroRegiaoSmuT_aux(SmuTreap t, Node_st *root, BoundingBox interest_bb, List L, FdentroDeRegiao is_form_inside_region, double x1, double y1, double x2, double y2) {
+static void getInfosDentroRegiaoSmuT_aux(SmuTreap t, Node_st *root, BoundingBox interest_bb, List L, FdentroDeRegiao is_form_inside_region, double x1, double y1, double x2, double y2) {
     if (root == NULL) return;
     if (bounding_box_intersects(&root->sub_bb, &interest_bb) == false) return; // node subtree does not intersect the interest region
     
@@ -381,8 +389,8 @@ static void getNodesDentroRegiaoSmuT_aux(SmuTreap t, Node_st *root, BoundingBox 
         set_form_state_selected(state, true); 
     }
 
-    getNodesDentroRegiaoSmuT_aux(t, root->left, interest_bb, L, is_form_inside_region, x1, y1, x2, y2);
-    getNodesDentroRegiaoSmuT_aux(t, root->right, interest_bb, L, is_form_inside_region, x1, y1, x2, y2);
+    getInfosDentroRegiaoSmuT_aux(t, root->left, interest_bb, L, is_form_inside_region, x1, y1, x2, y2);
+    getInfosDentroRegiaoSmuT_aux(t, root->right, interest_bb, L, is_form_inside_region, x1, y1, x2, y2);
 }
 
 bool getInfosDentroRegiaoSmuT(SmuTreap t, double x1, double y1, double x2, double y2, FdentroDeRegiao f, List L) {
@@ -402,9 +410,47 @@ bool getInfosDentroRegiaoSmuT(SmuTreap t, double x1, double y1, double x2, doubl
         .h = max_y - min_y
     };
     
-    getNodesDentroRegiaoSmuT_aux(t, (Node_st *) tree->root, interest_bb, L, f, x1, y1, x2, y2);
+    getInfosDentroRegiaoSmuT_aux(t, (Node_st *) tree->root, interest_bb, L, f, x1, y1, x2, y2);
+    if (list_get_size(L) <= 0) return false; 
 
     return true; 
+}
+
+static void getNodesDentroRegiaoSmuT_aux(Node r, BoundingBox interest_bb, List L, SmuTreap t) {
+    Node_st *root = (Node_st *) r; 
+    if (root == NULL) return;
+
+    if (bounding_box_intersects(&root->sub_bb, &interest_bb) == false) return; // node subtree does not intersect the interest region 
+
+    if (is_point_inside_bounding_box(&interest_bb, root->x, root->y)) {
+        printf("Node %p is inside the interest region\n", (void *) root);
+        list_insert(L, root);
+        promote_node_by_hit_count(t, root);
+    }
+
+    getNodesDentroRegiaoSmuT_aux(root->left, interest_bb, L, t);
+    getNodesDentroRegiaoSmuT_aux(root->right, interest_bb, L, t);
+}
+
+bool getNodesDentroRegiaoSmuT(SmuTreap t, double x1, double y1, double x2, double y2, List L) {
+    SmuTreap_st *tree = (SmuTreap_st *) t;
+
+    double min_x = (x1 < x2) ? x1 : x2;
+    double max_x = (x1 < x2) ? x2 : x1;
+    double min_y = (y1 < y2) ? y1 : y2;
+    double max_y = (y1 < y2) ? y2 : y1;
+
+    BoundingBox interest_bb = {
+        .x = min_x, 
+        .y = min_y, 
+        .w = max_x - min_x, 
+        .h = max_y - min_y
+    };
+    
+    getNodesDentroRegiaoSmuT_aux( tree->root, interest_bb, L, t);
+
+    if (list_get_size(L) <= 0) return false;
+    return true;
 }
 
 DescritorTipoInfo getTypeInfoSmuT(SmuTreap t, Node n) {
@@ -413,6 +459,29 @@ DescritorTipoInfo getTypeInfoSmuT(SmuTreap t, Node n) {
     
     Node_st *node = (Node_st *) n; 
     return node->formType; 
+}
+
+static Node getNodeSmuT_aux(Node current, double x, double y, double epsilon, SmuTreap t) {
+    if (current == NULL) return NULL;
+    
+    Node_st *node = (Node_st *) current;
+
+    if (fabs(node->x - x) <= epsilon && fabs(node->y - y) <= epsilon) {
+        promoteNodeSmuT(t, current, ((SmuTreap_st *)t)->promotionRate);
+        return current;
+    }
+
+    if (x <= node->x) {
+        return getNodeSmuT_aux(node->left, x, y, epsilon, t);
+    } else {
+        return getNodeSmuT_aux(node->right, x, y, epsilon, t);
+    }
+}
+
+Node getNodeSmuT(SmuTreap t, double x, double y) {
+    assert(t);
+    SmuTreap_st *tree = (SmuTreap_st *) t; 
+    return getNodeSmuT_aux(tree->root, x, y, tree->epsilon, t);
 }
 
 Info getInfoSmuT(SmuTreap t, Node n) {
@@ -515,6 +584,64 @@ bool printDotSmuTreap(SmuTreap t, char *fn) {
     fclose(file);
     return true; 
 }
-/*
- * Aumenta a prioridade do no' n pelo fator promotionRate.
- */
+
+Node procuraNoSmuT_aux(SmuTreap t, Node nd, FsearchNo f, void *aux) {
+    if (nd == NULL) return NULL;
+
+    Node_st *node = (Node_st *) nd; 
+
+    Info info = getInfoSmuT(t, nd);
+    if (f(t, nd, info, node->x, node->y, aux)) {
+        promote_node_by_hit_count(t, node);
+        return nd; 
+    }
+
+    Node found = procuraNoSmuT_aux(t, node->left, f, aux);
+    if (found != NULL) {
+        return found;
+    }
+
+    found = procuraNoSmuT_aux(t, node->right, f, aux);
+    if (found != NULL) {
+        return found;
+    }
+
+    return NULL;
+}
+
+Node procuraNoSmuT(SmuTreap t, FsearchNo f, void *aux) {
+    assert(t);
+    assert(f);
+
+    SmuTreap_st *tree = (SmuTreap_st *) t; 
+    return procuraNoSmuT_aux(t, tree->root, f, aux);
+}
+
+void getInfosAtingidoPontoSmuT_aux(SmuTreap t, Node nd, double x, double y, FpontoInternoAInfo f, List L) {
+    if (nd == NULL) return; 
+
+    Node_st *node = (Node_st *) nd; 
+
+    if (is_point_inside_bounding_box(&node->sub_bb, x, y)) {
+        if (f(t, nd, node->form, x, y)) {
+            list_insert(L, node);
+            promote_node_by_hit_count(t, node);
+        }
+    }
+
+    getInfosAtingidoPontoSmuT_aux(t, node->left, x, y, f, L);
+    getInfosAtingidoPontoSmuT_aux(t, node->right, x, y, f, L);
+}
+
+bool getInfosAtingidoPontoSmuT(SmuTreap t, double x, double y, FpontoInternoAInfo f, List L) {
+    assert(t);
+    assert(f);
+    assert(L);
+
+    SmuTreap_st *tree = (SmuTreap_st *) t; 
+    getInfosAtingidoPontoSmuT_aux(t, tree->root, x, y, f, L);
+    
+    if (list_get_size(L) <= 0) return false; 
+
+    return true;
+}

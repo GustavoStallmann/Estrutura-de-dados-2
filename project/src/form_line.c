@@ -60,6 +60,21 @@ void get_line_positions(Line l, double *x, double *y, double *x2, double *y2){
         *y2 = line->y2; 
 }
 
+void line_transp(Line l, double x, double y) {
+    assert(l); 
+
+    Line_st *line = (Line_st *) l; 
+    if (line == NULL) return; 
+
+    double offset_x = x - line->x;
+    double offset_y = y - line->y;
+
+    line->x += offset_x;
+    line->y += offset_y;
+    line->x2 += offset_x;
+    line->y2 += offset_y;
+}
+
 int get_line_id(Line l) {
     assert(l); 
 
@@ -85,6 +100,18 @@ FormState get_line_state(Line l) {
     if (line == NULL) return NULL; 
 
     return line->state; 
+}
+
+double get_line_distance_disp(Line l) {
+    assert(l);
+
+    Line_st *line = (Line_st *) l;
+    if (line == NULL) return 0.0;
+
+    // Line distance = 10 * line length
+    double length = sqrt((line->x2 - line->x) * (line->x2 - line->x) + 
+                        (line->y2 - line->y) * (line->y2 - line->y));
+    return 10.0 * length;
 }
 
 void free_line(Line l) {

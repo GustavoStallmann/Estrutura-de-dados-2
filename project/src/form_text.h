@@ -51,11 +51,25 @@ int get_text_id(Text t);
 FormStyle get_text_style(Text t); 
 
 /* 
+ * Sets the text position to the given coordinates
+ * @param t the form to set the position
+ * @param x, y the new coordinates of the text
+*/
+void text_transp(Text t, double x, double y);
+
+/* 
  * Gets the text string of the form
  * @param t the form to get the text
  * @return the text string of the form
 */
 char* get_text_string(Text t);
+
+/* 
+ * Gets the distance for displacement calculation
+ * @param t the form to calculate distance
+ * @return the distance value (12 * character count)
+ */
+double get_text_distance_disp(Text t);
 
 /* 
  * Free memory of the given form

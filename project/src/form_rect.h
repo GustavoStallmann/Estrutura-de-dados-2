@@ -36,6 +36,13 @@ void get_rect_positions(Rect r, double *x, double *y, double *w, double *h);
 FormStyle get_rect_style(Rect r); 
 
 /* 
+ * Sets the Rect position to the given coordinates
+ * @param r the form to set the position
+ * @param x, y the new coordinates of the Rect
+*/
+void rect_transp(Rect r, double x, double y);
+
+/* 
  * Gets the state of the Rect
  * @param r the form to get the state
  * @return the state of the Rect
@@ -48,6 +55,13 @@ FormState get_rect_state(Rect r);
  * @return the id of the Rect
 */
 int get_rect_id(Rect r); 
+
+/* 
+ * Gets the distance for displacement calculation
+ * @param r the form to calculate distance
+ * @return the distance value (area = width * height)
+ */
+double get_rect_distance_disp(Rect r);
 
 /* 
  * Free memory of the given form

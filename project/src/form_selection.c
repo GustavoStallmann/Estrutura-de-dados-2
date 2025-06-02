@@ -12,55 +12,8 @@ typedef struct {
 
 typedef struct {
     SelectionRegion_st regions[MAX_SELECTION_REGIONS];
+    int next_available_index;
 } SelectionManager_st;
-
-SelectionRegion selection_region_create(double x, double y, double width, double height) {
-    SelectionRegion_st* region = malloc(sizeof(SelectionRegion_st));
-    if (region == NULL) return NULL;
-    
-    region->x = x;
-    region->y = y;
-    region->width = width;
-    region->height = height;
-    region->is_active = false;
-    
-    return (SelectionRegion)region;
-}
-
-void selection_region_destroy(SelectionRegion region) {
-    if (region == NULL) return;
-    free(region);
-}
-
-void selection_region_set_active(SelectionRegion region, bool active) {
-    if (region == NULL) return;
-    SelectionRegion_st* r = (SelectionRegion_st*)region;
-    r->is_active = active;
-}
-
-bool selection_region_is_active(SelectionRegion region) {
-    if (region == NULL) return false;
-    SelectionRegion_st* r = (SelectionRegion_st*)region;
-    return r->is_active;
-}
-
-void selection_region_get_bounds(SelectionRegion region, double* x, double* y, double* width, double* height) {
-    if (region == NULL || x == NULL || y == NULL || width == NULL || height == NULL) return;
-    SelectionRegion_st* r = (SelectionRegion_st*)region;
-    *x = r->x;
-    *y = r->y;
-    *width = r->width;
-    *height = r->height;
-}
-
-void selection_region_set_bounds(SelectionRegion region, double x, double y, double width, double height) {
-    if (region == NULL) return;
-    SelectionRegion_st* r = (SelectionRegion_st*)region;
-    r->x = x;
-    r->y = y;
-    r->width = width;
-    r->height = height;
-}
 
 SelectionManager selection_manager_create() {
     SelectionManager_st* manager = malloc(sizeof(SelectionManager_st));
@@ -69,6 +22,7 @@ SelectionManager selection_manager_create() {
     for (int i = 0; i < MAX_SELECTION_REGIONS; i++) {
         manager->regions[i].is_active = false;
     }
+    manager->next_available_index = 0;
     
     return (SelectionManager)manager;
 }
@@ -80,12 +34,6 @@ void selection_manager_destroy(SelectionManager manager) {
 
 int selection_manager_get_region_count() {
     return MAX_SELECTION_REGIONS;
-}
-
-SelectionRegion selection_manager_get_region(SelectionManager manager, int index) {
-    if (manager == NULL || index < 0 || index >= MAX_SELECTION_REGIONS) return NULL;
-    SelectionManager_st* mgr = (SelectionManager_st*)manager;
-    return (SelectionRegion)&(mgr->regions[index]);
 }
 
 void selection_manager_set_region_active(SelectionManager manager, int index, bool active) {
@@ -121,4 +69,31 @@ void selection_manager_set_region_data(SelectionManager manager, int index, doub
     mgr->regions[index].width = width;
     mgr->regions[index].height = height;
     mgr->regions[index].is_active = true;
+}
+
+void selection_manager_add_region(SelectionManager manager, double x, double y, double width, double height) {
+    if (manager == NULL) return;
+    SelectionManager_st* mgr = (SelectionManager_st*)manager;
+    
+    int index = mgr->next_available_index;
+    while (index < MAX_SELECTION_REGIONS && mgr->regions[index].is_active) {
+        index++;
+    }
+    
+    if (index >= MAX_SELECTION_REGIONS) {
+        for (index = 0; index < MAX_SELECTION_REGIONS; index++) {
+            if (!mgr->regions[index].is_active) {
+                break;
+            }
+        }
+    }
+    
+    if (index < MAX_SELECTION_REGIONS) {
+        mgr->regions[index].x = x;
+        mgr->regions[index].y = y;
+        mgr->regions[index].width = width;
+        mgr->regions[index].height = height;
+        mgr->regions[index].is_active = true;
+        mgr->next_available_index = index + 1;
+    }
 }

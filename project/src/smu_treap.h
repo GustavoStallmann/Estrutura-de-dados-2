@@ -116,8 +116,7 @@ SmuTreap newSmuTreap(int hitCount, double promotionRate, double epsilon, int pri
  * do no'.
  */
 
-Node insertSmuT(SmuTreap t, double x, double y, Info i, DescritorTipoInfo d,
-		FCalculaBoundingBox fCalcBb);
+Node insertSmuT(SmuTreap t, double x, double y, Info i, DescritorTipoInfo d, FCalculaBoundingBox fCalcBb);
 /*
  * Insere a informacao i, associada 'a ancora (x,y) na arvore t.
  * d e' um valor (definido pela aplicacao) que identifica, caso existam varias
@@ -164,8 +163,7 @@ bool getNodesDentroRegiaoSmuT(SmuTreap t, double x1, double y1, double x2, doubl
    Retorna falso, caso nao existam nos dentro da regiao; verdadeiro, caso contrario.
  */
 
-bool getInfosDentroRegiaoSmuT(SmuTreap t, double x1, double y1, double x2, double y2,
-				 FdentroDeRegiao f, List L);
+bool getInfosDentroRegiaoSmuT(SmuTreap t, double x1, double y1, double x2, double y2, FdentroDeRegiao f, List L);
 /* Insere na List L os nos cujas respectivas informacoes associadas estao inteiramente dentro da regiao
    delimitada pelos pontos (x1,y1) e (x2,y2). A funcao f e' usada para determinar se uma
    informacao armazenada na arvore esta' dentro da regiao.

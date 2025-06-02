@@ -32,7 +32,7 @@ static List geo_execute(FILE *geo_file) {
         return NULL; 
     }
 
-    FormStyle actual_font_style = new_form_style("#ffffff", "#ffffff", "Arial", "normal", "start", "12px");
+    FormStyle actual_font_style = new_form_style("#ffffff", "#ffffff", "Arial", "normal", "start", "12px", "1");
 
     while (fgets(line_buffer, sizeof(line_buffer), geo_file) != NULL) {
         if (process_command(line_buffer, command_type) == false) continue;

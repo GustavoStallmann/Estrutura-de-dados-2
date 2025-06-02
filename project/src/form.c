@@ -138,6 +138,41 @@ int get_form_id(DescritorTipoInfo tp, Info form) {
     }
 }
 
+void transp_form(DescritorTipoInfo tp, Info form, double x, double y) {
+    switch (tp) {
+        case CIRCLE:
+            circle_transp((Circle) form, x, y);
+            break;
+        case RECT:
+            rect_transp((Rect) form, x, y);
+            break;
+        case TEXT:
+            text_transp((Text) form, x, y);
+            break;
+        case LINE:  
+            line_transp((Line) form, x, y);
+            break;
+        default:
+            fprintf(stderr, "(ERROR) form: invalid form provided to translate");
+            break;
+    }
+}
+
+double get_form_distance_disp(DescritorTipoInfo tp, Info form) {
+    switch (tp) {
+        case CIRCLE:
+            return get_circle_distance_disp((Circle) form);
+        case RECT:
+            return get_rect_distance_disp((Rect) form);
+        case LINE:
+            return get_line_distance_disp((Line) form);
+        case TEXT:
+            return get_text_distance_disp((Text) form);
+        default:
+            return 0.0;
+    }
+}
+
 void free_form(DescritorTipoInfo tp, Info form) {
     switch (tp) {
         case CIRCLE:

@@ -80,7 +80,7 @@ static FormInfo process_circle(char *line_buffer) {
         fprintf(stderr, "(ERROR) form: couldn't parse circle parameters from line: %s", line_buffer);
         return NULL;
     }
-    FormStyle style = new_form_style(borderColor, fillColor, NULL, NULL, NULL, NULL); 
+    FormStyle style = new_form_style(borderColor, fillColor, NULL, NULL, NULL, NULL, "2"); 
     Circle circle = new_circle(id, x, y, r, style);
     if (circle == NULL) {
         fprintf(stderr, "(ERROR) form: couldn't create circle with id %d", id);
@@ -100,7 +100,7 @@ static FormInfo process_rect(char * line_buffer) {
         fprintf(stderr, "(ERROR) form: couldn't parse rect parameters from line: %s", line_buffer);
         return NULL;
     }
-    FormStyle style = new_form_style(borderColor, fillColor, NULL, NULL, NULL, NULL); 
+    FormStyle style = new_form_style(borderColor, fillColor, NULL, NULL, NULL, NULL, "2"); 
     Rect rect = new_rect(id, x, y, w, h, style);
     if (rect == NULL) {
         fprintf(stderr, "(ERROR) form: couldn't create rect with id %d", id);
@@ -123,7 +123,8 @@ static FormInfo process_text(char *line_buffer, FormStyle *actual_font_style) {
 
     FormStyle style = new_form_style(borderColor, fillColor, 
         get_form_style_font_family(*actual_font_style), get_form_style_font_weight(*actual_font_style), 
-        get_form_style_text_anchor(*actual_font_style), get_form_style_font_size(*actual_font_style)
+        get_form_style_text_anchor(*actual_font_style), get_form_style_font_size(*actual_font_style),
+        "0.5"
     ); 
 
     Text textForm = new_text(id, x, y, text, style);
@@ -145,7 +146,8 @@ static FormInfo process_line(char *line_buffer) {
         fprintf(stderr, "(ERROR) form: couldn't parse line parameters from line: %s", line_buffer);
         return NULL;
     }
-    FormStyle style = new_form_style(borderColor, NULL, NULL, NULL, NULL, NULL); 
+
+    FormStyle style = new_form_style(borderColor, NULL, NULL, NULL, NULL, NULL, "2"); 
     Line line = new_line(id, x, y, x2, y2, style);
     if (line == NULL) {
         fprintf(stderr, "(ERROR) form: couldn't create line with id %d", id);
@@ -164,7 +166,7 @@ static FormStyle process_ts(char *line_buffer) {
         return NULL;
     }
 
-    FormStyle ts = new_form_style("#ffffff", "#ffffff", font_family, font_weight, "start", font_size);
+    FormStyle ts = new_form_style("#ffffff", "#ffffff", font_family, font_weight, "start", font_size, "1");
     if (ts == NULL) {
         fprintf(stderr, "(ERROR) form: couldn't create ts style");
         return NULL; 
@@ -220,7 +222,8 @@ FormInfo clone_form(DescritorTipoInfo formType, Info form, int id, double target
     FormStyle new_style = new_form_style(
         get_form_style_border_color(style), get_form_style_fill_color(style), 
         get_form_style_font_family(style), get_form_style_font_weight(style), 
-        get_form_style_text_anchor(style), get_form_style_font_size(style)
+        get_form_style_text_anchor(style), get_form_style_font_size(style),
+        get_form_style_stroke_width(style)
     );
 
     Info new_form = NULL; 
@@ -252,8 +255,7 @@ FormInfo clone_form(DescritorTipoInfo formType, Info form, int id, double target
         }  
         case LINE: {
             double x1, y1, x2, y2; 
-            get_form_coordinates(formType, form, &x1, &y1);
-            get_form_dimensions(formType, form, &x2, &y2);
+            get_line_positions((Line) form, &x1, &y1, &x2, &y2);
             
             double offset_x = target_x - x1;
             double offset_y = target_y - y1;
