@@ -56,47 +56,47 @@ static char* escape_xml_text(const char* text) {
     return escaped;
 }
 
-static void svg_export_form_states(FILE *svg_file, FormState state, double x, double y) {
+static void svg_export_form_states(FILE *svg_file, int form_id, FormState state, double x, double y) {
     if (is_form_state_blown(state)) {
         fprintf(svg_file, 
-            "<text x='%lf' y='%lf' fill='red' font-size='8px'>X</text>\n",
-            x, y
+            "<text id='b-%d' x='%lf' y='%lf' fill='red' font-size='8px'>X</text>\n",
+            form_id, x, y
         ); 
         return; 
     }; 
 
     if (is_form_state_selected(state)) {
         fprintf(svg_file, 
-            "<circle cx='%lf' cy='%lf' r='0.5' fill='none' stroke='red' stroke-width='1'/>\n",
-            x, y
+            "<circle id='s-%d' cx='%lf' cy='%lf' r='0.5' fill='none' stroke='red' stroke-width='1'/>\n",
+            form_id, x, y
         );
         return; 
     }; 
 }
 
-static void svg_export_circle(FILE *svg_file, Circle circle, FormStyle style, FormState state) {
+static void svg_export_circle(FILE *svg_file, int form_id, Circle circle, FormStyle style, FormState state) {
     double x, y, r; 
     get_circle_positions(circle, &x, &y, &r); 
 
     fprintf(svg_file, 
-        "<circle r='%lf' cx='%lf' cy='%lf' fill='%s' stroke='%s' stroke-width='%s'/>\n",
-        r, x, y, get_form_style_fill_color(style), get_form_style_border_color(style), get_form_style_stroke_width(style)
+        "<circle id='%d' r='%lf' cx='%lf' cy='%lf' fill='%s' stroke='%s' stroke-width='%s'/>\n",
+        form_id, r, x, y, get_form_style_fill_color(style), get_form_style_border_color(style), get_form_style_stroke_width(style)
     );     
-    svg_export_form_states(svg_file, state, x, y);
+    svg_export_form_states(svg_file, form_id, state, x, y);
 }
 
-static void svg_export_rectangle(FILE *svg_file, Rect rect, FormStyle style, FormState state) {
+static void svg_export_rectangle(FILE *svg_file, int form_id, Rect rect, FormStyle style, FormState state) {
     double x, y, w, h; 
     get_rect_positions(rect, &x, &y, &w, &h); 
 
     fprintf(svg_file, 
-        "<rect width='%lf' height='%lf' x='%lf' y='%lf' fill='%s' stroke='%s' stroke-width='%s' fill-opacity='0.8'/>\n",
-        w, h, x, y, get_form_style_fill_color(style), get_form_style_border_color(style), get_form_style_stroke_width(style)
+        "<rect id='%d' width='%lf' height='%lf' x='%lf' y='%lf' fill='%s' stroke='%s' stroke-width='%s' fill-opacity='0.8'/>\n",
+        form_id, w, h, x, y, get_form_style_fill_color(style), get_form_style_border_color(style), get_form_style_stroke_width(style)
     ); 
-    svg_export_form_states(svg_file, state, x, y);
+    svg_export_form_states(svg_file, form_id, state, x, y);
 }
 
-static void svg_export_text(FILE *svg_file, Text text, FormStyle style, FormState state) {
+static void svg_export_text(FILE *svg_file, int form_id, Text text, FormStyle style, FormState state) {
     double x, y; 
     get_text_positions(text, &x, &y); 
     char *font_weight = get_form_style_font_weight(style);
@@ -116,43 +116,44 @@ static void svg_export_text(FILE *svg_file, Text text, FormStyle style, FormStat
     }
 
     fprintf(svg_file, 
-        "<text x='%lf' y='%lf' fill='%s' stroke='%s' stroke-width='%s' text-anchor='%s' font-weight='%s' font-size='%s'>%s</text>\n",
-        x, y, get_form_style_fill_color(style), get_form_style_border_color(style), get_form_style_stroke_width(style), 
+        "<text id='%d' x='%lf' y='%lf' fill='%s' stroke='%s' stroke-width='%s' text-anchor='%s' font-weight='%s' font-size='%s'>%s</text>\n",
+        form_id, x, y, get_form_style_fill_color(style), get_form_style_border_color(style), get_form_style_stroke_width(style), 
         get_form_style_text_anchor(style), font_weight, get_form_style_font_size(style), escaped_text
     ); 
     free(escaped_text);
-    svg_export_form_states(svg_file, state, x, y);
+    svg_export_form_states(svg_file, form_id, state, x, y);
 }
 
-static void svg_export_line(FILE *svg_file, Line line, FormStyle style, FormState state) {
+static void svg_export_line(FILE *svg_file, int form_id, Line line, FormStyle style, FormState state) {
     double x1, y1, x2, y2;
     get_line_positions(line, &x1, &y1, &x2, &y2);
 
     fprintf(svg_file, 
-        "<line x1='%lf' y1='%lf' x2='%lf' y2='%lf' stroke='%s' stroke-width='%s'/>\n",
-        x1, y1, x2, y2, get_form_style_border_color(style), get_form_style_stroke_width(style)
+        "<line id='%d' x1='%lf' y1='%lf' x2='%lf' y2='%lf' stroke='%s' stroke-width='%s'/>\n",
+        form_id, x1, y1, x2, y2, get_form_style_border_color(style), get_form_style_stroke_width(style)
     );
 
-    svg_export_form_states(svg_file, state, (x1 + x2) / 2, (y1 + y2) / 2);
+    svg_export_form_states(svg_file, form_id, state, (x1 + x2) / 2, (y1 + y2) / 2);
 }
 
 void svg_export_form(FILE *svg_file, Info form, DescritorTipoInfo form_type) {
     assert(svg_file); 
     FormStyle style = get_form_style(form_type, form);
     FormState state = get_form_state(form_type, form);
+    int form_id = get_form_id(form_type, form);
 
     switch (form_type) {
         case CIRCLE:
-            svg_export_circle(svg_file, (Circle) form, style, state); 
+            svg_export_circle(svg_file, form_id, (Circle) form, style, state); 
             break; 
         case RECT: 
-            svg_export_rectangle(svg_file, (Rect) form, style, state); 
+            svg_export_rectangle(svg_file, form_id, (Rect) form, style, state); 
             break; 
         case TEXT:
-            svg_export_text(svg_file, (Text) form, style, state); 
+            svg_export_text(svg_file, form_id, (Text) form, style, state); 
             break;
         case LINE: 
-            svg_export_line(svg_file, (Line) form, style, state);
+            svg_export_line(svg_file, form_id, (Line) form, style, state);
             break;
         default:
             fprintf(stderr, "(ERROR) file_svg: couldn't indentify the given form to export (form: %d)", form_type); 
