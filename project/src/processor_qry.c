@@ -261,11 +261,11 @@ bool is_point_internal_to_form(SmuTreap t, Node n, Info i, double x, double y) {
     double form_x, form_y, form_w, form_h;
     get_form_coordinates(form_type, i, &form_x, &form_y);
     get_form_dimensions(form_type, i, &form_w, &form_h);
-    if (form_type == LINE) 
-        printf("after: %lf %lf\n", form_w, form_h);
+    // if (form_type == LINE && ) 
+    //     printf("after: %lf %lf\n", form_w, form_h);
     if (form_w <= 0 || form_h <= 0) {
-        fprintf(stderr, "ERROR: processor_qry is_point_internal_to_form requires valid form dimensions [%d](%lf, %lf)\n", form_type, form_w, form_h);
-        return false; 
+        // fprintf(stderr, "ERROR: processor_qry is_point_internal_to_form requires valid form dimensions [%d](%lf, %lf)\n", form_type, form_w, form_h);
+        // return false; 
     }
 
     bool is_internal = (x >= form_x && x <= form_x + form_w) && (y >= form_y && y <= form_y + form_h);

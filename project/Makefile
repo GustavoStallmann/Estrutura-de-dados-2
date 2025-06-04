@@ -34,6 +34,9 @@ clean:
 	rm -rf $(OBJ_DIR) $(TARGET)
 	rm -rf ${RESULT_DIR}
 
+test:
+	./program -o "./result" -e "./input/band-suecia" -f "01-band-suecia.geo" -q "blow.qry"
+
 # Run all tests (with and without .qry files)
 test-suecia: $(TARGET)
 	./program -o "./${RESULT_DIR}" -e "./input/band-suecia" -f "01-band-suecia.geo"
