@@ -113,6 +113,24 @@ ListValue list_search(List lst, void *value, compare compare_fn) {
     return NULL; 
 }
 
+bool list_includes(List lst, void *value, compare compare_fn) {
+    assert(lst); 
+    assert(compare_fn); 
+
+    List_st *list = (List_st *) lst; 
+    if (list == NULL) return false;
+    
+    ListNode_st *current = (ListNode_st *) list->head;
+    while (current != NULL) {
+        if (compare_fn(current->value, value)) {
+            return true; 
+        }
+        current = (ListNode_st *) current->next; 
+    }
+    
+    return false; 
+}
+
 void list_foreach(List lst, callback_fn callFn, callback_data callSt) {
     assert(lst); 
     assert(callFn); 

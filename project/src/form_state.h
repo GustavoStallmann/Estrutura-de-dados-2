@@ -11,6 +11,8 @@ void set_form_state_selected(FormState state, bool selected);
 bool is_form_state_selected(FormState state);
 void set_form_state_blown(FormState state, bool blown);
 bool is_form_state_blown(FormState state);
+void set_form_state_hit(FormState state, bool hit);
+bool is_form_state_hit(FormState state);
 void free_form_state(FormState state);
 
 #endif

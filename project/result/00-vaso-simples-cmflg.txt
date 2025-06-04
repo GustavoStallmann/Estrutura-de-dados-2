@@ -1,0 +1,4 @@
+[*] cmflg 16 #447821 #c6e9af 2.50
+	 Linha: camuflado(a)
+[*] cmflg 20 #447821 #c6e9af 2.50
+	 Circulo: camuflado(a)

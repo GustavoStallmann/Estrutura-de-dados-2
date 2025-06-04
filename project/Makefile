@@ -63,7 +63,6 @@ test-vaso: $(TARGET)
 	./program -o "./${RESULT_DIR}" -e "./input/vaso" -f "00-vaso-simples.geo" -q "disp-4-txt-regiao.qry"
 	./program -o "./${RESULT_DIR}" -e "./input/vaso" -f "00-vaso-simples.geo" -q "transp.qry"
 
-
 debug:
 	valgrind --leak-check=full --track-origins=yes ./program -o "./${RESULT_DIR}" -e "./input" -f "01-band-suecia.geo"
 

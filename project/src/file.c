@@ -10,7 +10,6 @@
 #define PATH_MAX 4096
 #endif
 
-
 bool file_exists(Dir d) {
     if (d == NULL) return false; 
 

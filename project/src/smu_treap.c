@@ -30,56 +30,6 @@ typedef struct nd {
     struct nd *left, *right; 
 } Node_st; 
 
-// //REMOVE LATER
-// static void print_tree_aux(Node nd, int depth, char* prefix, int is_last) {
-//     if (nd == NULL) {
-//         return;
-//     }
-    
-//     Node_st* node = (Node_st *) nd;
-    
-//     // Print current node with tree structure
-//     printf("%s%s", prefix, is_last ? "└── " : "├── ");
-//     printf("Node[%p]: form=%d, prio=%d, pos=(%.2f,%.2f)\n", 
-//            (void*)node, node->formType, node->priority, node->x, node->y);
-    
-//     // Print bounding box info with indentation
-//     printf("%s%s    BB: x=%.2f, y=%.2f, w=%.2f, h=%.2f\n", 
-//            prefix, is_last ? "    " : "│   ",
-//            node->sub_bb.x, node->sub_bb.y, node->sub_bb.w, node->sub_bb.h);
-    
-//     // Print children info
-//     printf("%s%s    Children: L=%s, R=%s\n", 
-//            prefix, is_last ? "    " : "│   ",
-//            node->left ? "Yes" : "NULL", 
-//            node->right ? "Yes" : "NULL");
-    
-//     // Prepare prefix for children
-//     char new_prefix[256];
-//     snprintf(new_prefix, sizeof(new_prefix), "%s%s", prefix, is_last ? "    " : "│   ");
-    
-//     // Print children
-//     if (node->left || node->right) {
-//         if (node->left) {
-//             print_tree_aux(node->left, depth + 1, new_prefix, node->right == NULL);
-//         }
-//         if (node->right) {
-//             print_tree_aux(node->right, depth + 1, new_prefix, 1);
-//         }
-//     }
-// }
-
-// static void print_tree(Node nd) {
-//     if (nd == NULL) {
-//         printf("Tree is empty (NULL)\n");
-//         return;
-//     }
-    
-//     printf("\n=== SMU TREAP STRUCTURE ===\n");
-//     print_tree_aux(nd, 0, "", 1);
-//     printf("=========================\n\n");
-// }
-
 static void alloc_error() { 
     fprintf(stderr, "(ERROR) smu_treap: insufficient memory for smu_treap allocation");
     exit(EXIT_FAILURE); 
@@ -154,15 +104,6 @@ static bool bounding_box_intersects(const BoundingBox* bb1, const BoundingBox* b
     return true;
 }
 
-// static bool is_bounding_boxes_contained(BoundingBox *inner_bbm, BoundingBox *outer_bbm) {
-//     if (inner_bbm == NULL || outer_bbm == NULL) return false;
-    
-//     return (inner_bbm->x >= outer_bbm->x && 
-//             inner_bbm->y >= outer_bbm->y &&
-//             (inner_bbm->x + inner_bbm->w) <= (outer_bbm->x + outer_bbm->w) &&
-//             (inner_bbm->y + inner_bbm->h) <= (outer_bbm->y + outer_bbm->h));
-// }
-
 static bool is_point_inside_bounding_box(BoundingBox *bb, double x, double y) {
     if (bb == NULL) return false;
     
@@ -179,7 +120,7 @@ static void join_bounding_boxes(BoundingBox *first_bb, BoundingBox *second_bb, d
     double max_x = (first_bb->x + first_bb->w) > (second_bb->x + second_bb->w) ? 
                    (first_bb->x + first_bb->w) : (second_bb->x + second_bb->w);
     double max_y = (first_bb->y + first_bb->h) > (second_bb->y + second_bb->h) ? 
-                   (first_bb->y + first_bb->h) : (second_bb->y + second_bb->h);
+                (first_bb->y + first_bb->h) : (second_bb->y + second_bb->h);
     
     *x = min_x;
     *y = min_y;
@@ -223,7 +164,6 @@ static Node rotate_right(Node nd) {
     Node_st *left_node = node->left; 
     Node_st *left_node_right = left_node->right; 
 
-    // Primeiro faz a rotação física
     left_node->right = node;
     node->left = left_node_right;
 
@@ -377,16 +317,33 @@ static void promote_node_by_hit_count(SmuTreap t, Node_st *root) {
     root->hitCount++;
 }
 
+static bool compare_nodes(ListValue value, void *target) {
+   Node *node = (Node *) value; 
+   Node *target_node = (Node *) target; 
+
+   Info node_form = getInfoSmuT(NULL, node); 
+   DescritorTipoInfo node_form_type = getTypeInfoSmuT(NULL, node); 
+   Info node_target_form = getInfoSmuT(NULL, target_node); 
+   DescritorTipoInfo node_target_form_type = getTypeInfoSmuT(NULL, target_node); 
+
+
+   int node_id = get_form_id(node_form_type, node_form); 
+   int target_node_id = get_form_id(node_target_form_type, node_target_form); 
+   return node_id == target_node_id;
+}
+
 static void getInfosDentroRegiaoSmuT_aux(SmuTreap t, Node_st *root, BoundingBox interest_bb, List L, FdentroDeRegiao is_form_inside_region, double x1, double y1, double x2, double y2) {
     if (root == NULL) return;
     if (bounding_box_intersects(&root->sub_bb, &interest_bb) == false) return; // node subtree does not intersect the interest region
     
     if (is_form_inside_region(NULL, root, root->form, x1, y1, x2, y2)) {
-        list_insert(L, root); // form is entirely inside the interest region
-        promote_node_by_hit_count(t, root);
-        
         FormState state = get_form_state(root->formType, root->form);
-        set_form_state_selected(state, true); 
+        if (!list_includes(L, root, &compare_nodes)) {
+            list_insert(L, root);
+            promote_node_by_hit_count(t, root);
+            
+            set_form_state_selected(state, true); 
+        }
     }
 
     getInfosDentroRegiaoSmuT_aux(t, root->left, interest_bb, L, is_form_inside_region, x1, y1, x2, y2);
@@ -423,9 +380,10 @@ static void getNodesDentroRegiaoSmuT_aux(Node r, BoundingBox interest_bb, List L
     if (bounding_box_intersects(&root->sub_bb, &interest_bb) == false) return; // node subtree does not intersect the interest region 
 
     if (is_point_inside_bounding_box(&interest_bb, root->x, root->y)) {
-        printf("Node %p is inside the interest region\n", (void *) root);
-        list_insert(L, root);
-        promote_node_by_hit_count(t, root);
+        if (!list_includes(L, root, &compare_nodes)) {
+            list_insert(L, root);
+            promote_node_by_hit_count(t, root);
+        }
     }
 
     getNodesDentroRegiaoSmuT_aux(root->left, interest_bb, L, t);
@@ -486,7 +444,7 @@ Node getNodeSmuT(SmuTreap t, double x, double y) {
 }
 
 Info getInfoSmuT(SmuTreap t, Node n) {
-    (void)t; // ignore arg
+    (void)t; 
     assert(n);
     
     Node_st *node = (Node_st *) n; 
@@ -494,9 +452,9 @@ Info getInfoSmuT(SmuTreap t, Node n) {
 }
 
 static void killSmuTreap_aux(SmuTreap t, Node n, Info i, double x, double y, void *aux) {
-    (void)x; // unused parameter
-    (void)y; // unused parameter
-    (void)aux; // unused parameter
+    (void)x; 
+    (void)y; 
+    (void)aux; 
     
     DescritorTipoInfo formType = getTypeInfoSmuT(t, n);
     free_form(formType, i);
@@ -645,4 +603,58 @@ bool getInfosAtingidoPontoSmuT(SmuTreap t, double x, double y, FpontoInternoAInf
     if (list_get_size(L) <= 0) return false; 
 
     return true;
+}
+
+static Node removeNodeSmuT_aux(Node nd, Node target) {
+    if (nd == NULL) return NULL;
+    
+    Node_st *node = (Node_st *) nd;
+    Node_st *target_node = (Node_st *) target;
+    
+    if (node == target_node) {
+        if (node->left == NULL && node->right == NULL) {
+            return NULL;
+        }
+        
+        if (node->left == NULL) {
+            return node->right;
+        }
+        if (node->right == NULL) {
+            return node->left;
+        }
+        
+        Node_st *left_child = (Node_st *) node->left;
+        Node_st *right_child = (Node_st *) node->right;
+        
+        if (left_child->priority >= right_child->priority) {
+            node = (Node_st *) rotate_right(nd);
+            node->right = removeNodeSmuT_aux(node->right, target);
+        } else {
+            node = (Node_st *) rotate_left(nd);
+            node->left = removeNodeSmuT_aux(node->left, target);
+        }
+        
+        return (Node) node;
+    }
+    
+    if (target_node->x <= node->x) {
+        node->left = removeNodeSmuT_aux(node->left, target);
+    } else {
+        node->right = removeNodeSmuT_aux(node->right, target);
+    }
+    
+    return nd;
+}
+
+void removeNoSmuT(SmuTreap t, Node n) {
+    assert(t);
+    assert(n);
+    
+    SmuTreap_st *tree = (SmuTreap_st *) t;
+    Node_st *node = (Node_st *) n;
+    
+    node->priority = -1;
+    tree->root = removeNodeSmuT_aux(tree->root, n);
+    
+    free(node);
 }

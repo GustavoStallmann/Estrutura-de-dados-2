@@ -173,6 +173,21 @@ double get_form_distance_disp(DescritorTipoInfo tp, Info form) {
     }
 }
 
+char* get_form_name(DescritorTipoInfo tp) {
+    switch (tp) {
+        case CIRCLE: 
+            return "Circulo";
+        case RECT: 
+            return "Retangulo";
+        case LINE: 
+            return "Linha"; 
+        case TEXT:
+            return "Texto"; 
+        default:
+            return "Desconhecido";
+    }
+}
+
 void free_form(DescritorTipoInfo tp, Info form) {
     switch (tp) {
         case CIRCLE:

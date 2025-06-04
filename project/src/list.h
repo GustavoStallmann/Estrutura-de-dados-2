@@ -51,6 +51,15 @@ ListValue list_remove(List list);
 ListValue list_search(List list, void *value, compare f);
 
 /* 
+ * Check if the list includes a specific value
+ * @param list the list to check
+ * @param value the value to be searched
+ * @param compare_fn the comparison function
+ * @return bool true if the value is found, false otherwise
+ */
+bool list_includes(List list, void *value, compare compare_fn);
+
+/* 
  * Execute a function for each item in the list
  * @param list the list to iterate
  * @param foreach the function to be executed

@@ -14,7 +14,6 @@
 #include "smu_treap.h"
 #include "form_selection.h"
 
-
 #define MAX_LINE_LENGTH 512
 
 static SelectionManager g_selection_manager = NULL; 
@@ -30,7 +29,21 @@ static bool process_command(char *line_buffer, char *command_type) {
     return true; 
 }
 
-static void selr(SmuTreap t, char *line_buffer, List *selections_list) {
+static void print_selr_selection_callback(void *value, callback_data call_data) {
+    assert(value); 
+    assert(call_data); 
+
+    Node node = (Node) value;
+    FILE *txt_file = (FILE *) call_data; 
+
+    Info node_form = getInfoSmuT(NULL, node);
+    DescritorTipoInfo node_form_type = getTypeInfoSmuT(NULL, node);
+    int form_id = get_form_id(node_form_type, node_form); 
+
+    fprintf(txt_file, "\t%d: %s\n",form_id, get_form_name(node_form_type));
+}
+
+static void selr(SmuTreap t, char *line_buffer, List *selections_list, FILE *txt_file) {
     int n;
     double x, y, w, h;
     int parsed = sscanf(line_buffer, "%*s %d %lf %lf %lf %lf", &n, &x, &y, &w, &h);
@@ -44,13 +57,13 @@ static void selr(SmuTreap t, char *line_buffer, List *selections_list) {
         return; 
     }
 
-    if (selections_list[n] != NULL) {
-        list_free(selections_list[n], NULL);
+    if (selections_list[n] == NULL) {
+        selections_list[n] = new_list();
     }
-    selections_list[n] = new_list();
 
     double x2 = x + w;
     double y2 = y + h;
+    fprintf(txt_file, "[*] selr %lf %lf %lf %f\n", x, y, w, h); 
 
     if (g_selection_manager != NULL) {
         bool region_exists = false;
@@ -74,9 +87,10 @@ static void selr(SmuTreap t, char *line_buffer, List *selections_list) {
     }
 
     getInfosDentroRegiaoSmuT(t, x, y, x2, y2, &is_form_inside_region, selections_list[n]);
+    list_foreach(selections_list[n], &print_selr_selection_callback, txt_file);
 }
 
-static void seli(SmuTreap t, char *line_buffer, List *selections_list) {
+static void seli(SmuTreap t, char *line_buffer, List *selections_list, FILE *txt_file) {
     int n; 
     double x, y; 
     int parsed = sscanf(line_buffer, "%*s %d %lf %lf", &n, &x, &y);
@@ -90,16 +104,21 @@ static void seli(SmuTreap t, char *line_buffer, List *selections_list) {
         return; 
     }
 
+    fprintf(txt_file, "[*] seli %lf %lf\n", x, y); 
     Node found_node = getNodeSmuT(t, x, y); 
     if (found_node == NULL) {
         fprintf(stderr, "ERROR: processor_qry seli command did not find a form at the given coordinates (%lf/%lf)\n", x, y);
         return; 
     }
 
-    if (selections_list[n] != NULL) {
-        list_free(selections_list[n], NULL);
+    Info node_form = getInfoSmuT(NULL, found_node);
+    DescritorTipoInfo node_form_type = getTypeInfoSmuT(NULL, found_node);
+    int form_id = get_form_id(node_form_type, node_form); 
+    fprintf(txt_file, "\t%d: %s\n",form_id, get_form_name(node_form_type)); 
+
+    if (selections_list[n] == NULL) {
+        selections_list[n] = new_list();
     }
-    selections_list[n] = new_list();
 
     if (g_selection_manager != NULL) {
         selection_manager_set_region_data(g_selection_manager, n, x, y, 1, 1);
@@ -156,16 +175,20 @@ static void cln_helper(void *value, callback_data call_data) {
         return; 
     }
     
-    double x, y;
-    get_form_coordinates(form_type, form_info, &x, &y);
-    FormInfo cloned_form_info = clone_form(form_type, form_info, ++data->max_id, data->target_x, data->target_y);
+    double new_x, new_y;
+    get_form_coordinates(form_type, form_info, &new_x, &new_y);
+
+    new_x += data->target_x; 
+    new_y += data->target_y; 
+
+    FormInfo cloned_form_info = clone_form(form_type, form_info, ++data->max_id, new_x, new_y);
     if (cloned_form_info == NULL) {
         fprintf(stderr, "ERROR: processor_qry cln command failed to clone form\n");
         return;
     }
     
     Info cloned_form = get_form_info(cloned_form_info);
-    insertSmuT(data->tree, data->target_x, data->target_y, cloned_form, form_type, &get_form_bounding_box);
+    insertSmuT(data->tree, new_x, new_y, cloned_form, form_type, &get_form_bounding_box);
     
     free_form_info_wrapper_only(cloned_form_info);
 }
@@ -200,7 +223,7 @@ static void cln(SmuTreap t, char *line_buffer, List *selections_list) {
     list_foreach(selection, &cln_helper, &data); // clone the forms from the given selection
 }
 
-static void transp(SmuTreap t, char *line_buffer) {
+static void transp(SmuTreap t, char *line_buffer, FILE *txt_file) {
     int id; 
     double x, y;
     int parsed = sscanf(line_buffer, "%*s %d %lf %lf", &id, &x, &y);
@@ -208,6 +231,7 @@ static void transp(SmuTreap t, char *line_buffer) {
         fprintf(stderr, "ERROR: processor_qry transp command requires 3 parameters\n");
         return; 
     }
+    fprintf(txt_file, "[*] transp %d %lf %lf\n", id, x, y); 
 
     Node found_node = procuraNoSmuT(t, &find_node_by_id, &id);
     if (found_node == NULL) {
@@ -221,11 +245,16 @@ static void transp(SmuTreap t, char *line_buffer) {
         return; 
     }
 
+    double org_x, org_y;
+    get_form_coordinates(form_type, form_info, &org_x, &org_y);
+
+    fprintf(txt_file, "\t%s: pos original (%lf, %lf)\n", get_form_name(form_type), org_x, org_y); 
+
     transp_form(form_type, form_info,x, y);
     set_form_state_camouflaged(form_info, true);
 }
 
-static void cmflg(SmuTreap t, char *line_buffer) {
+static void cmflg(SmuTreap t, char *line_buffer, FILE *txt_file) {
     int id; 
     char cb[10] = {0}, cp[10] = {0}, w[10] = {0};
     int parsed = sscanf(line_buffer, "%*s %d %s %s %s", &id, cb, cp, w);
@@ -233,6 +262,8 @@ static void cmflg(SmuTreap t, char *line_buffer) {
         fprintf(stderr, "ERROR: processor_qry cmflg command requires 3 parameters\n");
         return; 
     }
+    
+    fprintf(txt_file, "[*] cmflg %d %s %s %s\n", id, cb, cp, w); 
     Node found_node = procuraNoSmuT(t, &find_node_by_id, &id);
     if (found_node == NULL) {
         fprintf(stderr, "ERROR: processor_qry cmflg command did not find a form with id %d\n", id);
@@ -244,6 +275,8 @@ static void cmflg(SmuTreap t, char *line_buffer) {
         fprintf(stderr, "ERROR: processor_qry cmflg command requires valid form type and info\n");
         return; 
     }
+    
+    fprintf(txt_file, "\t %s: camuflado(a)\n", get_form_name(form_type)); 
 
     FormStyle style = get_form_style(form_type, form_info);
     set_form_border_color(style, cb);
@@ -261,43 +294,53 @@ bool is_point_internal_to_form(SmuTreap t, Node n, Info i, double x, double y) {
     double form_x, form_y, form_w, form_h;
     get_form_coordinates(form_type, i, &form_x, &form_y);
     get_form_dimensions(form_type, i, &form_w, &form_h);
-    // if (form_type == LINE && ) 
-    //     printf("after: %lf %lf\n", form_w, form_h);
     if (form_w <= 0 || form_h <= 0) {
-        // fprintf(stderr, "ERROR: processor_qry is_point_internal_to_form requires valid form dimensions [%d](%lf, %lf)\n", form_type, form_w, form_h);
-        // return false; 
+        form_w = 1; 
+        form_h = 1; 
     }
 
     bool is_internal = (x >= form_x && x <= form_x + form_w) && (y >= form_y && y <= form_y + form_h);
     return is_internal;
 }
 
-static void set_form_as_blown(void *value, callback_data call_data) {
+static void set_form_as_hit(void *value, callback_data call_data) {
     Node node = (Node) value;
     SmuTreap t = (SmuTreap) call_data;
     if (node == NULL || t == NULL) {
-        fprintf(stderr, "ERROR: processor_qry set_form_as_blown requires valid node and treap\n");
+        fprintf(stderr, "ERROR: processor_qry set_form_as_hit requires valid node and treap\n");
         return; 
     }
 
     DescritorTipoInfo form_type = getTypeInfoSmuT(t, node);
     Info form_info = getInfoSmuT(t, node);
     if (form_type == -1 || form_info == NULL) {
-        fprintf(stderr, "ERROR: processor_qry set_form_as_blown requires valid form type and info\n");
+        fprintf(stderr, "ERROR: processor_qry set_form_as_hit requires valid form type and info\n");
         return; 
     }
 
     FormState state = get_form_state(form_type, form_info);
-    set_form_state_blown(state, true);
+    set_form_state_hit(state, true);
 }
 
-static void blow(SmuTreap t, char *line_buffer) {
+static void report_hit_nodes(void *value, callback_data call_data) {
+    assert(value); 
+    assert(call_data); 
+
+    Node node = (Node) value; 
+    FILE *txt_file = (FILE *) call_data; 
+    Info form = getInfoSmuT(NULL, node);
+    DescritorTipoInfo form_type = getTypeInfoSmuT(NULL, node); 
+    fprintf(txt_file, "\t %s (%d) -> foi atingido pela explosao\n", get_form_name(form_type), get_form_id(form_type, form)); 
+}
+
+static void blow(SmuTreap t, char *line_buffer, FILE *txt_file) {
     int id; 
     int parsed = sscanf(line_buffer, "%*s %d", &id);
     if (parsed != 1) {
         fprintf(stderr, "ERROR: processor_qry blow command requires 1 parameter\n");
         return; 
     }
+    fprintf(txt_file, "[*] blow %d\n", id); 
 
     Node found_node = procuraNoSmuT(t, &find_node_by_id, &id);
     if (found_node == NULL) {
@@ -311,13 +354,16 @@ static void blow(SmuTreap t, char *line_buffer) {
         fprintf(stderr, "ERROR: processor_qry blow command requires valid form type and info\n");
         return; 
     }
+    fprintf(txt_file, "\t%s -> foi explodido\n", get_form_name(form_type)); 
+
     double x, y;
     get_form_coordinates(form_type, form_info, &x, &y);
 
     List hit_nodes = new_list();
     bool is_hit_nodes = getInfosAtingidoPontoSmuT(t, x, y, &is_point_internal_to_form, hit_nodes);
     if (is_hit_nodes) {
-        list_foreach(hit_nodes, &set_form_as_blown, t);
+        list_foreach(hit_nodes, &set_form_as_hit, t);
+        list_foreach(hit_nodes, &report_hit_nodes, txt_file);
     }
 
     FormState state = get_form_state(form_type, form_info);
@@ -350,7 +396,6 @@ struct disp_data {
     SmuTreap smu_treap;
     Info line_info;
     List hit_nodes;
-    double disp_distance; 
 };
 
 void disp_selection(void *value, callback_data call_data) {
@@ -372,8 +417,14 @@ void disp_selection(void *value, callback_data call_data) {
     get_form_coordinates(LINE, data->line_info, &lineX1, &lineY1);
     get_form_dimensions(LINE, data->line_info, &lineX2, &lineY2);
 
+    double distance = get_form_distance_disp(form_type, form_info);
+    if (distance <= 0) {
+        fprintf(stderr, "ERROR: processor_qry disp command requires a positive distance for the LINE form\n");
+        return; 
+    }
+
     double endX, endY;
-    calc_disp_final_point(x, y, lineX1, lineY1, lineX2, lineY2, data->disp_distance, &endX, &endY);
+    calc_disp_final_point(x, y, lineX1, lineY1, lineX2, lineY2, distance, &endX, &endY);
     transp_form(form_type, form_info, endX, endY);
     set_form_state_blown(state, true);
 
@@ -432,21 +483,15 @@ void disp(SmuTreap t, char *line_buffer, List *selections_list) {
     }
     
     List selection = selections_list[n];
-    double distance = get_form_distance_disp(form_type, form_info);
-    if (distance <= 0) {
-        fprintf(stderr, "ERROR: processor_qry disp command requires a positive distance for the LINE form\n");
-        return; 
-    }
-
     List hit_nodes = new_list();
-    struct disp_data data = {.smu_treap = t, .line_info = form_info, .disp_distance = distance, .hit_nodes = hit_nodes};
+    struct disp_data data = {.smu_treap = t, .line_info = form_info, .hit_nodes = hit_nodes};
 
     list_foreach(selection, &disp_selection, &data);
     list_foreach(hit_nodes, &set_nodes_as_hit, t);
     list_free(hit_nodes, NULL);
 }
 
-static void qry_execute(FILE *qry_file, SmuTreap smu_treap) {
+static void qry_execute(FILE *qry_file, FILE *txt_file, SmuTreap smu_treap) {
     assert(qry_file);
 
     char line_buffer[MAX_LINE_LENGTH]; 
@@ -461,17 +506,17 @@ static void qry_execute(FILE *qry_file, SmuTreap smu_treap) {
         if (process_command(line_buffer, command_type) == false) continue; 
 
         if (strcmp(command_type, "selr") == 0) {
-            selr(smu_treap, line_buffer, selections_list);
+            selr(smu_treap, line_buffer, selections_list, txt_file);
         } else if (strcmp(command_type, "seli") == 0) {
-            seli(smu_treap, line_buffer, selections_list);
+            seli(smu_treap, line_buffer, selections_list, txt_file);
         } else if (strcmp(command_type, "cln") == 0) {
             cln(smu_treap, line_buffer, selections_list);
         } else if (strcmp(command_type, "transp") == 0) {
-            transp(smu_treap, line_buffer);
+            transp(smu_treap, line_buffer, txt_file);
         } else if (strcmp(command_type, "cmflg") == 0) {
-            cmflg(smu_treap, line_buffer);
+            cmflg(smu_treap, line_buffer, txt_file);
         } else if (strcmp(command_type, "blow") == 0) {
-            blow(smu_treap, line_buffer);
+            blow(smu_treap, line_buffer, txt_file);
         } else if (strcmp(command_type, "disp") == 0) {
             disp(smu_treap, line_buffer, selections_list);
         } else {
@@ -485,16 +530,28 @@ static void qry_execute(FILE *qry_file, SmuTreap smu_treap) {
     }
 }
 
-void qry_process(Dir dir, SmuTreap smu_treap, SelectionManager selection_manager) {
-    char *file_extension = get_dir_file_extension(dir);
+void qry_process(Dir qry, Dir txt, SmuTreap smu_treap, SelectionManager selection_manager) {
+    char *file_extension = get_dir_file_extension(qry);
     if (strcmp(file_extension, "qry") != 0) {
         fprintf(stderr, "ERROR: processor_qry requires a .qry file extension\n"); 
         return; 
     }
 
-    FILE *qry_file = file_open_readable(dir);
+    if (txt == NULL) {
+        fprintf(stderr, "ERROR: processor_qry requires a .txt file to reports\n"); 
+        return; 
+    }
+
+    FILE *qry_file = file_open_readable(qry);
     if (qry_file == NULL) {
         fprintf(stderr, "ERROR: processor_qry couldn't open the .qry file\n"); 
+        return; 
+    }
+
+    FILE *txt_file = file_open_writable(txt);
+    if (txt_file == NULL) {
+        fprintf(stderr, "ERROR: processor_qry couldn't open the .txt file\n"); 
+        file_close(qry_file);
         return; 
     }
 
@@ -505,8 +562,9 @@ void qry_process(Dir dir, SmuTreap smu_treap, SelectionManager selection_manager
         }
     }
 
-    qry_execute(qry_file, smu_treap);
+    qry_execute(qry_file, txt_file, smu_treap);
     file_close(qry_file);
+    file_close(txt_file);
     
     g_selection_manager = NULL;
 }

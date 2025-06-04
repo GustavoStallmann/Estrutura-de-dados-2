@@ -43,13 +43,12 @@ static List geo_execute(FILE *geo_file) {
             continue; 
         }
 
-        if (form != NULL) {
-            if (list_insert_end(form_list, form) == NULL) {
-                fprintf(stderr, "ERROR: processor_geo couldn't add the form to the list\n"); 
-                free_form_info(form);
-                continue; 
-            }	
-        }
+        if (form == NULL) continue; 
+        
+        if (list_insert_end(form_list, form) == NULL) {
+            fprintf(stderr, "ERROR: processor_geo couldn't add the form to the list\n"); 
+            free_form_info(form);
+        }	
     }
 
     free_form_style(actual_font_style);
