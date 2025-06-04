@@ -1,7 +1,0 @@
-[*] blow 16
-	Linha -> foi explodido
-	 Circulo (19) -> foi atingido pela explosao
-	 Linha (16) -> foi atingido pela explosao
-[*] blow 20
-	Circulo -> foi explodido
-	 Circulo (20) -> foi atingido pela explosao
