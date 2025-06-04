@@ -195,8 +195,6 @@ static void cln(SmuTreap t, char *line_buffer, List *selections_list) {
         return; 
     }
 
-    printf("Amount selected: %d\n", list_get_size(selection));
-    
     struct cln_data data = {.max_id = 0, .tree = t, .target_x = x, .target_y = y};
     list_foreach(selection, &get_max_info_id, &data); // lookup for the maximum id in the selection
     list_foreach(selection, &cln_helper, &data); // clone the forms from the given selection
@@ -259,11 +257,14 @@ bool is_point_internal_to_form(SmuTreap t, Node n, Info i, double x, double y) {
         fprintf(stderr, "ERROR: processor_qry is_point_internal_to_form requires valid form type and info\n");
         return false; 
     }
+
     double form_x, form_y, form_w, form_h;
     get_form_coordinates(form_type, i, &form_x, &form_y);
     get_form_dimensions(form_type, i, &form_w, &form_h);
+    if (form_type == LINE) 
+        printf("after: %lf %lf\n", form_w, form_h);
     if (form_w <= 0 || form_h <= 0) {
-        fprintf(stderr, "ERROR: processor_qry is_point_internal_to_form requires valid form dimensions\n");
+        fprintf(stderr, "ERROR: processor_qry is_point_internal_to_form requires valid form dimensions [%d](%lf, %lf)\n", form_type, form_w, form_h);
         return false; 
     }
 
@@ -325,7 +326,7 @@ static void blow(SmuTreap t, char *line_buffer) {
 }
 
 static void calc_disp_final_point(double startX, double startY, double lineX1, double lineY1, 
-    double lineX2, double lineY2, double distance, double* endX, double* endY) {
+    double lineX2, double lineY2, double distance, double *endX, double *endY) {
 
     double dx = lineX2 - lineX1;
     double dy = lineY2 - lineY1;
@@ -431,11 +432,6 @@ void disp(SmuTreap t, char *line_buffer, List *selections_list) {
     }
     
     List selection = selections_list[n];
-    if (selection == NULL) {
-        fprintf(stderr, "ERROR: processor_qry disp command requires a valid selection (selection %d is NULL)\n", n);
-        return; 
-    }
-
     double distance = get_form_distance_disp(form_type, form_info);
     if (distance <= 0) {
         fprintf(stderr, "ERROR: processor_qry disp command requires a positive distance for the LINE form\n");

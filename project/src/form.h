@@ -32,7 +32,6 @@ void get_form_coordinates(DescritorTipoInfo tp, Info form, double *x, double *y)
 void get_form_dimensions(DescritorTipoInfo tp, Info form, double *w, double *h);
 FormState get_form_state(DescritorTipoInfo tp, Info form);
 bool is_form_inside_region(SmuTreap t, Node n, Info i, double x1, double y1, double x2, double y2);
-void get_form_dimensions(DescritorTipoInfo tp, Info form, double *w, double *h);
 double get_form_distance_disp(DescritorTipoInfo tp, Info form); 
 
 /* 

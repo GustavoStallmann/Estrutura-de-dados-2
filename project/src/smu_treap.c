@@ -456,6 +456,7 @@ bool getNodesDentroRegiaoSmuT(SmuTreap t, double x1, double y1, double x2, doubl
 DescritorTipoInfo getTypeInfoSmuT(SmuTreap t, Node n) {
     (void)t; // ignore arg
     assert(n);
+    if (n == NULL) return -1; 
     
     Node_st *node = (Node_st *) n; 
     return node->formType; 

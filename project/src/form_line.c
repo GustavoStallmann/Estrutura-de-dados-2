@@ -14,6 +14,14 @@ typedef struct {
     FormState state;
 } Line_st; 
 
+static double get_min(double x, double y) {
+    return x < y? x: y; 
+}
+
+static double get_max(double x, double y) {
+    return x > y? x: y;
+}
+
 Line new_line(int id, double x, double y, double x2, double y2, FormStyle style) {
     Line_st *line = (Line_st *) malloc(sizeof(Line_st)); 
     if (line == NULL) {
@@ -22,10 +30,10 @@ Line new_line(int id, double x, double y, double x2, double y2, FormStyle style)
     }
 
     line->id = id; 
-    line->x = x; 
-    line->y = y; 
-    line->x2 = x2; 
-    line->y2 = y2; 
+    line->x = get_min(x, x2); 
+    line->y = get_min(y, y2); 
+    line->x2 = get_max(x, x2); 
+    line->y2 = get_max(y, y2); 
     line->style = style;
     line->state = new_form_state();
 

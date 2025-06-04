@@ -37,12 +37,17 @@ clean:
 # Run all tests (with and without .qry files)
 test-suecia: $(TARGET)
 	./program -o "./${RESULT_DIR}" -e "./input/band-suecia" -f "01-band-suecia.geo"
-	./program -o "./${RESULT_DIR}" -e "./input/band-suecia" -f "01-band-suecia.geo" -q "transp.qry"
+	./program -o "./${RESULT_DIR}" -e "./input/band-suecia" -f "01-band-suecia.geo" -q "blow.qry"
+	./program -o "./${RESULT_DIR}" -e "./input/band-suecia" -f "01-band-suecia.geo" -q "clone-1clones.qry"
+	./program -o "./${RESULT_DIR}" -e "./input/band-suecia" -f "01-band-suecia.geo" -q "clone-2clones.qry"
+	./program -o "./${RESULT_DIR}" -e "./input/band-suecia" -f "01-band-suecia.geo" -q "clone-3disp.qry"
+	./program -o "./${RESULT_DIR}" -e "./input/band-suecia" -f "01-band-suecia.geo" -q "clone-clones.qry"
+	./program -o "./${RESULT_DIR}" -e "./input/band-suecia" -f "01-band-suecia.geo" -q "clone.qry"
 	./program -o "./${RESULT_DIR}" -e "./input/band-suecia" -f "01-band-suecia.geo" -q "cmflg.qry"
 	./program -o "./${RESULT_DIR}" -e "./input/band-suecia" -f "01-band-suecia.geo" -q "sel-0-r1.qry"
 	./program -o "./${RESULT_DIR}" -e "./input/band-suecia" -f "01-band-suecia.geo" -q "sel-1-r1-r2.qry"
-	./program -o "./${RESULT_DIR}" -e "./input/band-suecia" -f "01-band-suecia.geo" -q "clone.qry"
-	./program -o "./${RESULT_DIR}" -e "./input/band-suecia" -f "01-band-suecia.geo" -q "blow.qry"
+	./program -o "./${RESULT_DIR}" -e "./input/band-suecia" -f "01-band-suecia.geo" -q "spy-rect.qry"
+	./program -o "./${RESULT_DIR}" -e "./input/band-suecia" -f "01-band-suecia.geo" -q "transp.qry"
 
 test-vaso: $(TARGET)
 	./program -o "./${RESULT_DIR}" -e "./input/vaso" -f "00-vaso-simples.geo"
@@ -54,6 +59,7 @@ test-vaso: $(TARGET)
 	./program -o "./${RESULT_DIR}" -e "./input/vaso" -f "00-vaso-simples.geo" -q "disp-3-retang-regiao.qry"
 	./program -o "./${RESULT_DIR}" -e "./input/vaso" -f "00-vaso-simples.geo" -q "disp-4-txt-regiao.qry"
 	./program -o "./${RESULT_DIR}" -e "./input/vaso" -f "00-vaso-simples.geo" -q "transp.qry"
+
 
 debug:
 	valgrind --leak-check=full --track-origins=yes ./program -o "./${RESULT_DIR}" -e "./input" -f "01-band-suecia.geo"
