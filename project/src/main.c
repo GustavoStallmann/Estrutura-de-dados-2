@@ -11,7 +11,7 @@
 #include "processor_geo.h"
 #include "processor_qry.h"
 
-#define EPSILON 0.3
+#define EPSILON 0.5
 
 typedef struct {
     char *base_input_dir;
@@ -38,12 +38,6 @@ static void combine_file_names(char *str1, char *str2, char *file_extension, cha
 static void export_svg_treap(SmuTreap smu_treap, char *base_output_dir, char *filename, SelectionManager selection_manager);
 static void export_dot_treap(SmuTreap smu_treap, char *base_output_dir, char *geo_name, char *qry_name);
 
-/*
-TODOS: 
-    - Valor do epsilon? 
-    - Promover nós nas funções de consulta
-*/
-
 int main(int argc, char *argv[]) {
     ArgManager argm = check_args(argc, argv);
     ProgramConfig config = extract_config_from_args(argm);
@@ -61,7 +55,6 @@ int main(int argc, char *argv[]) {
     free_arg_manager(argm);
     return 0;
 }
-
 
 static ProgramConfig extract_config_from_args(ArgManager argm) {
     ProgramConfig config;

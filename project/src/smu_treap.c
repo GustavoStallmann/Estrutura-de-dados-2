@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <time.h>
-#include <math.h>
 
 #include "smu_treap.h"
 #include "form.h"
@@ -310,11 +309,12 @@ static void promote_node_by_hit_count(SmuTreap t, Node_st *root) {
 
     SmuTreap_st *tree = (SmuTreap_st *) t;
 
-    if (root->hitCount > tree->hitCount) {
-        promoteNodeSmuT(t, (Node) root, tree->promotionRate);
-    }
-
     root->hitCount++;
+    
+    if (root->hitCount >= tree->hitCount) {
+        promoteNodeSmuT(t, (Node) root, tree->promotionRate);
+        root->hitCount = 0; 
+    }
 }
 
 static bool compare_nodes(ListValue value, void *target) {
@@ -354,7 +354,6 @@ bool getInfosDentroRegiaoSmuT(SmuTreap t, double x1, double y1, double x2, doubl
     assert(t);
     SmuTreap_st *tree = (SmuTreap_st *) t;
 
-    // Normalize coordinates to ensure min/max are correct
     double min_x = (x1 < x2) ? x1 : x2;
     double max_x = (x1 < x2) ? x2 : x1;
     double min_y = (y1 < y2) ? y1 : y2;
@@ -425,7 +424,7 @@ static Node getNodeSmuT_aux(Node current, double x, double y, double epsilon, Sm
     
     Node_st *node = (Node_st *) current;
 
-    if (fabs(node->x - x) <= epsilon && fabs(node->y - y) <= epsilon) {
+    if (node->x - x <= epsilon && node->y - y <= epsilon) {
         promoteNodeSmuT(t, current, ((SmuTreap_st *)t)->promotionRate);
         return current;
     }
@@ -479,7 +478,7 @@ void killSmuTreap(SmuTreap t) {
     free(t);
 }
 
-static void get_node_type(DescritorTipoInfo formType, char *str, char *color) {
+static void get_node_color(DescritorTipoInfo formType, char *str, char *color) {
     switch (formType) {
         case CIRCLE:
             strcpy(str, "circle");
@@ -507,9 +506,9 @@ static void printDotSmuTreap_aux(Node_st *node, FILE *file) {
     if (node == NULL) return;
 
     char color[20], str[20];
-    get_node_type(node->formType, str, color);
+    get_node_color(node->formType, str, color);
 
-    fprintf(file, "\t\"%p\" [label=\"%s\np: %d\nX: %d\\nY: %d\", color=black, fontcolor=white, style=filled, fillcolor=%s];\n", node, str, node->priority, (int) node->x, (int) node->y, color);
+    fprintf(file, "\t\"%p\" [label=\"%s\np: %d\nhc: %d\nX: %d\\nY: %d\", color=black, fontcolor=white, style=filled, fillcolor=%s];\n", node, str, node->priority, node->hitCount, (int) node->x, (int) node->y, color);
 
     if (node->left != NULL) {
         fprintf(file, "\t\"%p\" -- \"%p\";\n", node, node->left);
@@ -581,11 +580,11 @@ void getInfosAtingidoPontoSmuT_aux(SmuTreap t, Node nd, double x, double y, Fpon
 
     Node_st *node = (Node_st *) nd; 
 
-    if (is_point_inside_bounding_box(&node->sub_bb, x, y)) {
-        if (f(t, nd, node->form, x, y)) {
-            list_insert(L, node);
-            promote_node_by_hit_count(t, node);
-        }
+    if (!is_point_inside_bounding_box(&node->sub_bb, x, y)) return; 
+    
+    if (f(t, nd, node->form, x, y)) {
+        list_insert(L, node);
+        promote_node_by_hit_count(t, node);
     }
 
     getInfosAtingidoPontoSmuT_aux(t, node->left, x, y, f, L);

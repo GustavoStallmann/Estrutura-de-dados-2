@@ -330,7 +330,7 @@ static void report_hit_nodes(void *value, callback_data call_data) {
     FILE *txt_file = (FILE *) call_data; 
     Info form = getInfoSmuT(NULL, node);
     DescritorTipoInfo form_type = getTypeInfoSmuT(NULL, node); 
-    fprintf(txt_file, "\t %s (%d) -> foi atingido pela explosao\n", get_form_name(form_type), get_form_id(form_type, form)); 
+    fprintf(txt_file, "\t%s (%d) -> foi alvo da operação\n", get_form_name(form_type), get_form_id(form_type, form)); 
 }
 
 static void blow(SmuTreap t, char *line_buffer, FILE *txt_file) {
@@ -446,7 +446,7 @@ void set_nodes_as_hit(void *value, callback_data call_data) {
     set_form_state_blown(state, true);
 }
 
-void disp(SmuTreap t, char *line_buffer, List *selections_list) {
+void disp(SmuTreap t, char *line_buffer, List *selections_list, FILE *txt_file) {
     int id, n; 
     int parsed = sscanf(line_buffer, "%*s %d %d", &id, &n);
     if (parsed != 2) {
@@ -454,11 +454,15 @@ void disp(SmuTreap t, char *line_buffer, List *selections_list) {
         return; 
     }
 
+    fprintf(txt_file, "[*] disp %d %d\n", id, n); 
+
     Node found_node = procuraNoSmuT(t, &find_node_by_id, &id);
     if (found_node == NULL) {
         fprintf(stderr, "ERROR: processor_qry disp command did not find a form with id %d\n", id);
         return; 
     }
+
+    fprintf(txt_file, "[*] disp %d %d\n", id, n); 
 
     DescritorTipoInfo form_type = getTypeInfoSmuT(t, found_node);
     if (form_type != LINE) {
@@ -488,7 +492,55 @@ void disp(SmuTreap t, char *line_buffer, List *selections_list) {
 
     list_foreach(selection, &disp_selection, &data);
     list_foreach(hit_nodes, &set_nodes_as_hit, t);
+    list_foreach(hit_nodes, &report_hit_nodes, txt_file);
     list_free(hit_nodes, NULL);
+}
+
+static void spy(SmuTreap t, char *line_buffer, FILE *txt_file) {
+    int id; 
+    int parsed = sscanf(line_buffer, "%*s %d", &id);
+    if (parsed != 1) {
+        fprintf(stderr, "ERROR: processor_qry spy command requires 1 parameter\n");
+        return; 
+    }
+    fprintf(txt_file, "[*] spy %d\n", id); 
+
+    Node found_node = procuraNoSmuT(t, &find_node_by_id, &id);
+    if (found_node == NULL) {
+        fprintf(stderr, "ERROR: processor_qry spy command did not find a form with id %d\n", id);
+        return; 
+    }
+    
+    DescritorTipoInfo form_type = getTypeInfoSmuT(t, found_node);
+    Info form_info = getInfoSmuT(t, found_node);
+    if (form_type == -1 || form_info == NULL) {
+        fprintf(stderr, "ERROR: processor_qry spy command requires valid form type and info\n");
+        return; 
+    }
+
+    List forms_selected = new_list(); 
+
+    switch (form_type) {
+        case TEXT: {
+            double x, y; 
+            get_form_coordinates(form_type, form_info, &x, &y); 
+            getNodesDentroRegiaoSmuT(t, x-1, y-1, x+1, y+1, forms_selected);
+            break;
+        } 
+        case RECT: {
+            double x, y, w, h; 
+            get_form_coordinates(form_type, form_info, &x, &y); 
+            get_form_dimensions(form_type, form_info, &w, &h); 
+
+            getInfosDentroRegiaoSmuT(t, x, y, w, h, &is_form_inside_region, forms_selected); 
+            break; 
+        }
+        default:
+        fprintf(stderr, "ERROR: spy requires a line or rect element"); 
+        break; 
+    }
+    list_foreach(forms_selected, &report_hit_nodes, txt_file); 
+    list_free(forms_selected, NULL); 
 }
 
 static void qry_execute(FILE *qry_file, FILE *txt_file, SmuTreap smu_treap) {
@@ -518,7 +570,9 @@ static void qry_execute(FILE *qry_file, FILE *txt_file, SmuTreap smu_treap) {
         } else if (strcmp(command_type, "blow") == 0) {
             blow(smu_treap, line_buffer, txt_file);
         } else if (strcmp(command_type, "disp") == 0) {
-            disp(smu_treap, line_buffer, selections_list);
+            disp(smu_treap, line_buffer, selections_list, txt_file);
+        } else if (strcmp(command_type, "spy") == 0) {
+            spy(smu_treap, line_buffer, txt_file);
         } else {
             fprintf(stderr, "ERROR: processor_qry unknown command type '%s'\n", command_type);
         }

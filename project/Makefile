@@ -48,7 +48,7 @@ test-suecia: $(TARGET)
 	./program -o "./${RESULT_DIR}" -e "./input/band-suecia" -f "01-band-suecia.geo" -q "clone.qry"
 	./program -o "./${RESULT_DIR}" -e "./input/band-suecia" -f "01-band-suecia.geo" -q "cmflg.qry"
 	./program -o "./${RESULT_DIR}" -e "./input/band-suecia" -f "01-band-suecia.geo" -q "sel-0-r1.qry"
-	./program -o "./${RESULT_DIR}" -e "./input/band-suecia" -f "01-band-suecia.geo" -q "sel-1-r1-r2.qry"
+	./program -o "./${RESULT_DIR}" -e "./input/band-suecia" -f "01-band-suecia.geo" -q "sel-1-r1-r2.qry" -pr 10
 	./program -o "./${RESULT_DIR}" -e "./input/band-suecia" -f "01-band-suecia.geo" -q "spy-rect.qry"
 	./program -o "./${RESULT_DIR}" -e "./input/band-suecia" -f "01-band-suecia.geo" -q "transp.qry"
 
