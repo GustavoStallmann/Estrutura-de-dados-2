@@ -1,0 +1,806 @@
+[*] transp 802 291.330000 64.670000
+	Retangulo: pos original (141.333000, 14.666000)
+[*] transp 803 301.330000 64.670000
+	Retangulo: pos original (151.333000, 14.666000)
+[*] transp 804 311.330000 64.670000
+	Retangulo: pos original (161.333000, 14.666000)
+[*] transp 805 321.330000 64.670000
+	Retangulo: pos original (171.333000, 14.666000)
+[*] transp 806 331.330000 64.670000
+	Retangulo: pos original (181.333000, 14.666000)
+[*] transp 807 341.330000 64.670000
+	Retangulo: pos original (191.333000, 14.666000)
+[*] transp 808 291.330000 74.670000
+	Retangulo: pos original (141.333000, 24.666000)
+[*] transp 809 301.330000 74.670000
+	Retangulo: pos original (151.333000, 24.666000)
+[*] transp 810 311.330000 74.670000
+	Retangulo: pos original (161.333000, 24.666000)
+[*] transp 811 321.330000 74.670000
+	Retangulo: pos original (171.333000, 24.666000)
+[*] transp 812 331.330000 74.670000
+	Retangulo: pos original (181.333000, 24.666000)
+[*] transp 813 341.330000 74.670000
+	Retangulo: pos original (191.333000, 24.666000)
+[*] transp 814 291.330000 84.670000
+	Retangulo: pos original (141.333000, 34.666000)
+[*] transp 815 301.330000 84.670000
+	Retangulo: pos original (151.333000, 34.666000)
+[*] transp 816 311.330000 84.670000
+	Retangulo: pos original (161.333000, 34.666000)
+[*] transp 817 321.330000 84.670000
+	Retangulo: pos original (171.333000, 34.666000)
+[*] transp 818 331.330000 84.670000
+	Retangulo: pos original (181.333000, 34.666000)
+[*] transp 819 341.330000 84.670000
+	Retangulo: pos original (191.333000, 34.666000)
+[*] transp 820 291.330000 94.670000
+	Retangulo: pos original (141.333000, 44.666000)
+[*] transp 821 301.330000 94.670000
+	Retangulo: pos original (151.333000, 44.666000)
+[*] transp 822 311.330000 94.670000
+	Retangulo: pos original (161.333000, 44.666000)
+[*] transp 823 321.330000 94.670000
+	Retangulo: pos original (171.333000, 44.666000)
+[*] transp 824 331.330000 94.670000
+	Retangulo: pos original (181.333000, 44.666000)
+[*] transp 825 341.330000 94.670000
+	Retangulo: pos original (191.333000, 44.666000)
+[*] transp 826 291.330000 104.670000
+	Retangulo: pos original (141.333000, 54.666000)
+[*] transp 827 301.330000 104.670000
+	Retangulo: pos original (151.333000, 54.666000)
+[*] transp 828 311.330000 104.670000
+	Retangulo: pos original (161.333000, 54.666000)
+[*] transp 829 321.330000 104.670000
+	Retangulo: pos original (171.333000, 54.666000)
+[*] transp 830 331.330000 104.670000
+	Retangulo: pos original (181.333000, 54.666000)
+[*] transp 831 341.330000 104.670000
+	Retangulo: pos original (191.333000, 54.666000)
+[*] transp 832 291.330000 114.670000
+	Retangulo: pos original (141.333000, 64.666000)
+[*] transp 833 301.330000 114.670000
+	Retangulo: pos original (151.333000, 64.666000)
+[*] transp 834 311.330000 114.670000
+	Retangulo: pos original (161.333000, 64.666000)
+[*] transp 835 321.330000 114.670000
+	Retangulo: pos original (171.333000, 64.666000)
+[*] transp 836 331.330000 114.670000
+	Retangulo: pos original (181.333000, 64.666000)
+[*] transp 837 341.330000 114.670000
+	Retangulo: pos original (191.333000, 64.666000)
+[*] transp 838 291.330000 124.670000
+	Retangulo: pos original (141.333000, 74.666000)
+[*] transp 839 301.330000 124.670000
+	Retangulo: pos original (151.333000, 74.666000)
+[*] transp 840 311.330000 124.670000
+	Retangulo: pos original (161.333000, 74.666000)
+[*] transp 841 321.330000 124.670000
+	Retangulo: pos original (171.333000, 74.666000)
+[*] transp 842 331.330000 124.670000
+	Retangulo: pos original (181.333000, 74.666000)
+[*] transp 843 341.330000 124.670000
+	Retangulo: pos original (191.333000, 74.666000)
+[*] transp 844 291.330000 134.670000
+	Retangulo: pos original (141.333000, 84.666000)
+[*] transp 845 301.330000 134.670000
+	Retangulo: pos original (151.333000, 84.666000)
+[*] transp 846 311.330000 134.670000
+	Retangulo: pos original (161.333000, 84.666000)
+[*] transp 847 321.330000 134.670000
+	Retangulo: pos original (171.333000, 84.666000)
+[*] transp 848 331.330000 134.670000
+	Retangulo: pos original (181.333000, 84.666000)
+[*] transp 849 341.330000 134.670000
+	Retangulo: pos original (191.333000, 84.666000)
+[*] transp 850 291.330000 144.670000
+	Retangulo: pos original (141.333000, 94.666000)
+[*] transp 851 301.330000 144.670000
+	Retangulo: pos original (151.333000, 94.666000)
+[*] transp 852 311.330000 144.670000
+	Retangulo: pos original (161.333000, 94.666000)
+[*] transp 853 321.330000 144.670000
+	Retangulo: pos original (171.333000, 94.666000)
+[*] transp 854 331.330000 144.670000
+	Retangulo: pos original (181.333000, 94.666000)
+[*] transp 855 341.330000 144.670000
+	Retangulo: pos original (191.333000, 94.666000)
+[*] transp 856 291.330000 154.670000
+	Retangulo: pos original (141.333000, 104.666000)
+[*] transp 857 301.330000 154.670000
+	Retangulo: pos original (151.333000, 104.666000)
+[*] transp 858 311.330000 154.670000
+	Retangulo: pos original (161.333000, 104.666000)
+[*] transp 859 321.330000 154.670000
+	Retangulo: pos original (171.333000, 104.666000)
+[*] transp 860 331.330000 154.670000
+	Retangulo: pos original (181.333000, 104.666000)
+[*] transp 861 341.330000 154.670000
+	Retangulo: pos original (191.333000, 104.666000)
+[*] transp 862 291.330000 164.670000
+	Retangulo: pos original (141.333000, 114.666000)
+[*] transp 863 301.330000 164.670000
+	Retangulo: pos original (151.333000, 114.666000)
+[*] transp 864 311.330000 164.670000
+	Retangulo: pos original (161.333000, 114.666000)
+[*] transp 865 321.330000 164.670000
+	Retangulo: pos original (171.333000, 114.666000)
+[*] transp 866 331.330000 164.670000
+	Retangulo: pos original (181.333000, 114.666000)
+[*] transp 867 341.330000 164.670000
+	Retangulo: pos original (191.333000, 114.666000)
+[*] transp 868 291.330000 174.670000
+	Retangulo: pos original (141.333000, 124.666000)
+[*] transp 869 301.330000 174.670000
+	Retangulo: pos original (151.333000, 124.666000)
+[*] transp 870 311.330000 174.670000
+	Retangulo: pos original (161.333000, 124.666000)
+[*] transp 871 321.330000 174.670000
+	Retangulo: pos original (171.333000, 124.666000)
+[*] transp 872 331.330000 174.670000
+	Retangulo: pos original (181.333000, 124.666000)
+[*] transp 873 341.330000 174.670000
+	Retangulo: pos original (191.333000, 124.666000)
+[*] transp 874 291.330000 184.670000
+	Retangulo: pos original (141.333000, 134.666000)
+[*] transp 875 301.330000 184.670000
+	Retangulo: pos original (151.333000, 134.666000)
+[*] transp 876 311.330000 184.670000
+	Retangulo: pos original (161.333000, 134.666000)
+[*] transp 877 321.330000 184.670000
+	Retangulo: pos original (171.333000, 134.666000)
+[*] transp 878 331.330000 184.670000
+	Retangulo: pos original (181.333000, 134.666000)
+[*] transp 879 341.330000 184.670000
+	Retangulo: pos original (191.333000, 134.666000)
+[*] transp 880 291.330000 194.670000
+	Retangulo: pos original (141.333000, 144.666000)
+[*] transp 881 301.330000 194.670000
+	Retangulo: pos original (151.333000, 144.666000)
+[*] transp 882 311.330000 194.670000
+	Retangulo: pos original (161.333000, 144.666000)
+[*] transp 883 321.330000 194.670000
+	Retangulo: pos original (171.333000, 144.666000)
+[*] transp 884 331.330000 194.670000
+	Retangulo: pos original (181.333000, 144.666000)
+[*] transp 885 341.330000 194.670000
+	Retangulo: pos original (191.333000, 144.666000)
+[*] transp 886 291.330000 204.670000
+	Retangulo: pos original (141.333000, 154.666000)
+[*] transp 887 301.330000 204.670000
+	Retangulo: pos original (151.333000, 154.666000)
+[*] transp 888 311.330000 204.670000
+	Retangulo: pos original (161.333000, 154.666000)
+[*] transp 889 321.330000 204.670000
+	Retangulo: pos original (171.333000, 154.666000)
+[*] transp 890 331.330000 204.670000
+	Retangulo: pos original (181.333000, 154.666000)
+[*] transp 891 341.330000 204.670000
+	Retangulo: pos original (191.333000, 154.666000)
+[*] transp 892 291.330000 214.670000
+	Retangulo: pos original (141.333000, 164.666000)
+[*] transp 893 301.330000 214.670000
+	Retangulo: pos original (151.333000, 164.666000)
+[*] transp 894 311.330000 214.670000
+	Retangulo: pos original (161.333000, 164.666000)
+[*] transp 895 321.330000 214.670000
+	Retangulo: pos original (171.333000, 164.666000)
+[*] transp 896 331.330000 214.670000
+	Retangulo: pos original (181.333000, 164.666000)
+[*] transp 897 341.330000 214.670000
+	Retangulo: pos original (191.333000, 164.666000)
+[*] transp 898 291.330000 224.670000
+	Retangulo: pos original (141.333000, 174.666000)
+[*] transp 899 301.330000 224.670000
+	Retangulo: pos original (151.333000, 174.666000)
+[*] transp 900 311.330000 224.670000
+	Retangulo: pos original (161.333000, 174.666000)
+[*] transp 901 321.330000 224.670000
+	Retangulo: pos original (171.333000, 174.666000)
+[*] transp 902 331.330000 224.670000
+	Retangulo: pos original (181.333000, 174.666000)
+[*] transp 903 341.330000 224.670000
+	Retangulo: pos original (191.333000, 174.666000)
+[*] transp 904 291.330000 234.670000
+	Retangulo: pos original (141.333000, 184.666000)
+[*] transp 905 301.330000 234.670000
+	Retangulo: pos original (151.333000, 184.666000)
+[*] transp 906 311.330000 234.670000
+	Retangulo: pos original (161.333000, 184.666000)
+[*] transp 907 321.330000 234.670000
+	Retangulo: pos original (171.333000, 184.666000)
+[*] transp 908 331.330000 234.670000
+	Retangulo: pos original (181.333000, 184.666000)
+[*] transp 909 341.330000 234.670000
+	Retangulo: pos original (191.333000, 184.666000)
+[*] transp 910 291.330000 244.670000
+	Retangulo: pos original (141.333000, 194.666000)
+[*] transp 911 301.330000 244.670000
+	Retangulo: pos original (151.333000, 194.666000)
+[*] transp 912 311.330000 244.670000
+	Retangulo: pos original (161.333000, 194.666000)
+[*] transp 913 321.330000 244.670000
+	Retangulo: pos original (171.333000, 194.666000)
+[*] transp 914 331.330000 244.670000
+	Retangulo: pos original (181.333000, 194.666000)
+[*] transp 915 341.330000 244.670000
+	Retangulo: pos original (191.333000, 194.666000)
+[*] transp 916 291.330000 254.670000
+	Retangulo: pos original (141.333000, 204.666000)
+[*] transp 917 301.330000 254.670000
+	Retangulo: pos original (151.333000, 204.666000)
+[*] transp 918 311.330000 254.670000
+	Retangulo: pos original (161.333000, 204.666000)
+[*] transp 919 321.330000 254.670000
+	Retangulo: pos original (171.333000, 204.666000)
+[*] transp 920 331.330000 254.670000
+	Retangulo: pos original (181.333000, 204.666000)
+[*] transp 921 341.330000 254.670000
+	Retangulo: pos original (191.333000, 204.666000)
+[*] transp 922 291.330000 264.670000
+	Retangulo: pos original (141.333000, 214.666000)
+[*] transp 923 301.330000 264.670000
+	Retangulo: pos original (151.333000, 214.666000)
+[*] transp 924 311.330000 264.670000
+	Retangulo: pos original (161.333000, 214.666000)
+[*] transp 925 321.330000 264.670000
+	Retangulo: pos original (171.333000, 214.666000)
+[*] transp 926 331.330000 264.670000
+	Retangulo: pos original (181.333000, 214.666000)
+[*] transp 927 341.330000 264.670000
+	Retangulo: pos original (191.333000, 214.666000)
+[*] transp 928 291.330000 274.670000
+	Retangulo: pos original (141.333000, 224.666000)
+[*] transp 929 301.330000 274.670000
+	Retangulo: pos original (151.333000, 224.666000)
+[*] transp 930 311.330000 274.670000
+	Retangulo: pos original (161.333000, 224.666000)
+[*] transp 931 321.330000 274.670000
+	Retangulo: pos original (171.333000, 224.666000)
+[*] transp 932 331.330000 274.670000
+	Retangulo: pos original (181.333000, 224.666000)
+[*] transp 933 341.330000 274.670000
+	Retangulo: pos original (191.333000, 224.666000)
+[*] transp 934 291.330000 284.670000
+	Retangulo: pos original (141.333000, 234.666000)
+[*] transp 935 301.330000 284.670000
+	Retangulo: pos original (151.333000, 234.666000)
+[*] transp 936 311.330000 284.670000
+	Retangulo: pos original (161.333000, 234.666000)
+[*] transp 937 321.330000 284.670000
+	Retangulo: pos original (171.333000, 234.666000)
+[*] transp 938 331.330000 284.670000
+	Retangulo: pos original (181.333000, 234.666000)
+[*] transp 939 341.330000 284.670000
+	Retangulo: pos original (191.333000, 234.666000)
+[*] transp 940 291.330000 294.670000
+	Retangulo: pos original (141.333000, 244.666000)
+[*] transp 941 301.330000 294.670000
+	Retangulo: pos original (151.333000, 244.666000)
+[*] transp 942 311.330000 294.670000
+	Retangulo: pos original (161.333000, 244.666000)
+[*] transp 943 321.330000 294.670000
+	Retangulo: pos original (171.333000, 244.666000)
+[*] transp 944 331.330000 294.670000
+	Retangulo: pos original (181.333000, 244.666000)
+[*] transp 945 341.330000 294.670000
+	Retangulo: pos original (191.333000, 244.666000)
+[*] transp 946 291.330000 304.670000
+	Retangulo: pos original (141.333000, 254.666000)
+[*] transp 947 301.330000 304.670000
+	Retangulo: pos original (151.333000, 254.666000)
+[*] transp 948 311.330000 304.670000
+	Retangulo: pos original (161.333000, 254.666000)
+[*] transp 949 321.330000 304.670000
+	Retangulo: pos original (171.333000, 254.666000)
+[*] transp 950 331.330000 304.670000
+	Retangulo: pos original (181.333000, 254.666000)
+[*] transp 951 341.330000 304.670000
+	Retangulo: pos original (191.333000, 254.666000)
+[*] transp 952 291.330000 314.670000
+	Retangulo: pos original (141.333000, 264.666000)
+[*] transp 953 301.330000 314.670000
+	Retangulo: pos original (151.333000, 264.666000)
+[*] transp 954 311.330000 314.670000
+	Retangulo: pos original (161.333000, 264.666000)
+[*] transp 955 321.330000 314.670000
+	Retangulo: pos original (171.333000, 264.666000)
+[*] transp 956 331.330000 314.670000
+	Retangulo: pos original (181.333000, 264.666000)
+[*] transp 957 341.330000 314.670000
+	Retangulo: pos original (191.333000, 264.666000)
+[*] transp 958 166.330000 164.670000
+	Retangulo: pos original (16.333000, 114.666000)
+[*] transp 959 176.330000 164.670000
+	Retangulo: pos original (26.333000, 114.666000)
+[*] transp 960 186.330000 164.670000
+	Retangulo: pos original (36.333000, 114.666000)
+[*] transp 961 196.330000 164.670000
+	Retangulo: pos original (46.333000, 114.666000)
+[*] transp 962 206.330000 164.670000
+	Retangulo: pos original (56.333000, 114.666000)
+[*] transp 963 216.330000 164.670000
+	Retangulo: pos original (66.333000, 114.666000)
+[*] transp 964 226.330000 164.670000
+	Retangulo: pos original (76.333000, 114.666000)
+[*] transp 965 236.330000 164.670000
+	Retangulo: pos original (86.333000, 114.666000)
+[*] transp 966 246.330000 164.670000
+	Retangulo: pos original (96.333000, 114.666000)
+[*] transp 967 256.330000 164.670000
+	Retangulo: pos original (106.333000, 114.666000)
+[*] transp 968 266.330000 164.670000
+	Retangulo: pos original (116.333000, 114.666000)
+[*] transp 969 276.330000 164.670000
+	Retangulo: pos original (126.333000, 114.666000)
+[*] transp 970 286.330000 164.670000
+	Retangulo: pos original (136.333000, 114.666000)
+[*] transp 971 296.330000 164.670000
+	Retangulo: pos original (146.333000, 114.666000)
+[*] transp 972 306.330000 164.670000
+	Retangulo: pos original (156.333000, 114.666000)
+[*] transp 973 316.330000 164.670000
+	Retangulo: pos original (166.333000, 114.666000)
+[*] transp 974 326.330000 164.670000
+	Retangulo: pos original (176.333000, 114.666000)
+[*] transp 975 336.330000 164.670000
+	Retangulo: pos original (186.333000, 114.666000)
+[*] transp 976 346.330000 164.670000
+	Retangulo: pos original (196.333000, 114.666000)
+[*] transp 977 356.330000 164.670000
+	Retangulo: pos original (206.333000, 114.666000)
+[*] transp 978 366.330000 164.670000
+	Retangulo: pos original (216.333000, 114.666000)
+[*] transp 979 376.330000 164.670000
+	Retangulo: pos original (226.333000, 114.666000)
+[*] transp 980 386.330000 164.670000
+	Retangulo: pos original (236.333000, 114.666000)
+[*] transp 981 396.330000 164.670000
+	Retangulo: pos original (246.333000, 114.666000)
+[*] transp 982 406.330000 164.670000
+	Retangulo: pos original (256.333000, 114.666000)
+[*] transp 983 416.330000 164.670000
+	Retangulo: pos original (266.333000, 114.666000)
+[*] transp 984 426.330000 164.670000
+	Retangulo: pos original (276.333000, 114.666000)
+[*] transp 985 436.330000 164.670000
+	Retangulo: pos original (286.333000, 114.666000)
+[*] transp 986 446.330000 164.670000
+	Retangulo: pos original (296.333000, 114.666000)
+[*] transp 987 456.330000 164.670000
+	Retangulo: pos original (306.333000, 114.666000)
+[*] transp 988 466.330000 164.670000
+	Retangulo: pos original (316.333000, 114.666000)
+[*] transp 989 476.330000 164.670000
+	Retangulo: pos original (326.333000, 114.666000)
+[*] transp 990 486.330000 164.670000
+	Retangulo: pos original (336.333000, 114.666000)
+[*] transp 991 496.330000 164.670000
+	Retangulo: pos original (346.333000, 114.666000)
+[*] transp 992 506.330000 164.670000
+	Retangulo: pos original (356.333000, 114.666000)
+[*] transp 993 516.330000 164.670000
+	Retangulo: pos original (366.333000, 114.666000)
+[*] transp 994 526.330000 164.670000
+	Retangulo: pos original (376.333000, 114.666000)
+[*] transp 995 536.330000 164.670000
+	Retangulo: pos original (386.333000, 114.666000)
+[*] transp 996 546.330000 164.670000
+	Retangulo: pos original (396.333000, 114.666000)
+[*] transp 997 556.330000 164.670000
+	Retangulo: pos original (406.333000, 114.666000)
+[*] transp 998 566.330000 164.670000
+	Retangulo: pos original (416.333000, 114.666000)
+[*] transp 999 166.330000 174.670000
+	Retangulo: pos original (16.333000, 124.666000)
+[*] transp 1000 176.330000 174.670000
+	Retangulo: pos original (26.333000, 124.666000)
+[*] transp 1001 186.330000 174.670000
+	Retangulo: pos original (36.333000, 124.666000)
+[*] transp 1002 196.330000 174.670000
+	Retangulo: pos original (46.333000, 124.666000)
+[*] transp 1003 206.330000 174.670000
+	Retangulo: pos original (56.333000, 124.666000)
+[*] transp 1004 216.330000 174.670000
+	Retangulo: pos original (66.333000, 124.666000)
+[*] transp 1005 226.330000 174.670000
+	Retangulo: pos original (76.333000, 124.666000)
+[*] transp 1006 236.330000 174.670000
+	Retangulo: pos original (86.333000, 124.666000)
+[*] transp 1007 246.330000 174.670000
+	Retangulo: pos original (96.333000, 124.666000)
+[*] transp 1008 256.330000 174.670000
+	Retangulo: pos original (106.333000, 124.666000)
+[*] transp 1009 266.330000 174.670000
+	Retangulo: pos original (116.333000, 124.666000)
+[*] transp 1010 276.330000 174.670000
+	Retangulo: pos original (126.333000, 124.666000)
+[*] transp 1011 286.330000 174.670000
+	Retangulo: pos original (136.333000, 124.666000)
+[*] transp 1012 296.330000 174.670000
+	Retangulo: pos original (146.333000, 124.666000)
+[*] transp 1013 306.330000 174.670000
+	Retangulo: pos original (156.333000, 124.666000)
+[*] transp 1014 316.330000 174.670000
+	Retangulo: pos original (166.333000, 124.666000)
+[*] transp 1015 326.330000 174.670000
+	Retangulo: pos original (176.333000, 124.666000)
+[*] transp 1016 336.330000 174.670000
+	Retangulo: pos original (186.333000, 124.666000)
+[*] transp 1017 346.330000 174.670000
+	Retangulo: pos original (196.333000, 124.666000)
+[*] transp 1018 356.330000 174.670000
+	Retangulo: pos original (206.333000, 124.666000)
+[*] transp 1019 366.330000 174.670000
+	Retangulo: pos original (216.333000, 124.666000)
+[*] transp 1020 376.330000 174.670000
+	Retangulo: pos original (226.333000, 124.666000)
+[*] transp 1021 386.330000 174.670000
+	Retangulo: pos original (236.333000, 124.666000)
+[*] transp 1022 396.330000 174.670000
+	Retangulo: pos original (246.333000, 124.666000)
+[*] transp 1023 406.330000 174.670000
+	Retangulo: pos original (256.333000, 124.666000)
+[*] transp 1024 416.330000 174.670000
+	Retangulo: pos original (266.333000, 124.666000)
+[*] transp 1025 426.330000 174.670000
+	Retangulo: pos original (416.330000, 174.670000)
+[*] transp 1026 436.330000 174.670000
+	Retangulo: pos original (286.333000, 124.666000)
+[*] transp 1027 446.330000 174.670000
+	Retangulo: pos original (296.333000, 124.666000)
+[*] transp 1028 456.330000 174.670000
+	Retangulo: pos original (306.333000, 124.666000)
+[*] transp 1029 466.330000 174.670000
+	Retangulo: pos original (316.333000, 124.666000)
+[*] transp 1030 476.330000 174.670000
+	Retangulo: pos original (326.333000, 124.666000)
+[*] transp 1031 486.330000 174.670000
+	Retangulo: pos original (336.333000, 124.666000)
+[*] transp 1032 496.330000 174.670000
+	Retangulo: pos original (346.333000, 124.666000)
+[*] transp 1033 506.330000 174.670000
+	Retangulo: pos original (356.333000, 124.666000)
+[*] transp 1034 516.330000 174.670000
+	Retangulo: pos original (366.333000, 124.666000)
+[*] transp 1035 526.330000 174.670000
+	Retangulo: pos original (376.333000, 124.666000)
+[*] transp 1036 536.330000 174.670000
+	Retangulo: pos original (386.333000, 124.666000)
+[*] transp 1037 546.330000 174.670000
+	Retangulo: pos original (396.333000, 124.666000)
+[*] transp 1038 556.330000 174.670000
+	Retangulo: pos original (406.333000, 124.666000)
+[*] transp 1039 566.330000 174.670000
+	Retangulo: pos original (416.333000, 124.666000)
+[*] transp 1040 166.330000 184.670000
+	Retangulo: pos original (16.333000, 134.666000)
+[*] transp 1041 176.330000 184.670000
+	Retangulo: pos original (26.333000, 134.666000)
+[*] transp 1042 186.330000 184.670000
+	Retangulo: pos original (36.333000, 134.666000)
+[*] transp 1043 196.330000 184.670000
+	Retangulo: pos original (46.333000, 134.666000)
+[*] transp 1044 206.330000 184.670000
+	Retangulo: pos original (56.333000, 134.666000)
+[*] transp 1045 216.330000 184.670000
+	Retangulo: pos original (66.333000, 134.666000)
+[*] transp 1046 226.330000 184.670000
+	Retangulo: pos original (76.333000, 134.666000)
+[*] transp 1047 236.330000 184.670000
+	Retangulo: pos original (86.333000, 134.666000)
+[*] transp 1048 246.330000 184.670000
+	Retangulo: pos original (96.333000, 134.666000)
+[*] transp 1049 256.330000 184.670000
+	Retangulo: pos original (106.333000, 134.666000)
+[*] transp 1050 266.330000 184.670000
+	Retangulo: pos original (116.333000, 134.666000)
+[*] transp 1051 276.330000 184.670000
+	Retangulo: pos original (126.333000, 134.666000)
+[*] transp 1052 286.330000 184.670000
+	Retangulo: pos original (136.333000, 134.666000)
+[*] transp 1053 296.330000 184.670000
+	Retangulo: pos original (146.333000, 134.666000)
+[*] transp 1054 306.330000 184.670000
+	Retangulo: pos original (156.333000, 134.666000)
+[*] transp 1055 316.330000 184.670000
+	Retangulo: pos original (166.333000, 134.666000)
+[*] transp 1056 326.330000 184.670000
+	Retangulo: pos original (176.333000, 134.666000)
+[*] transp 1057 336.330000 184.670000
+	Retangulo: pos original (186.333000, 134.666000)
+[*] transp 1058 346.330000 184.670000
+	Retangulo: pos original (196.333000, 134.666000)
+[*] transp 1059 356.330000 184.670000
+	Retangulo: pos original (206.333000, 134.666000)
+[*] transp 1060 366.330000 184.670000
+	Retangulo: pos original (216.333000, 134.666000)
+[*] transp 1061 376.330000 184.670000
+	Retangulo: pos original (226.333000, 134.666000)
+[*] transp 1062 386.330000 184.670000
+	Retangulo: pos original (236.333000, 134.666000)
+[*] transp 1063 396.330000 184.670000
+	Retangulo: pos original (246.333000, 134.666000)
+[*] transp 1064 406.330000 184.670000
+	Retangulo: pos original (256.333000, 134.666000)
+[*] transp 1065 416.330000 184.670000
+	Retangulo: pos original (266.333000, 134.666000)
+[*] transp 1066 426.330000 184.670000
+	Retangulo: pos original (276.333000, 134.666000)
+[*] transp 1067 436.330000 184.670000
+	Retangulo: pos original (286.333000, 134.666000)
+[*] transp 1068 446.330000 184.670000
+	Retangulo: pos original (296.333000, 134.666000)
+[*] transp 1069 456.330000 184.670000
+	Retangulo: pos original (306.333000, 134.666000)
+[*] transp 1070 466.330000 184.670000
+	Retangulo: pos original (316.333000, 134.666000)
+[*] transp 1071 476.330000 184.670000
+	Retangulo: pos original (326.333000, 134.666000)
+[*] transp 1072 486.330000 184.670000
+	Retangulo: pos original (336.333000, 134.666000)
+[*] transp 1073 496.330000 184.670000
+	Retangulo: pos original (346.333000, 134.666000)
+[*] transp 1074 506.330000 184.670000
+	Retangulo: pos original (356.333000, 134.666000)
+[*] transp 1075 516.330000 184.670000
+	Retangulo: pos original (366.333000, 134.666000)
+[*] transp 1076 526.330000 184.670000
+	Retangulo: pos original (376.333000, 134.666000)
+[*] transp 1077 536.330000 184.670000
+	Retangulo: pos original (386.333000, 134.666000)
+[*] transp 1078 546.330000 184.670000
+	Retangulo: pos original (396.333000, 134.666000)
+[*] transp 1079 556.330000 184.670000
+	Retangulo: pos original (406.333000, 134.666000)
+[*] transp 1080 566.330000 184.670000
+	Retangulo: pos original (416.333000, 134.666000)
+[*] transp 1081 166.330000 194.670000
+	Retangulo: pos original (16.333000, 144.666000)
+[*] transp 1082 176.330000 194.670000
+	Retangulo: pos original (26.333000, 144.666000)
+[*] transp 1083 186.330000 194.670000
+	Retangulo: pos original (36.333000, 144.666000)
+[*] transp 1084 196.330000 194.670000
+	Retangulo: pos original (46.333000, 144.666000)
+[*] transp 1085 206.330000 194.670000
+	Retangulo: pos original (56.333000, 144.666000)
+[*] transp 1086 216.330000 194.670000
+	Retangulo: pos original (66.333000, 144.666000)
+[*] transp 1087 226.330000 194.670000
+	Retangulo: pos original (76.333000, 144.666000)
+[*] transp 1088 236.330000 194.670000
+	Retangulo: pos original (86.333000, 144.666000)
+[*] transp 1089 246.330000 194.670000
+	Retangulo: pos original (96.333000, 144.666000)
+[*] transp 1090 256.330000 194.670000
+	Retangulo: pos original (106.333000, 144.666000)
+[*] transp 1091 266.330000 194.670000
+	Retangulo: pos original (116.333000, 144.666000)
+[*] transp 1092 276.330000 194.670000
+	Retangulo: pos original (126.333000, 144.666000)
+[*] transp 1093 286.330000 194.670000
+	Retangulo: pos original (136.333000, 144.666000)
+[*] transp 1094 296.330000 194.670000
+	Retangulo: pos original (146.333000, 144.666000)
+[*] transp 1095 306.330000 194.670000
+	Retangulo: pos original (156.333000, 144.666000)
+[*] transp 1096 316.330000 194.670000
+	Retangulo: pos original (166.333000, 144.666000)
+[*] transp 1097 326.330000 194.670000
+	Retangulo: pos original (176.333000, 144.666000)
+[*] transp 1098 336.330000 194.670000
+	Retangulo: pos original (186.333000, 144.666000)
+[*] transp 1099 346.330000 194.670000
+	Retangulo: pos original (196.333000, 144.666000)
+[*] transp 1100 356.330000 194.670000
+	Retangulo: pos original (206.333000, 144.666000)
+[*] transp 1101 366.330000 194.670000
+	Retangulo: pos original (216.333000, 144.666000)
+[*] transp 1102 376.330000 194.670000
+	Retangulo: pos original (226.333000, 144.666000)
+[*] transp 1103 386.330000 194.670000
+	Retangulo: pos original (236.333000, 144.666000)
+[*] transp 1104 396.330000 194.670000
+	Retangulo: pos original (246.333000, 144.666000)
+[*] transp 1105 406.330000 194.670000
+	Retangulo: pos original (256.333000, 144.666000)
+[*] transp 1106 416.330000 194.670000
+	Retangulo: pos original (266.333000, 144.666000)
+[*] transp 1107 426.330000 194.670000
+	Retangulo: pos original (276.333000, 144.666000)
+[*] transp 1108 436.330000 194.670000
+	Retangulo: pos original (286.333000, 144.666000)
+[*] transp 1109 446.330000 194.670000
+	Retangulo: pos original (296.333000, 144.666000)
+[*] transp 1110 456.330000 194.670000
+	Retangulo: pos original (306.333000, 144.666000)
+[*] transp 1111 466.330000 194.670000
+	Retangulo: pos original (316.333000, 144.666000)
+[*] transp 1112 476.330000 194.670000
+	Retangulo: pos original (326.333000, 144.666000)
+[*] transp 1113 486.330000 194.670000
+	Retangulo: pos original (336.333000, 144.666000)
+[*] transp 1114 496.330000 194.670000
+	Retangulo: pos original (346.333000, 144.666000)
+[*] transp 1115 506.330000 194.670000
+	Retangulo: pos original (356.333000, 144.666000)
+[*] transp 1116 516.330000 194.670000
+	Retangulo: pos original (366.333000, 144.666000)
+[*] transp 1117 526.330000 194.670000
+	Retangulo: pos original (376.333000, 144.666000)
+[*] transp 1118 536.330000 194.670000
+	Retangulo: pos original (386.333000, 144.666000)
+[*] transp 1119 546.330000 194.670000
+	Retangulo: pos original (396.333000, 144.666000)
+[*] transp 1120 556.330000 194.670000
+	Retangulo: pos original (406.333000, 144.666000)
+[*] transp 1121 566.330000 194.670000
+	Retangulo: pos original (416.333000, 144.666000)
+[*] transp 1122 166.330000 204.670000
+	Retangulo: pos original (16.333000, 154.666000)
+[*] transp 1123 176.330000 204.670000
+	Retangulo: pos original (26.333000, 154.666000)
+[*] transp 1124 186.330000 204.670000
+	Retangulo: pos original (36.333000, 154.666000)
+[*] transp 1125 196.330000 204.670000
+	Retangulo: pos original (46.333000, 154.666000)
+[*] transp 1126 206.330000 204.670000
+	Retangulo: pos original (56.333000, 154.666000)
+[*] transp 1127 216.330000 204.670000
+	Retangulo: pos original (66.333000, 154.666000)
+[*] transp 1128 226.330000 204.670000
+	Retangulo: pos original (76.333000, 154.666000)
+[*] transp 1129 236.330000 204.670000
+	Retangulo: pos original (86.333000, 154.666000)
+[*] transp 1130 246.330000 204.670000
+	Retangulo: pos original (96.333000, 154.666000)
+[*] transp 1131 256.330000 204.670000
+	Retangulo: pos original (106.333000, 154.666000)
+[*] transp 1132 266.330000 204.670000
+	Retangulo: pos original (116.333000, 154.666000)
+[*] transp 1133 276.330000 204.670000
+	Retangulo: pos original (126.333000, 154.666000)
+[*] transp 1134 286.330000 204.670000
+	Retangulo: pos original (136.333000, 154.666000)
+[*] transp 1135 296.330000 204.670000
+	Retangulo: pos original (146.333000, 154.666000)
+[*] transp 1136 306.330000 204.670000
+	Retangulo: pos original (156.333000, 154.666000)
+[*] transp 1137 316.330000 204.670000
+	Retangulo: pos original (166.333000, 154.666000)
+[*] transp 1138 326.330000 204.670000
+	Retangulo: pos original (176.333000, 154.666000)
+[*] transp 1139 336.330000 204.670000
+	Retangulo: pos original (186.333000, 154.666000)
+[*] transp 1140 346.330000 204.670000
+	Retangulo: pos original (196.333000, 154.666000)
+[*] transp 1141 356.330000 204.670000
+	Retangulo: pos original (206.333000, 154.666000)
+[*] transp 1142 366.330000 204.670000
+	Retangulo: pos original (216.333000, 154.666000)
+[*] transp 1143 376.330000 204.670000
+	Retangulo: pos original (226.333000, 154.666000)
+[*] transp 1144 386.330000 204.670000
+	Retangulo: pos original (236.333000, 154.666000)
+[*] transp 1145 396.330000 204.670000
+	Retangulo: pos original (246.333000, 154.666000)
+[*] transp 1146 406.330000 204.670000
+	Retangulo: pos original (256.333000, 154.666000)
+[*] transp 1147 416.330000 204.670000
+	Retangulo: pos original (266.333000, 154.666000)
+[*] transp 1148 426.330000 204.670000
+	Retangulo: pos original (276.333000, 154.666000)
+[*] transp 1149 436.330000 204.670000
+	Retangulo: pos original (286.333000, 154.666000)
+[*] transp 1150 446.330000 204.670000
+	Retangulo: pos original (296.333000, 154.666000)
+[*] transp 1151 456.330000 204.670000
+	Retangulo: pos original (306.333000, 154.666000)
+[*] transp 1152 466.330000 204.670000
+	Retangulo: pos original (316.333000, 154.666000)
+[*] transp 1153 476.330000 204.670000
+	Retangulo: pos original (326.333000, 154.666000)
+[*] transp 1154 486.330000 204.670000
+	Retangulo: pos original (336.333000, 154.666000)
+[*] transp 1155 496.330000 204.670000
+	Retangulo: pos original (346.333000, 154.666000)
+[*] transp 1156 506.330000 204.670000
+	Retangulo: pos original (356.333000, 154.666000)
+[*] transp 1157 516.330000 204.670000
+	Retangulo: pos original (366.333000, 154.666000)
+[*] transp 1158 526.330000 204.670000
+	Retangulo: pos original (376.333000, 154.666000)
+[*] transp 1159 536.330000 204.670000
+	Retangulo: pos original (386.333000, 154.666000)
+[*] transp 1160 546.330000 204.670000
+	Retangulo: pos original (396.333000, 154.666000)
+[*] transp 1161 556.330000 204.670000
+	Retangulo: pos original (406.333000, 154.666000)
+[*] transp 1162 566.330000 204.670000
+	Retangulo: pos original (416.333000, 154.666000)
+[*] transp 1163 166.330000 214.670000
+	Retangulo: pos original (16.333000, 164.666000)
+[*] transp 1164 176.330000 214.670000
+	Retangulo: pos original (26.333000, 164.666000)
+[*] transp 1165 186.330000 214.670000
+	Retangulo: pos original (36.333000, 164.666000)
+[*] transp 1166 196.330000 214.670000
+	Retangulo: pos original (46.333000, 164.666000)
+[*] transp 1167 206.330000 214.670000
+	Retangulo: pos original (56.333000, 164.666000)
+[*] transp 1168 216.330000 214.670000
+	Retangulo: pos original (66.333000, 164.666000)
+[*] transp 1169 226.330000 214.670000
+	Retangulo: pos original (76.333000, 164.666000)
+[*] transp 1170 236.330000 214.670000
+	Retangulo: pos original (86.333000, 164.666000)
+[*] transp 1171 246.330000 214.670000
+	Retangulo: pos original (96.333000, 164.666000)
+[*] transp 1172 256.330000 214.670000
+	Retangulo: pos original (106.333000, 164.666000)
+[*] transp 1173 266.330000 214.670000
+	Retangulo: pos original (116.333000, 164.666000)
+[*] transp 1174 276.330000 214.670000
+	Retangulo: pos original (126.333000, 164.666000)
+[*] transp 1175 286.330000 214.670000
+	Retangulo: pos original (136.333000, 164.666000)
+[*] transp 1176 296.330000 214.670000
+	Retangulo: pos original (146.333000, 164.666000)
+[*] transp 1177 306.330000 214.670000
+	Retangulo: pos original (156.333000, 164.666000)
+[*] transp 1178 316.330000 214.670000
+	Retangulo: pos original (166.333000, 164.666000)
+[*] transp 1179 326.330000 214.670000
+	Retangulo: pos original (176.333000, 164.666000)
+[*] transp 1180 336.330000 214.670000
+	Retangulo: pos original (186.333000, 164.666000)
+[*] transp 1181 346.330000 214.670000
+	Retangulo: pos original (196.333000, 164.666000)
+[*] transp 1182 356.330000 214.670000
+	Retangulo: pos original (206.333000, 164.666000)
+[*] transp 1183 366.330000 214.670000
+	Retangulo: pos original (216.333000, 164.666000)
+[*] transp 1184 376.330000 214.670000
+	Retangulo: pos original (226.333000, 164.666000)
+[*] transp 1185 386.330000 214.670000
+	Retangulo: pos original (236.333000, 164.666000)
+[*] transp 1186 396.330000 214.670000
+	Retangulo: pos original (246.333000, 164.666000)
+[*] transp 1187 406.330000 214.670000
+	Retangulo: pos original (256.333000, 164.666000)
+[*] transp 1188 416.330000 214.670000
+	Retangulo: pos original (266.333000, 164.666000)
+[*] transp 1189 426.330000 214.670000
+	Retangulo: pos original (276.333000, 164.666000)
+[*] transp 1190 436.330000 214.670000
+	Retangulo: pos original (286.333000, 164.666000)
+[*] transp 1191 446.330000 214.670000
+	Retangulo: pos original (296.333000, 164.666000)
+[*] transp 1192 456.330000 214.670000
+	Retangulo: pos original (306.333000, 164.666000)
+[*] transp 1193 466.330000 214.670000
+	Retangulo: pos original (316.333000, 164.666000)
+[*] transp 1194 476.330000 214.670000
+	Retangulo: pos original (326.333000, 164.666000)
+[*] transp 1195 486.330000 214.670000
+	Retangulo: pos original (336.333000, 164.666000)
+[*] transp 1196 496.330000 214.670000
+	Retangulo: pos original (346.333000, 164.666000)
+[*] transp 1197 506.330000 214.670000
+	Retangulo: pos original (356.333000, 164.666000)
+[*] transp 1198 516.330000 214.670000
+	Retangulo: pos original (366.333000, 164.666000)
+[*] transp 1199 526.330000 214.670000
+	Retangulo: pos original (376.333000, 164.666000)
+[*] transp 1200 536.330000 214.670000
+	Retangulo: pos original (386.333000, 164.666000)
+[*] transp 1201 546.330000 214.670000
+	Retangulo: pos original (396.333000, 164.666000)
+[*] transp 1202 556.330000 214.670000
+	Retangulo: pos original (406.333000, 164.666000)
+[*] transp 1203 566.330000 214.670000
+	Retangulo: pos original (416.333000, 164.666000)
+[*] transp 5 291.330000 64.670000
+	Retangulo: pos original (141.333000, 14.666000)

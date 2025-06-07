@@ -303,6 +303,19 @@ bool is_point_internal_to_form(SmuTreap t, Node n, Info i, double x, double y) {
     return is_internal;
 }
 
+bool is_point_at_the_same_coordinate(SmuTreap t, Node n, Info i, double x, double y) {
+    DescritorTipoInfo form_type = getTypeInfoSmuT(t, n);
+    if (form_type == -1 || i == NULL) {
+        fprintf(stderr, "ERROR: processor_qry is_point_internal_to_form requires valid form type and info\n");
+        return false; 
+    }
+
+    double form_x, form_y;
+    get_form_coordinates(form_type, i, &form_x, &form_y);
+
+    return x == form_x && y == form_y;
+}
+
 static void set_form_as_hit(void *value, callback_data call_data) {
     Node node = (Node) value;
     SmuTreap t = (SmuTreap) call_data;

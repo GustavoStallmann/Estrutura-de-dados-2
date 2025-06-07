@@ -1,0 +1,785 @@
+[*] blow 364
+	Circulo -> foi explodido
+	Circulo (364) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 311
+	Circulo -> foi explodido
+	Circulo (311) -> foi alvo da operação
+[*] blow 190
+	Circulo -> foi explodido
+	Circulo (190) -> foi alvo da operação
+[*] blow 405
+	Circulo -> foi explodido
+	Circulo (405) -> foi alvo da operação
+	Retangulo (998) -> foi alvo da operação
+	Retangulo (997) -> foi alvo da operação
+[*] blow 290
+	Circulo -> foi explodido
+	Circulo (290) -> foi alvo da operação
+[*] blow 320
+	Circulo -> foi explodido
+	Circulo (320) -> foi alvo da operação
+[*] blow 185
+	Circulo -> foi explodido
+	Circulo (185) -> foi alvo da operação
+[*] blow 248
+	Circulo -> foi explodido
+	Circulo (248) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 354
+	Circulo -> foi explodido
+	Circulo (354) -> foi alvo da operação
+[*] blow 389
+	Circulo -> foi explodido
+	Circulo (389) -> foi alvo da operação
+	Retangulo (982) -> foi alvo da operação
+[*] blow 220
+	Circulo -> foi explodido
+	Circulo (220) -> foi alvo da operação
+[*] blow 173
+	Circulo -> foi explodido
+	Circulo (173) -> foi alvo da operação
+[*] blow 372
+	Circulo -> foi explodido
+	Circulo (372) -> foi alvo da operação
+[*] blow 374
+	Circulo -> foi explodido
+	Circulo (374) -> foi alvo da operação
+[*] blow 356
+	Circulo -> foi explodido
+	Circulo (356) -> foi alvo da operação
+[*] blow 259
+	Circulo -> foi explodido
+	Circulo (259) -> foi alvo da operação
+[*] blow 219
+	Circulo -> foi explodido
+	Circulo (219) -> foi alvo da operação
+[*] blow 310
+	Circulo -> foi explodido
+	Circulo (310) -> foi alvo da operação
+[*] blow 301
+	Circulo -> foi explodido
+	Circulo (301) -> foi alvo da operação
+[*] blow 263
+	Circulo -> foi explodido
+	Circulo (263) -> foi alvo da operação
+[*] blow 365
+	Circulo -> foi explodido
+	Circulo (365) -> foi alvo da operação
+[*] blow 274
+	Circulo -> foi explodido
+	Circulo (274) -> foi alvo da operação
+[*] blow 402
+	Circulo -> foi explodido
+	Circulo (402) -> foi alvo da operação
+	Retangulo (995) -> foi alvo da operação
+	Retangulo (994) -> foi alvo da operação
+[*] blow 401
+	Circulo -> foi explodido
+	Retangulo (994) -> foi alvo da operação
+	Circulo (401) -> foi alvo da operação
+	Retangulo (993) -> foi alvo da operação
+[*] blow 171
+	Circulo -> foi explodido
+	Circulo (171) -> foi alvo da operação
+[*] blow 231
+	Circulo -> foi explodido
+	Circulo (231) -> foi alvo da operação
+[*] blow 297
+	Circulo -> foi explodido
+	Circulo (297) -> foi alvo da operação
+[*] blow 333
+	Circulo -> foi explodido
+	Circulo (333) -> foi alvo da operação
+[*] blow 334
+	Circulo -> foi explodido
+	Circulo (334) -> foi alvo da operação
+[*] blow 227
+	Circulo -> foi explodido
+	Circulo (227) -> foi alvo da operação
+[*] blow 324
+	Circulo -> foi explodido
+	Circulo (324) -> foi alvo da operação
+[*] blow 302
+	Circulo -> foi explodido
+	Circulo (302) -> foi alvo da operação
+[*] blow 241
+	Circulo -> foi explodido
+	Circulo (241) -> foi alvo da operação
+[*] blow 340
+	Circulo -> foi explodido
+	Circulo (340) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 370
+	Circulo -> foi explodido
+	Circulo (370) -> foi alvo da operação
+[*] blow 243
+	Circulo -> foi explodido
+	Circulo (243) -> foi alvo da operação
+[*] blow 275
+	Circulo -> foi explodido
+	Circulo (275) -> foi alvo da operação
+[*] blow 214
+	Circulo -> foi explodido
+	Circulo (214) -> foi alvo da operação
+[*] blow 368
+	Circulo -> foi explodido
+	Circulo (368) -> foi alvo da operação
+[*] blow 322
+	Circulo -> foi explodido
+	Circulo (322) -> foi alvo da operação
+[*] blow 165
+	Circulo -> foi explodido
+	Circulo (165) -> foi alvo da operação
+[*] blow 177
+	Circulo -> foi explodido
+	Circulo (177) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 202
+	Circulo -> foi explodido
+	Circulo (202) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 245
+	Circulo -> foi explodido
+	Circulo (245) -> foi alvo da operação
+	Retangulo (831) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 379
+	Circulo -> foi explodido
+	Circulo (379) -> foi alvo da operação
+[*] blow 238
+	Circulo -> foi explodido
+	Circulo (238) -> foi alvo da operação
+[*] blow 166
+	Circulo -> foi explodido
+	Circulo (166) -> foi alvo da operação
+[*] blow 272
+	Circulo -> foi explodido
+	Circulo (272) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 264
+	Circulo -> foi explodido
+	Circulo (264) -> foi alvo da operação
+[*] blow 335
+	Circulo -> foi explodido
+	Circulo (335) -> foi alvo da operação
+[*] blow 376
+	Circulo -> foi explodido
+	Circulo (376) -> foi alvo da operação
+[*] blow 258
+	Circulo -> foi explodido
+	Circulo (258) -> foi alvo da operação
+[*] blow 347
+	Circulo -> foi explodido
+	Circulo (347) -> foi alvo da operação
+[*] blow 265
+	Circulo -> foi explodido
+	Circulo (265) -> foi alvo da operação
+[*] blow 257
+	Circulo -> foi explodido
+	Circulo (257) -> foi alvo da operação
+[*] blow 186
+	Circulo -> foi explodido
+	Circulo (186) -> foi alvo da operação
+[*] blow 366
+	Circulo -> foi explodido
+	Circulo (366) -> foi alvo da operação
+[*] blow 396
+	Circulo -> foi explodido
+	Circulo (396) -> foi alvo da operação
+	Retangulo (989) -> foi alvo da operação
+	Retangulo (988) -> foi alvo da operação
+[*] blow 234
+	Circulo -> foi explodido
+	Circulo (234) -> foi alvo da operação
+[*] blow 392
+	Circulo -> foi explodido
+	Retangulo (985) -> foi alvo da operação
+	Circulo (392) -> foi alvo da operação
+	Retangulo (984) -> foi alvo da operação
+[*] blow 391
+	Circulo -> foi explodido
+	Retangulo (984) -> foi alvo da operação
+	Circulo (391) -> foi alvo da operação
+	Retangulo (983) -> foi alvo da operação
+[*] blow 251
+	Circulo -> foi explodido
+	Circulo (251) -> foi alvo da operação
+[*] blow 230
+	Circulo -> foi explodido
+	Circulo (230) -> foi alvo da operação
+[*] blow 178
+	Circulo -> foi explodido
+	Circulo (178) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 350
+	Circulo -> foi explodido
+	Circulo (350) -> foi alvo da operação
+[*] blow 326
+	Circulo -> foi explodido
+	Circulo (326) -> foi alvo da operação
+[*] blow 360
+	Circulo -> foi explodido
+	Retangulo (861) -> foi alvo da operação
+	Circulo (360) -> foi alvo da operação
+	Retangulo (861) -> foi alvo da operação
+	Circulo (360) -> foi alvo da operação
+	Retangulo (861) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 207
+	Circulo -> foi explodido
+	Circulo (207) -> foi alvo da operação
+[*] blow 304
+	Circulo -> foi explodido
+	Circulo (304) -> foi alvo da operação
+[*] blow 390
+	Circulo -> foi explodido
+	Circulo (390) -> foi alvo da operação
+	Retangulo (983) -> foi alvo da operação
+	Retangulo (982) -> foi alvo da operação
+[*] blow 244
+	Circulo -> foi explodido
+	Circulo (244) -> foi alvo da operação
+[*] blow 228
+	Circulo -> foi explodido
+	Circulo (228) -> foi alvo da operação
+[*] blow 339
+	Circulo -> foi explodido
+	Circulo (339) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 305
+	Circulo -> foi explodido
+	Circulo (305) -> foi alvo da operação
+[*] blow 299
+	Circulo -> foi explodido
+	Circulo (299) -> foi alvo da operação
+[*] blow 312
+	Circulo -> foi explodido
+	Circulo (312) -> foi alvo da operação
+[*] blow 404
+	Circulo -> foi explodido
+	Retangulo (997) -> foi alvo da operação
+	Circulo (404) -> foi alvo da operação
+	Retangulo (996) -> foi alvo da operação
+[*] blow 289
+	Circulo -> foi explodido
+	Circulo (289) -> foi alvo da operação
+[*] blow 170
+	Circulo -> foi explodido
+	Circulo (170) -> foi alvo da operação
+[*] blow 288
+	Circulo -> foi explodido
+	Circulo (288) -> foi alvo da operação
+[*] blow 318
+	Circulo -> foi explodido
+	Circulo (318) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 192
+	Circulo -> foi explodido
+	Circulo (192) -> foi alvo da operação
+[*] blow 385
+	Circulo -> foi explodido
+	Retangulo (978) -> foi alvo da operação
+	Circulo (385) -> foi alvo da operação
+	Retangulo (977) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 292
+	Circulo -> foi explodido
+	Circulo (292) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 399
+	Circulo -> foi explodido
+	Retangulo (992) -> foi alvo da operação
+	Circulo (399) -> foi alvo da operação
+	Retangulo (991) -> foi alvo da operação
+[*] blow 387
+	Circulo -> foi explodido
+	Circulo (387) -> foi alvo da operação
+	Retangulo (980) -> foi alvo da operação
+	Retangulo (979) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 268
+	Circulo -> foi explodido
+	Circulo (268) -> foi alvo da operação
+	Retangulo (837) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 294
+	Circulo -> foi explodido
+	Circulo (294) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 213
+	Circulo -> foi explodido
+	Circulo (213) -> foi alvo da operação
+[*] blow 321
+	Circulo -> foi explodido
+	Circulo (321) -> foi alvo da operação
+[*] blow 382
+	Circulo -> foi explodido
+	Circulo (382) -> foi alvo da operação
+[*] blow 181
+	Circulo -> foi explodido
+	Circulo (181) -> foi alvo da operação
+[*] blow 211
+	Circulo -> foi explodido
+	Circulo (211) -> foi alvo da operação
+[*] blow 361
+	Circulo -> foi explodido
+	Circulo (361) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 369
+	Circulo -> foi explodido
+	Circulo (369) -> foi alvo da operação
+[*] blow 341
+	Circulo -> foi explodido
+	Circulo (341) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 222
+	Circulo -> foi explodido
+	Circulo (222) -> foi alvo da operação
+	Retangulo (825) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 235
+	Circulo -> foi explodido
+	Circulo (235) -> foi alvo da operação
+[*] blow 197
+	Circulo -> foi explodido
+	Circulo (197) -> foi alvo da operação
+[*] blow 323
+	Circulo -> foi explodido
+	Circulo (323) -> foi alvo da operação
+[*] blow 337
+	Circulo -> foi explodido
+	Circulo (337) -> foi alvo da operação
+	Retangulo (855) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 295
+	Circulo -> foi explodido
+	Circulo (295) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 217
+	Circulo -> foi explodido
+	Circulo (217) -> foi alvo da operação
+[*] blow 386
+	Circulo -> foi explodido
+	Circulo (386) -> foi alvo da operação
+	Retangulo (979) -> foi alvo da operação
+	Retangulo (978) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 332
+	Circulo -> foi explodido
+	Circulo (332) -> foi alvo da operação
+[*] blow 346
+	Circulo -> foi explodido
+	Circulo (346) -> foi alvo da operação
+[*] blow 394
+	Circulo -> foi explodido
+	Circulo (394) -> foi alvo da operação
+	Retangulo (987) -> foi alvo da operação
+	Retangulo (986) -> foi alvo da operação
+[*] blow 284
+	Circulo -> foi explodido
+	Circulo (284) -> foi alvo da operação
+[*] blow 174
+	Circulo -> foi explodido
+	Circulo (174) -> foi alvo da operação
+[*] blow 160
+	Circulo -> foi explodido
+	Circulo (160) -> foi alvo da operação
+[*] blow 352
+	Circulo -> foi explodido
+	Circulo (352) -> foi alvo da operação
+[*] blow 262
+	Circulo -> foi explodido
+	Circulo (262) -> foi alvo da operação
+[*] blow 358
+	Circulo -> foi explodido
+	Circulo (358) -> foi alvo da operação
+[*] blow 351
+	Circulo -> foi explodido
+	Circulo (351) -> foi alvo da operação
+[*] blow 183
+	Circulo -> foi explodido
+	Circulo (183) -> foi alvo da operação
+[*] blow 239
+	Circulo -> foi explodido
+	Circulo (239) -> foi alvo da operação
+[*] blow 249
+	Circulo -> foi explodido
+	Circulo (249) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 188
+	Circulo -> foi explodido
+	Circulo (188) -> foi alvo da operação
+[*] blow 194
+	Circulo -> foi explodido
+	Circulo (194) -> foi alvo da operação
+[*] blow 344
+	Circulo -> foi explodido
+	Circulo (344) -> foi alvo da operação
+[*] blow 300
+	Circulo -> foi explodido
+	Circulo (300) -> foi alvo da operação
+[*] blow 266
+	Circulo -> foi explodido
+	Circulo (266) -> foi alvo da operação
+[*] blow 314
+	Circulo -> foi explodido
+	Circulo (314) -> foi alvo da operação
+	Retangulo (849) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 156
+	Circulo -> foi explodido
+	Circulo (156) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 278
+	Circulo -> foi explodido
+	Circulo (278) -> foi alvo da operação
+[*] blow 261
+	Circulo -> foi explodido
+	Circulo (261) -> foi alvo da operação
+[*] blow 209
+	Circulo -> foi explodido
+	Circulo (209) -> foi alvo da operação
+[*] blow 316
+	Circulo -> foi explodido
+	Circulo (316) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 225
+	Circulo -> foi explodido
+	Circulo (225) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 199
+	Circulo -> foi explodido
+	Circulo (199) -> foi alvo da operação
+	Retangulo (819) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 187
+	Circulo -> foi explodido
+	Circulo (187) -> foi alvo da operação
+[*] blow 327
+	Circulo -> foi explodido
+	Circulo (327) -> foi alvo da operação
+[*] blow 253
+	Circulo -> foi explodido
+	Circulo (253) -> foi alvo da operação
+[*] blow 325
+	Circulo -> foi explodido
+	Circulo (325) -> foi alvo da operação
+[*] blow 212
+	Circulo -> foi explodido
+	Circulo (212) -> foi alvo da operação
+[*] blow 388
+	Circulo -> foi explodido
+	Circulo (388) -> foi alvo da operação
+	Retangulo (981) -> foi alvo da operação
+	Retangulo (980) -> foi alvo da operação
+[*] blow 168
+	Circulo -> foi explodido
+	Circulo (168) -> foi alvo da operação
+[*] blow 237
+	Circulo -> foi explodido
+	Circulo (237) -> foi alvo da operação
+[*] blow 206
+	Circulo -> foi explodido
+	Circulo (206) -> foi alvo da operação
+[*] blow 229
+	Circulo -> foi explodido
+	Circulo (229) -> foi alvo da operação
+[*] blow 282
+	Circulo -> foi explodido
+	Circulo (282) -> foi alvo da operação
+[*] blow 193
+	Circulo -> foi explodido
+	Circulo (193) -> foi alvo da operação
+[*] blow 180
+	Circulo -> foi explodido
+	Circulo (180) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 236
+	Circulo -> foi explodido
+	Circulo (236) -> foi alvo da operação
+[*] blow 279
+	Circulo -> foi explodido
+	Circulo (279) -> foi alvo da operação
+[*] blow 403
+	Circulo -> foi explodido
+	Retangulo (996) -> foi alvo da operação
+	Circulo (403) -> foi alvo da operação
+	Retangulo (995) -> foi alvo da operação
+[*] blow 205
+	Circulo -> foi explodido
+	Circulo (205) -> foi alvo da operação
+[*] blow 375
+	Circulo -> foi explodido
+	Circulo (375) -> foi alvo da operação
+[*] blow 184
+	Circulo -> foi explodido
+	Circulo (184) -> foi alvo da operação
+[*] blow 158
+	Circulo -> foi explodido
+	Circulo (158) -> foi alvo da operação
+[*] blow 157
+	Circulo -> foi explodido
+	Circulo (157) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 218
+	Circulo -> foi explodido
+	Circulo (218) -> foi alvo da operação
+[*] blow 153
+	Circulo -> foi explodido
+	Circulo (153) -> foi alvo da operação
+	Retangulo (807) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 355
+	Circulo -> foi explodido
+	Circulo (355) -> foi alvo da operação
+[*] blow 395
+	Circulo -> foi explodido
+	Retangulo (988) -> foi alvo da operação
+	Circulo (395) -> foi alvo da operação
+	Retangulo (987) -> foi alvo da operação
+[*] blow 400
+	Circulo -> foi explodido
+	Circulo (400) -> foi alvo da operação
+	Retangulo (993) -> foi alvo da operação
+	Retangulo (992) -> foi alvo da operação
+[*] blow 378
+	Circulo -> foi explodido
+	Circulo (378) -> foi alvo da operação
+[*] blow 381
+	Circulo -> foi explodido
+	Circulo (381) -> foi alvo da operação
+[*] blow 172
+	Circulo -> foi explodido
+	Circulo (172) -> foi alvo da operação
+[*] blow 287
+	Circulo -> foi explodido
+	Circulo (287) -> foi alvo da operação
+[*] blow 338
+	Circulo -> foi explodido
+	Circulo (338) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 330
+	Circulo -> foi explodido
+	Circulo (330) -> foi alvo da operação
+[*] blow 161
+	Circulo -> foi explodido
+	Circulo (161) -> foi alvo da operação
+[*] blow 307
+	Circulo -> foi explodido
+	Circulo (307) -> foi alvo da operação
+[*] blow 393
+	Circulo -> foi explodido
+	Retangulo (986) -> foi alvo da operação
+	Circulo (393) -> foi alvo da operação
+	Retangulo (985) -> foi alvo da operação
+[*] blow 246
+	Circulo -> foi explodido
+	Circulo (246) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 329
+	Circulo -> foi explodido
+	Circulo (329) -> foi alvo da operação
+[*] blow 342
+	Circulo -> foi explodido
+	Circulo (342) -> foi alvo da operação
+[*] blow 154
+	Circulo -> foi explodido
+	Circulo (154) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 270
+	Circulo -> foi explodido
+	Circulo (270) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 398
+	Circulo -> foi explodido
+	Retangulo (991) -> foi alvo da operação
+	Circulo (398) -> foi alvo da operação
+	Retangulo (990) -> foi alvo da operação
+[*] blow 306
+	Circulo -> foi explodido
+	Circulo (306) -> foi alvo da operação
+[*] blow 303
+	Circulo -> foi explodido
+	Circulo (303) -> foi alvo da operação
+[*] blow 281
+	Circulo -> foi explodido
+	Circulo (281) -> foi alvo da operação
+[*] blow 286
+	Circulo -> foi explodido
+	Circulo (286) -> foi alvo da operação
+[*] blow 293
+	Circulo -> foi explodido
+	Circulo (293) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 269
+	Circulo -> foi explodido
+	Circulo (269) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 255
+	Circulo -> foi explodido
+	Circulo (255) -> foi alvo da operação
+[*] blow 273
+	Circulo -> foi explodido
+	Circulo (273) -> foi alvo da operação
+[*] blow 200
+	Circulo -> foi explodido
+	Circulo (200) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 210
+	Circulo -> foi explodido
+	Circulo (210) -> foi alvo da operação
+[*] blow 380
+	Circulo -> foi explodido
+	Circulo (380) -> foi alvo da operação
+[*] blow 189
+	Circulo -> foi explodido
+	Circulo (189) -> foi alvo da operação
+[*] blow 363
+	Circulo -> foi explodido
+	Circulo (363) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 169
+	Circulo -> foi explodido
+	Circulo (169) -> foi alvo da operação
+[*] blow 201
+	Circulo -> foi explodido
+	Circulo (201) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 250
+	Circulo -> foi explodido
+	Circulo (250) -> foi alvo da operação
+[*] blow 179
+	Circulo -> foi explodido
+	Circulo (179) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 277
+	Circulo -> foi explodido
+	Circulo (277) -> foi alvo da operação
+[*] blow 252
+	Circulo -> foi explodido
+	Circulo (252) -> foi alvo da operação
+[*] blow 167
+	Circulo -> foi explodido
+	Circulo (167) -> foi alvo da operação
+[*] blow 226
+	Circulo -> foi explodido
+	Circulo (226) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 233
+	Circulo -> foi explodido
+	Circulo (233) -> foi alvo da operação
+[*] blow 349
+	Circulo -> foi explodido
+	Circulo (349) -> foi alvo da operação
+[*] blow 159
+	Circulo -> foi explodido
+	Circulo (159) -> foi alvo da operação
+[*] blow 373
+	Circulo -> foi explodido
+	Circulo (373) -> foi alvo da operação
+[*] blow 232
+	Circulo -> foi explodido
+	Circulo (232) -> foi alvo da operação
+[*] blow 377
+	Circulo -> foi explodido
+	Circulo (377) -> foi alvo da operação
+[*] blow 371
+	Circulo -> foi explodido
+	Circulo (371) -> foi alvo da operação
+[*] blow 198
+	Circulo -> foi explodido
+	Circulo (198) -> foi alvo da operação
+[*] blow 164
+	Circulo -> foi explodido
+	Circulo (164) -> foi alvo da operação
+[*] blow 221
+	Circulo -> foi explodido
+	Circulo (221) -> foi alvo da operação
+[*] blow 336
+	Circulo -> foi explodido
+	Circulo (336) -> foi alvo da operação
+[*] blow 315
+	Circulo -> foi explodido
+	Circulo (315) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 260
+	Circulo -> foi explodido
+	Circulo (260) -> foi alvo da operação
+[*] blow 204
+	Circulo -> foi explodido
+	Circulo (204) -> foi alvo da operação
+[*] blow 283
+	Circulo -> foi explodido
+	Circulo (283) -> foi alvo da operação
+[*] blow 163
+	Circulo -> foi explodido
+	Circulo (163) -> foi alvo da operação
+[*] blow 162
+	Circulo -> foi explodido
+	Circulo (162) -> foi alvo da operação
+[*] blow 397
+	Circulo -> foi explodido
+	Circulo (397) -> foi alvo da operação
+	Retangulo (990) -> foi alvo da operação
+	Retangulo (989) -> foi alvo da operação
+[*] blow 384
+	Circulo -> foi explodido
+	Retangulo (977) -> foi alvo da operação
+	Circulo (384) -> foi alvo da operação
+	Retangulo (976) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 343
+	Circulo -> foi explodido
+	Circulo (343) -> foi alvo da operação
+[*] blow 271
+	Circulo -> foi explodido
+	Circulo (271) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 296
+	Circulo -> foi explodido
+	Circulo (296) -> foi alvo da operação
+[*] blow 285
+	Circulo -> foi explodido
+	Circulo (285) -> foi alvo da operação
+[*] blow 267
+	Circulo -> foi explodido
+	Circulo (267) -> foi alvo da operação
+[*] blow 155
+	Circulo -> foi explodido
+	Circulo (155) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 298
+	Circulo -> foi explodido
+	Circulo (298) -> foi alvo da operação
+[*] blow 182
+	Circulo -> foi explodido
+	Circulo (182) -> foi alvo da operação
+[*] blow 362
+	Circulo -> foi explodido
+	Circulo (362) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 308
+	Circulo -> foi explodido
+	Circulo (308) -> foi alvo da operação
+[*] blow 331
+	Circulo -> foi explodido
+	Circulo (331) -> foi alvo da operação
+[*] blow 348
+	Circulo -> foi explodido
+	Circulo (348) -> foi alvo da operação
+[*] blow 191
+	Circulo -> foi explodido
+	Circulo (191) -> foi alvo da operação
+[*] blow 240
+	Circulo -> foi explodido
+	Circulo (240) -> foi alvo da operação
+[*] blow 223
+	Circulo -> foi explodido
+	Circulo (223) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação
+[*] blow 291
+	Circulo -> foi explodido
+	Circulo (291) -> foi alvo da operação
+	Retangulo (843) -> foi alvo da operação
+	Retangulo (5) -> foi alvo da operação

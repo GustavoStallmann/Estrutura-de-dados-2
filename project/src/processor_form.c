@@ -220,7 +220,7 @@ FormInfo clone_form(DescritorTipoInfo formType, Info form, int id, double target
     }
 
     FormStyle new_style = new_form_style(
-        get_form_style_border_color(style), get_form_style_fill_color(style), 
+        "purple", "red", 
         get_form_style_font_family(style), get_form_style_font_weight(style), 
         get_form_style_text_anchor(style), get_form_style_font_size(style),
         get_form_style_stroke_width(style)
